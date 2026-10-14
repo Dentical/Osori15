@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Osori15 — Женская одежда | Душанбе</title>
+    <style>
+        :root {
+            --primary-color: #d4a373;
+            --header-bg: #ffffff;
+            --bg-color: #f9f9f9;
+            --text-color: #333333;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+        }
+
+        header {
+            background-color: var(--header-bg);
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #eaeaea;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            letter-spacing: 2px;
+            color: var(--primary-color);
+        }
+
+        .auth-section {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        button {
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            font-weight: 600;
+            transition: opacity 0.2s;
+        }
+
+        button:hover {
+            opacity: 0.9;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 10px 18px;
+        }
+
+        .btn-orders {
+            background-color: #2b2b2b;
+            color: #fff;
+            padding: 8px 15px;
+            display: none;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        .hero-banner {
+            background: linear-gradient(135deg, #f3e9dc, #e8d7c1);
+            padding: 40px 20px;
+            border-radius: 12px;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        /* Фильтры и поиск */
+        .controls-bar {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+
+        .controls-bar input, .controls-bar select {
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
+        .controls-bar input {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        /* Информационный блок оплаты/доставки */
+        .info-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 15px;
+            margin-bottom: 35px;
+        }
+
+        .info-card {
+            background: white;
+            padding: 15px 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.03);
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .info-card h4 {
+            margin: 0 0 5px 0;
+            font-size: 15px;
+        }
+
+        .info-card p {
+            margin: 0;
+            font-size: 13px;
+            color: #666;
+        }
+
+        /* Панели Админа */
+        .admin-box {
+            display: none;
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            margin-bottom: 30px;
+            border-left: 5px solid var(--primary-color);
+        }
+
+        .admin-form-group {
+            margin-bottom: 12px;
+        }
+
+        .admin-form-group label {
+            display: block;
+            margin-bottom: 4px;
+            font-weight: 500;
+            font-size: 14px;
+        }
+
+        .admin-form-group input, .admin-form-group select {
+            width: 100%;
+            padding: 8px 12px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        /* Каталог */
+        .catalog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 25px;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .product-card img {
+            width: 100%;
+            height: 280px;
+            object-fit: cover;
+            border-radius: 6px;
+        }
+
+        .product-card h3 {
+            font-size: 18px;
+            margin: 12px 0 6px;
+        }
+
+        .product-category {
+            font-size: 12px;
+            color: #888;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .product-price {
+            color: var(--primary-color);
+            font-weight: bold;
+            font-size: 18px;
+            margin: 8px 0;
+        }
+
+        .btn-wa {
+            background-color: #25D366;
+            color: white;
+            width: 100%;
+            padding: 10px;
+            margin-top: 8px;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .btn-buy {
+            background-color: var(--primary-color);
+            color: white;
+            width: 100%;
+            padding: 10px;
+            margin-top: 8px;
+        }
+
+        .btn-action {
+            background-color: #333;
+            color: white;
+            padding: 6px 12px;
+            font-size: 12px;
+        }
+
+        .btn-delete {
+            background-color: #e63946;
+            color: white;
+            padding: 6px 12px;
+            font-size: 12px;
+        }
+
+        /* Модальные окна */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 85vh;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 15px; right: 15px;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        table, th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        .order-item {
+            border-bottom: 1px solid #eee;
+            padding: 12px 0;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .user-info img {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">OSORI15</div>
+        <div class="auth-section">
+            <button id="ordersBtn" class="btn-orders" onclick="toggleOrdersModal()">📦 Заказы (<span id="ordersCount">0</span>)</button>
+            <button onclick="openSizeGuide()" style="background:#eee; padding: 8px 12px; color: #333;">📏 Таблица размеров</button>
+            <div id="authContainer">
+                <button id="googleLoginBtn" class="btn-primary">Вход через Google</button>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="hero-banner">
+            <h1>Osori15 — Женская коллекция</h1>
+            <p>Премиальное качество • Доставка по Душанбе и регионам</p>
+        </div>
+
+        <!-- Информация о сервисе -->
+        <div class="info-cards">
+            <div class="info-card">
+                <h4>🚚 Быстрая доставка</h4>
+                <p>Доставка по Душанбе в день заказа. Примерка до 15 минут.</p>
+            </div>
+            <div class="info-card">
+                <h4>💳 Удобная оплата</h4>
+                <p>Наличными, Алиф (Salom / QR), Dushanbe City или Корти Милли.</p>
+            </div>
+            <div class="info-card">
+                <h4>✨ Гарантия качества</h4>
+                <p>Только качественные ткани и проверенные лекала.</p>
+            </div>
+        </div>
+
+        <!-- Поиск и Фильтр -->
+        <div class="controls-bar">
+            <input type="text" id="searchInput" placeholder="🔎 Поиск по названию..." oninput="filterProducts()">
+            <select id="categoryFilter" onchange="filterProducts()">
+                <option value="all">Все категории</option>
+                <option value="Платья">Платья</option>
+                <option value="Костюмы">Костюмы</option>
+                <option value="Верхняя одежда">Верхняя одежда</option>
+                <option value="Блузки">Блузки и Рубашки</option>
+                <option value="Аксессуары">Аксессуары</option>
+            </select>
+        </div>
+
+        <!-- Панель Администратора -->
+        <div id="adminPanel" class="admin-box">
+            <h2>⚙️ Панель администратора Osori15</h2>
+            <form id="productForm">
+                <input type="hidden" id="editProductId">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px;">
+                    <div class="admin-form-group">
+                        <label>Название товара:</label>
+                        <input type="text" id="prodTitle" required placeholder="Например: Платье Silk">
+                    </div>
+                    <div class="admin-form-group">
+                        <label>Категория:</label>
+                        <select id="prodCategory">
+                            <option value="Платья">Платья</option>
+                            <option value="Костюмы">Костюмы</option>
+                            <option value="Верхняя одежда">Верхняя одежда</option>
+                            <option value="Блузки">Блузки и Рубашки</option>
+                            <option value="Аксессуары">Аксессуары</option>
+                        </select>
+                    </div>
+                    <div class="admin-form-group">
+                        <label>Цена (TJS):</label>
+                        <input type="number" id="prodPrice" required placeholder="450">
+                    </div>
+                    <div class="admin-form-group">
+                        <label>Размеры (через запятую):</label>
+                        <input type="text" id="prodSizes" value="S, M, L" placeholder="S, M, L">
+                    </div>
+                </div>
+                <div class="admin-form-group">
+                    <label>Ссылка на изображение:</label>
+                    <input type="url" id="prodImage" required placeholder="https://images.unsplash.com/...">
+                </div>
+                <button type="submit" class="btn-primary" id="saveProductBtn" style="margin-top: 10px;">Добавить товар</button>
+            </form>
+
+            <div style="margin-top: 25px; border-top: 1px solid #eee; padding-top: 15px;">
+                <h4>🎨 Настройка основного цвета</h4>
+                <input type="color" id="primaryColorPicker" value="#d4a373">
+                <button type="button" class="btn-action" onclick="saveStyles()">Применить цвет</button>
+            </div>
+        </div>
+
+        <!-- Каталог -->
+        <h2>Каталог одежды</h2>
+        <div class="catalog-grid" id="catalogContainer"></div>
+    </div>
+
+    <!-- Модальное окно: Таблица размеров -->
+    <div id="sizeGuideModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('sizeGuideModal')">&times;</span>
+            <h3>📏 Таблица размеров Osori15</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Размер</th>
+                        <th>Грудь (см)</th>
+                        <th>Талия (см)</th>
+                        <th>Бёдра (см)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>XS (40)</td><td>80-84</td><td>60-64</td><td>86-90</td></tr>
+                    <tr><td>S (42)</td><td>84-88</td><td>64-68</td><td>90-94</td></tr>
+                    <tr><td>M (44)</td><td>88-92</td><td>68-72</td><td>94-98</td></tr>
+                    <tr><td>L (46)</td><td>92-96</td><td>72-76</td><td>98-102</td></tr>
+                    <tr><td>XL (48)</td><td>96-100</td><td>76-80</td><td>102-106</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Модальное окно: Оформление заказа -->
+    <div id="buyModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('buyModal')">&times;</span>
+            <h3 id="buyModalTitle">Оформление заказа</h3>
+            <form id="orderForm">
+                <input type="hidden" id="orderProdId">
+                <input type="hidden" id="orderProdTitle">
+                <input type="hidden" id="orderProdPrice">
+                
+                <div class="admin-form-group">
+                    <label>Выберите размер:</label>
+                    <select id="orderSizeSelect"></select>
+                </div>
+                <div class="admin-form-group">
+                    <label>Ваше имя:</label>
+                    <input type="text" id="orderClientName" required placeholder="Мадина">
+                </div>
+                <div class="admin-form-group">
+                    <label>Номер телефона:</label>
+                    <input type="tel" id="orderClientPhone" required placeholder="+992 900 000 000">
+                </div>
+                <div class="admin-form-group">
+                    <label>Адрес доставки (Душанбе/Регион):</label>
+                    <input type="text" id="orderClientAddress" required placeholder="ул. Рудаки 15, кв 4">
+                </div>
+                <div class="admin-form-group">
+                    <label>Способ оплаты:</label>
+                    <select id="orderPayment">
+                        <option value="Наличными курьеру">Наличными при получении</option>
+                        <option value="Alif Salom / QR">Alif (Salom / QR)</option>
+                        <option value="Dushanbe City / Korti Milli">Dushanbe City / Korti Milli</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn-primary" style="width: 100%; margin-top: 10px;">Подтвердить заказ</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Модальное окно: Список заказов (для Админа) -->
+    <div id="ordersModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('ordersModal')">&times;</span>
+            <h3>📦 Поступившие заказы</h3>
+            <div id="ordersListContainer">Загрузка заказов...</div>
+        </div>
+    </div>
+
+    <!-- Firebase SDK (Версия 13) - Realtime Database -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/13.0.0/firebase-app.js";
+        import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/13.0.0/firebase-auth.js";
+        import { getDatabase, ref, set, push, onValue, remove, update } from "https://www.gstatic.com/firebasejs/13.0.0/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDL3fvNpu8FfZBY85gpg4FjQ_0GcMwr-pY",
+            authDomain: "osori-17.firebaseapp.com",
+            databaseURL: "https://osori-17-default-rtdb.firebaseio.com", // Подключена Realtime Database
+            projectId: "osori-17",
+            storageBucket: "osori-17.firebasestorage.app",
+            messagingSenderId: "112011730643",
+            appId: "1:112011730643:web:d39e3dd3c286bd36a5fe26",
+            measurementId: "G-TK4LB9LHE9"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getDatabase(app);
+        const provider = new GoogleAuthProvider();
+
+        const ADMIN_EMAILS = [
+            "samirdv888@gmail.com",
+            "abdullochoriev4242@gmail.com"
+        ];
+
+        let allProducts = [];
+        let isAdmin = false;
+
+        // Авторизация
+        const authContainer = document.getElementById("authContainer");
+        const adminPanel = document.getElementById("adminPanel");
+        const ordersBtn = document.getElementById("ordersBtn");
+
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                const email = user.email.toLowerCase().trim();
+                authContainer.innerHTML = `
+                    <div class="user-info">
+                        <img src="${user.photoURL || 'https://via.placeholder.com/32'}" alt="User">
+                        <span>${user.displayName || email}</span>
+                        <button id="logoutBtn" style="background:#e63946; color:white; padding: 5px 10px; font-size: 12px;">Выйти</button>
+                    </div>
+                `;
+                document.getElementById("logoutBtn").addEventListener("click", () => signOut(auth));
+
+                if (ADMIN_EMAILS.includes(email)) {
+                    isAdmin = true;
+                    adminPanel.style.display = "block";
+                    ordersBtn.style.display = "inline-block";
+                    listenOrders();
+                } else {
+                    isAdmin = false;
+                    adminPanel.style.display = "none";
+                    ordersBtn.style.display = "none";
+                }
+            } else {
+                isAdmin = false;
+                authContainer.innerHTML = `<button id="googleLoginBtn" class="btn-primary">Вход через Google</button>`;
+                document.getElementById("googleLoginBtn").addEventListener("click", () => signInWithPopup(auth, provider));
+                adminPanel.style.display = "none";
+                ordersBtn.style.display = "none";
+            }
+            renderCatalog(allProducts);
+        });
+
+        // Загрузка товаров из Realtime Database
+        const productsRef = ref(db, 'products');
+        onValue(productsRef, (snapshot) => {
+            const data = snapshot.val();
+            allProducts = [];
+            if (data) {
+                Object.keys(data).forEach(key => {
+                    allProducts.push({ id: key, ...data[key] });
+                });
+            }
+            renderCatalog(allProducts);
+        });
+
+        // Добавление / Обновление товара
+        document.getElementById("productForm").addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const editId = document.getElementById("editProductId").value;
+            const productData = {
+                title: document.getElementById("prodTitle").value,
+                category: document.getElementById("prodCategory").value,
+                price: document.getElementById("prodPrice").value,
+                sizes: document.getElementById("prodSizes").value,
+                image: document.getElementById("prodImage").value
+            };
+
+            if (editId) {
+                await update(ref(db, `products/${editId}`), productData);
+                alert("Товар обновлен!");
+                document.getElementById("editProductId").value = "";
+                document.getElementById("saveProductBtn").innerText = "Добавить товар";
+            } else {
+                const newProdRef = push(ref(db, 'products'));
+                await set(newProdRef, productData);
+                alert("Товар добавлен!");
+            }
+            document.getElementById("productForm").reset();
+        });
+
+        // Отображение каталога
+        window.renderCatalog = function(products) {
+            const container = document.getElementById("catalogContainer");
+            container.innerHTML = "";
+
+            if (products.length === 0) {
+                container.innerHTML = "<p>Товары не найдены.</p>";
+                return;
+            }
+
+            products.forEach((prod) => {
+                const card = document.createElement("div");
+                card.className = "product-card";
+                card.innerHTML = `
+                    <div>
+                        <img src="${prod.image}" alt="${prod.title}" onerror="this.src='https://via.placeholder.com/280?text=Osori15'">
+                        <div class="product-category">${prod.category || 'Одежда'}</div>
+                        <h3>${prod.title}</h3>
+                        <p style="font-size: 13px; color: #666; margin: 4px 0;">Размеры: ${prod.sizes}</p>
+                        <div class="product-price">${prod.price} TJS</div>
+                    </div>
+                    <div>
+                        <button class="btn-buy" onclick="openBuyModal('${prod.id}', '${prod.title}', '${prod.price}', '${prod.sizes}')">🛍️ Оформить заказ</button>
+                        <button class="btn-wa" onclick="orderWhatsApp('${prod.title}', '${prod.price}', '${prod.sizes}')">💬 Заказ в WhatsApp</button>
+                        ${isAdmin ? `
+                            <div style="margin-top: 10px; display: flex; gap: 5px;">
+                                <button class="btn-action" onclick="editProduct('${prod.id}')">✏️ Ред.</button>
+                                <button class="btn-delete" onclick="deleteProduct('${prod.id}')">🗑️ Удал.</button>
+                            </div>
+                        ` : ''}
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        };
+
+        // Фильтрация и поиск
+        window.filterProducts = function() {
+            const search = document.getElementById("searchInput").value.toLowerCase();
+            const category = document.getElementById("categoryFilter").value;
+
+            const filtered = allProducts.filter(p => {
+                const matchSearch = p.title.toLowerCase().includes(search);
+                const matchCategory = (category === "all") || (p.category === category);
+                return matchSearch && matchCategory;
+            });
+            renderCatalog(filtered);
+        };
+
+        // Удаление и Редактирование
+        window.deleteProduct = async function(id) {
+            if (confirm("Удалить товар?")) {
+                await remove(ref(db, `products/${id}`));
+            }
+        };
+
+        window.editProduct = function(id) {
+            const p = allProducts.find(item => item.id === id);
+            if (!p) return;
+            document.getElementById("editProductId").value = p.id;
+            document.getElementById("prodTitle").value = p.title;
+            document.getElementById("prodCategory").value = p.category || "Платья";
+            document.getElementById("prodPrice").value = p.price;
+            document.getElementById("prodSizes").value = p.sizes;
+            document.getElementById("prodImage").value = p.image;
+            document.getElementById("saveProductBtn").innerText = "Сохранить изменения";
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        };
+
+        // WhatsApp заказ
+        window.orderWhatsApp = function(title, price, sizes) {
+            const phone = "992900000000"; // Укажите ваш номер WhatsApp
+            const text = encodeURIComponent(`Здравствуйте! Хочу заказать "${title}" (Цена: ${price} TJS). Доступные размеры: ${sizes}.`);
+            window.open(`https://wa.me/${phone}?text=${text}`, '_blank');
+        };
+
+        // Оформление заказа через сайт
+        window.openBuyModal = function(id, title, price, sizes) {
+            document.getElementById("orderProdId").value = id;
+            document.getElementById("orderProdTitle").value = title;
+            document.getElementById("orderProdPrice").value = price;
+            document.getElementById("buyModalTitle").innerText = `Заказ: ${title} (${price} TJS)`;
+
+            const sizeSelect = document.getElementById("orderSizeSelect");
+            sizeSelect.innerHTML = "";
+            sizes.split(",").forEach(s => {
+                const opt = document.createElement("option");
+                opt.value = s.trim();
+                opt.innerText = s.trim();
+                sizeSelect.appendChild(opt);
+            });
+
+            document.getElementById("buyModal").style.display = "flex";
+        };
+
+        document.getElementById("orderForm").addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const orderData = {
+                prodTitle: document.getElementById("orderProdTitle").value,
+                prodPrice: document.getElementById("orderProdPrice").value,
+                size: document.getElementById("orderSizeSelect").value,
+                clientName: document.getElementById("orderClientName").value,
+                clientPhone: document.getElementById("orderClientPhone").value,
+                address: document.getElementById("orderClientAddress").value,
+                payment: document.getElementById("orderPayment").value,
+                date: new Date().toLocaleString()
+            };
+
+            const newOrderRef = push(ref(db, 'orders'));
+            await set(newOrderRef, orderData);
+
+            alert("Ваш заказ успешно принят! Менеджер свяжется с вами.");
+            closeModal('buyModal');
+            document.getElementById("orderForm").reset();
+        });
+
+        // Просмотр заказов (Админ)
+        function listenOrders() {
+            const ordersRef = ref(db, 'orders');
+            onValue(ordersRef, (snapshot) => {
+                const data = snapshot.val();
+                const container = document.getElementById("ordersListContainer");
+                const countElem = document.getElementById("ordersCount");
+                container.innerHTML = "";
+
+                if (!data) {
+                    countElem.innerText = "0";
+                    container.innerHTML = "<p>Пока нет активных заказов.</p>";
+                    return;
+                }
+
+                const keys = Object.keys(data);
+                countElem.innerText = keys.length;
+
+                keys.reverse().forEach(key => {
+                    const ord = data[key];
+                    const div = document.createElement("div");
+                    div.className = "order-item";
+                    div.innerHTML = `
+                        <div style="display:flex; justify-between; align-items:center;">
+                            <strong>🛍️ ${ord.prodTitle} (Размер: ${ord.size}) — ${ord.prodPrice} TJS</strong>
+                            <button class="btn-delete" style="padding: 2px 6px;" onclick="deleteOrder('${key}')">✕</button>
+                        </div>
+                        <div style="font-size: 13px; color: #555; margin-top: 5px;">
+                            👤 <b>Клиент:</b> ${ord.clientName} (${ord.clientPhone})<br>
+                            📍 <b>Адрес:</b> ${ord.address}<br>
+                            💳 <b>Оплата:</b> ${ord.payment} | 🕒 <i>${ord.date}</i>
+                        </div>
+                    `;
+                    container.appendChild(div);
+                });
+            });
+        }
+
+        window.deleteOrder = async function(key) {
+            if (confirm("Удалить этот заказ из списка?")) {
+                await remove(ref(db, `orders/${key}`));
+            }
+        };
+
+        // Вспомогательные функции окон
+        window.openSizeGuide = () => document.getElementById("sizeGuideModal").style.display = "flex";
+        window.toggleOrdersModal = () => document.getElementById("ordersModal").style.display = "flex";
+        window.closeModal = (id) => document.getElementById(id).style.display = "none";
+
+        // Настройка цвета
+        window.saveStyles = function() {
+            const color = document.getElementById("primaryColorPicker").value;
+            localStorage.setItem("osori_primary_color", color);
+            document.documentElement.style.setProperty('--primary-color', color);
+            alert("Цвет применён!");
+        };
+
+        const savedColor = localStorage.getItem("osori_primary_color");
+        if (savedColor) {
+            document.documentElement.style.setProperty('--primary-color', savedColor);
+            document.getElementById("primaryColorPicker").value = savedColor;
+        }
+    </script>
+</body>
+</html>
