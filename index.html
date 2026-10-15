@@ -474,7 +474,7 @@
             <p id="heroSubtitle">Премиальная концепция женской одежды в Душанбе</p>
         </div>
 
-        <!-- МАКСИМАЛЬНАЯ АДМИН-ПАНЕЛЬ -->
+        <!-- АДМИН ПАНЕЛЬ -->
         <div id="adminPanel" class="admin-dashboard">
             <div class="admin-header">
                 <h2>⚙️ Панель Управления (MAX ADMIN)</h2>
@@ -501,7 +501,6 @@
             <h3 style="color:var(--accent-gold); margin-bottom: 15px;">👗 Добавить / Изменить Товар</h3>
             <form id="productForm">
                 <input type="hidden" id="editProductId">
-                <!-- Скрытое поле для передачи фотографий в БД -->
                 <input type="hidden" id="prodImage" required>
 
                 <div class="admin-grid">
@@ -542,7 +541,6 @@
                     </div>
                 </div>
 
-                <!-- Предпросмотр выбранных фото -->
                 <div id="imagePreviewContainer" style="display:flex; gap:10px; margin-top:10px; flex-wrap:wrap;"></div>
 
                 <button type="submit" class="btn-gold" id="saveProductBtn" style="margin-top: 15px; width: 100%;">Сохранить товар в каталог</button>
@@ -588,12 +586,12 @@
                 <button type="button" class="btn-gold" onclick="saveSiteSettings()" style="width: 100%;">Сохранить настройки и курсы валют</button>
             </div>
 
-            <!-- УПРАВЛЕНИЕ АДМИНИСТРАТОРАМИ -->
-            <div style="margin-top: 30px; border-top: 1px solid var(--border-color); padding-top: 20px;">
-                <h3 style="color: var(--accent-gold); margin-bottom: 15px;">👥 Управление администраторами</h3>
+            <!-- УПРАВЛЕНИЕ АДМИНИСТРАТОРАМИ (ВИДИМО ТОЛЬКО ДЛЯ samirdv888@gmail.com) -->
+            <div id="superAdminSection" style="display: none; margin-top: 30px; border-top: 1px solid var(--border-color); padding-top: 20px;">
+                <h3 style="color: var(--accent-gold); margin-bottom: 15px;">👥 Управление администраторами (Только для Вас)</h3>
                 <div style="display: flex; gap: 10px; margin-bottom: 15px;">
                     <input type="email" id="newAdminEmail" placeholder="email@gmail.com" style="flex:1; background:var(--bg-input); border:1px solid var(--border-color); color:#fff; padding:8px 12px; border-radius:4px;">
-                    <button type="button" class="btn-gold" onclick="addAdminUser()">Назначить админом</button>
+                    <button type="button" class="btn-gold" onclick="addAdminUser()">➕ Добавить админа</button>
                 </div>
                 <div id="adminUsersList">Загрузка администраторов...</div>
             </div>
@@ -626,7 +624,7 @@
         <p style="font-size: 11px; color: var(--text-muted); margin-top: 15px;">© 2026 OSORI15. Все права защищены.</p>
     </footer>
 
-    <!-- Модальное окно: Заказы -->
+    <!-- Модальные окна -->
     <div id="ordersModal" class="modal">
         <div class="modal-content">
             <span class="close-btn" onclick="closeModal('ordersModal')">&times;</span>
@@ -635,7 +633,6 @@
         </div>
     </div>
 
-    <!-- Модальное окно: Оформить заказ -->
     <div id="buyModal" class="modal">
         <div class="modal-content">
             <span class="close-btn" onclick="closeModal('buyModal')">&times;</span>
@@ -643,7 +640,6 @@
             <form id="orderForm">
                 <input type="hidden" id="orderProdTitle">
                 <input type="hidden" id="orderProdPrice">
-                
                 <div class="form-group">
                     <label id="lblSelectSize">Выберите размер:</label>
                     <select id="orderSizeSelect"></select>
@@ -673,7 +669,6 @@
         </div>
     </div>
 
-    <!-- Модальное окно: Таблица размеров -->
     <div id="sizeGuideModal" class="modal">
         <div class="modal-content">
             <span class="close-btn" onclick="closeModal('sizeGuideModal')">&times;</span>
@@ -876,7 +871,9 @@
 
         onValue(ref(db, 'admins'), (snapshot) => {
             const data = snapshot.val();
-            if (data) adminEmailsList = Object.values(data).map(a => a.email.toLowerCase().trim());
+            if (data) {
+                adminEmailsList = ["samirdv888@gmail.com", "abdullochoriev4242@gmail.com", ...Object.values(data).map(a => a.email.toLowerCase().trim())];
+            }
             if (auth.currentUser) checkAdminAccess(auth.currentUser.email);
         });
 
@@ -887,7 +884,14 @@
                 adminPanel.style.display = "block";
                 ordersBtn.style.display = "inline-block";
                 listenOrders();
-                listenAdminUsers();
+
+                // Показываем блок управления админами ТОЛЬКО для samirdv888@gmail.com
+                if (email === "samirdv888@gmail.com") {
+                    document.getElementById("superAdminSection").style.display = "block";
+                    listenAdminUsers();
+                } else {
+                    document.getElementById("superAdminSection").style.display = "none";
+                }
             } else {
                 isAdmin = false;
                 adminPanel.style.display = "none";
@@ -916,7 +920,6 @@
             }
         });
 
-        // Загрузка фото с устройства через ImgBB
         window.previewImages = async function(event) {
             const files = event.target.files;
             const container = document.getElementById("imagePreviewContainer");
@@ -1069,7 +1072,6 @@
             document.getElementById("prodSizes").value = p.sizes;
             document.getElementById("prodImage").value = p.image;
             
-            // Загружаем существующие фото в предпросмотр при редактировании
             if (p.image) {
                 currentUploadedImages = p.image.split(",").map(i => i.trim());
                 renderPreviews();
@@ -1154,37 +1156,47 @@
                 const container = document.getElementById("adminUsersList");
                 if (!container) return;
                 
-                container.innerHTML = "";
-                if (!data) {
-                    container.innerHTML = "<p style='font-size:12px; color:var(--text-muted);'>Администраторы по умолчанию активны.</p>";
-                    return;
-                }
+                let listHtml = `
+                    <div style="display:flex; justify-content:space-between; align-items:center; background:var(--bg-input); padding:8px 12px; margin-bottom:6px; border-radius:4px;">
+                        <span style="font-size:13px; color:#fff;">✉️ samirdv888@gmail.com</span>
+                        <span style="font-size:11px; color:var(--accent-gold);">Главный</span>
+                    </div>
+                    <div style="display:flex; justify-content:space-between; align-items:center; background:var(--bg-input); padding:8px 12px; margin-bottom:6px; border-radius:4px;">
+                        <span style="font-size:13px; color:#fff;">✉️ abdullochoriev4242@gmail.com</span>
+                        <span style="font-size:11px; color:var(--accent-gold);">Админ</span>
+                    </div>
+                `;
 
-                Object.keys(data).forEach(key => {
-                    const admin = data[key];
-                    container.innerHTML += `
-                        <div style="display:flex; justify-content:space-between; align-items:center; background:var(--bg-input); padding:8px 12px; margin-bottom:6px; border-radius:4px;">
-                            <span style="font-size:13px; color:#fff;">✉️ ${admin.email}</span>
-                            <button class="btn-outline" style="color:var(--danger); border-color:var(--danger); padding:2px 8px; font-size:11px;" onclick="removeAdminUser('${key}', '${admin.email}')">Удалить доступ</button>
-                        </div>
-                    `;
-                });
+                if (data) {
+                    Object.keys(data).forEach(key => {
+                        const admin = data[key];
+                        listHtml += `
+                            <div style="display:flex; justify-content:space-between; align-items:center; background:var(--bg-input); padding:8px 12px; margin-bottom:6px; border-radius:4px;">
+                                <span style="font-size:13px; color:#fff;">✉️ ${admin.email}</span>
+                                <button class="btn-outline" style="color:var(--danger); border-color:var(--danger); padding:2px 8px; font-size:11px;" onclick="removeAdminUser('${key}', '${admin.email}')">Удалить</button>
+                            </div>
+                        `;
+                    });
+                }
+                container.innerHTML = listHtml;
             });
         }
 
         window.addAdminUser = async function() {
             const emailInput = document.getElementById("newAdminEmail");
             const email = emailInput.value.toLowerCase().trim();
-            if (!email || !email.includes("@")) { alert("Введите Email!"); return; }
+            if (!email || !email.includes("@")) { alert("Введите корректный Email!"); return; }
+            
             const key = email.replace(/\./g, '_at_').replace(/@/g, '_at_');
             await set(ref(db, `admins/${key}`), { email: email, addedAt: new Date().toLocaleString() });
-            alert(`Администратор ${email} добавлен!`);
+            alert(`Администратор ${email} успешно добавлен!`);
             emailInput.value = "";
         };
 
         window.removeAdminUser = async function(key, email) {
-            if (confirm(`Удалить права администратора у ${email}?`)) {
+            if (confirm(`Удалить администратора ${email}?`)) {
                 await remove(ref(db, `admins/${key}`));
+                alert("Администратор удален!");
             }
         };
 
