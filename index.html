@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>OSORI15 — Haute Couture & Female Fashion</title>
-    <!-- Премиальные шрифты -->
+    
+    <!-- Оптимизированное подключение шрифтов -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -75,7 +76,7 @@
             border: none;
             border-radius: 4px;
             font-weight: 500;
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
         }
 
         .btn-gold {
@@ -246,7 +247,7 @@
             border: 1px solid var(--border-color);
             border-radius: 6px;
             overflow: hidden;
-            transition: all 0.4s ease;
+            transition: transform 0.3s ease, border-color 0.3s ease;
             position: relative;
             display: flex;
             flex-direction: column;
@@ -255,7 +256,7 @@
 
         .product-card:hover {
             border-color: var(--accent-gold);
-            transform: translateY(-5px);
+            transform: translateY(-4px);
         }
 
         .product-badge {
@@ -277,17 +278,18 @@
             height: 350px;
             overflow: hidden;
             position: relative;
+            background: var(--bg-input);
         }
 
         .product-card img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 0.6s ease;
+            transition: transform 0.4s ease;
         }
 
         .product-card:hover img {
-            transform: scale(1.08);
+            transform: scale(1.05);
         }
 
         .product-info {
@@ -328,6 +330,28 @@
             padding: 10px;
             font-size: 12px;
             text-transform: uppercase;
+        }
+
+        /* Футер */
+        footer {
+            border-top: 1px solid var(--border-color);
+            padding: 40px 20px;
+            margin-top: 60px;
+            background: var(--bg-card);
+            text-align: center;
+        }
+
+        .footer-socials {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 15px;
+        }
+
+        .footer-socials a {
+            color: var(--accent-gold);
+            text-decoration: none;
+            font-size: 14px;
         }
 
         /* Модальные окна */
@@ -404,7 +428,7 @@
 <body>
 
     <header>
-        <div class="logo">OSORI15</div>
+        <div class="logo" id="siteLogo">OSORI15</div>
         <div class="header-actions">
             <button id="ordersBtn" class="btn-outline" style="display:none;" onclick="openOrdersModal()">📦 Заказы (<span id="ordersCount">0</span>)</button>
             <button class="btn-outline" onclick="openSizeGuide()">📏 Размеры</button>
@@ -416,18 +440,18 @@
 
     <div class="container">
         <div class="hero">
-            <h1>OSORI15 FASHION</h1>
-            <p>Премиальная концепция женской одежды в Душанбе</p>
+            <h1 id="heroTitle">OSORI15 FASHION</h1>
+            <p id="heroSubtitle">Премиальная концепция женской одежды в Душанбе</p>
         </div>
 
         <!-- МАКСИМАЛЬНАЯ АДМИН-ПАНЕЛЬ -->
         <div id="adminPanel" class="admin-dashboard">
             <div class="admin-header">
                 <h2>⚙️ Панель Управления (MAX ADMIN)</h2>
-                <span style="color: var(--accent-gold); font-size: 12px;">Полный доступ системы</span>
+                <span style="color: var(--accent-gold); font-size: 12px;">Полный доступ</span>
             </div>
 
-            <!-- Аналитика в реальном времени -->
+            <!-- Аналитика -->
             <div class="stats-grid">
                 <div class="stat-card">
                     <div>Всего заказов</div>
@@ -443,13 +467,14 @@
                 </div>
             </div>
 
-            <!-- Форма управления товарами -->
+            <!-- Добавление / Редактирование товара с фото с телефона -->
+            <h3 style="color:var(--accent-gold); margin-bottom: 15px;">👗 Добавить / Изменить Товар</h3>
             <form id="productForm">
                 <input type="hidden" id="editProductId">
                 <div class="admin-grid">
                     <div class="form-group">
                         <label>Название товара:</label>
-                        <input type="text" id="prodTitle" required placeholder="Платье 'Avanti Silk'">
+                        <input type="text" id="prodTitle" required placeholder="Платье 'Silk Luxury'">
                     </div>
                     <div class="form-group">
                         <label>Категория:</label>
@@ -479,12 +504,60 @@
                         <input type="text" id="prodSizes" value="XS, S, M, L" placeholder="S, M, L">
                     </div>
                     <div class="form-group">
-                        <label>Ссылка на фото:</label>
-                        <input type="url" id="prodImage" required placeholder="https://...">
+                        <label>Загрузить фото с телефона (выберите 2-3+ фото):</label>
+                        <input type="file" id="prodFiles" accept="image/*" multiple onchange="previewImages(event)">
                     </div>
                 </div>
+
+                <div id="imagePreviewContainer" style="display:flex; gap:10px; margin-top:10px; flex-wrap:wrap;"></div>
+
+                <div class="form-group" style="margin-top:10px;">
+                    <label>Ссылки на фото (автозаполнение или вручную через запятую):</label>
+                    <input type="text" id="prodImage" required placeholder="https://...">
+                </div>
+
                 <button type="submit" class="btn-gold" id="saveProductBtn" style="margin-top: 15px; width: 100%;">Сохранить товар в каталог</button>
             </form>
+
+            <!-- НАСТРОЙКИ СТИЛЯ И КОНТАКТОВ СЕКЦИЯ -->
+            <div style="margin-top: 30px; border-top: 1px solid var(--border-color); padding-top: 20px;">
+                <h3 style="color: var(--accent-gold); margin-bottom: 15px;">🎨 Настройки СТИЛЯ, Контактов и Заголовков</h3>
+                <div class="admin-grid">
+                    <div class="form-group">
+                        <label>Заголовок магазина:</label>
+                        <input type="text" id="settingLogo" value="OSORI15">
+                    </div>
+                    <div class="form-group">
+                        <label>Главный баннер (Заголовок):</label>
+                        <input type="text" id="settingTitle" value="OSORI15 FASHION">
+                    </div>
+                    <div class="form-group">
+                        <label>Главный баннер (Подзаголовок):</label>
+                        <input type="text" id="settingSubtitle" value="Премиальная концепция женской одежды в Душанбе">
+                    </div>
+                    <div class="form-group">
+                        <label>Акцентный цвет (Gold):</label>
+                        <input type="color" id="settingAccentColor" value="#d4af37">
+                    </div>
+                    <div class="form-group">
+                        <label>Номер WhatsApp (+992...):</label>
+                        <input type="text" id="settingPhone" value="992900000000">
+                    </div>
+                    <div class="form-group">
+                        <label>Адрес в Душанбе:</label>
+                        <input type="text" id="settingAddress" value="Душанбе, пр. Рудаки 15">
+                    </div>
+                    <div class="form-group">
+                        <label>Ссылка на Instagram:</label>
+                        <input type="text" id="settingInstagram" value="https://instagram.com/osori15">
+                    </div>
+                    <div class="form-group">
+                        <label>Ссылка на Telegram:</label>
+                        <input type="text" id="settingTelegram" value="https://t.me/osori15">
+                    </div>
+                </div>
+                <button type="button" class="btn-gold" onclick="saveSiteSettings()" style="width: 100%;">Сохранить настройки сайта</button>
+            </div>
 
             <!-- УПРАВЛЕНИЕ АДМИНИСТРАТОРАМИ -->
             <div style="margin-top: 30px; border-top: 1px solid var(--border-color); padding-top: 20px;">
@@ -512,6 +585,17 @@
 
         <div class="catalog-grid" id="catalogContainer"></div>
     </div>
+
+    <!-- Подвал сайта -->
+    <footer>
+        <p id="footerAddress">Душанбе, пр. Рудаки 15</p>
+        <div class="footer-socials">
+            <a id="footerInstagram" href="#" target="_blank">Instagram</a>
+            <a id="footerTelegram" href="#" target="_blank">Telegram</a>
+            <a id="footerWhatsapp" href="#" target="_blank">WhatsApp</a>
+        </div>
+        <p style="font-size: 11px; color: var(--text-muted); margin-top: 15px;">© 2026 OSORI15. Все права защищены.</p>
+    </footer>
 
     <!-- Модальное окно: Заказы -->
     <div id="ordersModal" class="modal">
@@ -612,12 +696,36 @@
 
         let allProducts = [];
         let isAdmin = false;
+        let siteSettings = {};
+        let currentUploadedImages = [];
 
         const authContainer = document.getElementById("authContainer");
         const adminPanel = document.getElementById("adminPanel");
         const ordersBtn = document.getElementById("ordersBtn");
 
-        // Загрузка динамического списка админов из БД
+        // Загрузка настроек сайта из базы
+        onValue(ref(db, 'settings'), (snapshot) => {
+            const data = snapshot.val();
+            if (data) {
+                siteSettings = data;
+                applySiteSettings(data);
+            }
+        });
+
+        function applySiteSettings(s) {
+            if (s.logo) document.getElementById("siteLogo").innerText = s.logo;
+            if (s.title) document.getElementById("heroTitle").innerText = s.title;
+            if (s.subtitle) document.getElementById("heroSubtitle").innerText = s.subtitle;
+            if (s.address) document.getElementById("footerAddress").innerText = s.address;
+            if (s.instagram) document.getElementById("footerInstagram").href = s.instagram;
+            if (s.telegram) document.getElementById("footerTelegram").href = s.telegram;
+            if (s.phone) document.getElementById("footerWhatsapp").href = `https://wa.me/${s.phone}`;
+            if (s.accentColor) {
+                document.documentElement.style.setProperty('--accent-gold', s.accentColor);
+            }
+        }
+
+        // Загрузка админов
         onValue(ref(db, 'admins'), (snapshot) => {
             const data = snapshot.val();
             if (data) {
@@ -664,7 +772,56 @@
             }
         });
 
-        // Загрузка товаров
+        // Загрузка изображений с телефона через ImgBB
+        window.previewImages = async function(event) {
+            const files = event.target.files;
+            const container = document.getElementById("imagePreviewContainer");
+            container.innerHTML = "<p style='color:var(--accent-gold); font-size:12px;'>Загрузка фотографий...</p>";
+            
+            const apiKey = "6d257f2c1d0138241434c44161b3699b";
+
+            for (let i = 0; i < files.length; i++) {
+                const formData = new FormData();
+                formData.append("image", files[i]);
+
+                try {
+                    const res = await fetch(`https://api.imgbb.com/1/upload?key=${apiKey}`, {
+                        method: "POST",
+                        body: formData
+                    });
+                    const result = await res.json();
+                    if (result.success) {
+                        currentUploadedImages.push(result.data.url);
+                    }
+                } catch (e) {
+                    console.error("Ошибка фото:", e);
+                }
+            }
+
+            document.getElementById("prodImage").value = currentUploadedImages.join(", ");
+            renderPreviews();
+        };
+
+        function renderPreviews() {
+            const container = document.getElementById("imagePreviewContainer");
+            container.innerHTML = "";
+            currentUploadedImages.forEach((url, idx) => {
+                container.innerHTML += `
+                    <div style="position:relative; width:60px; height:60px;">
+                        <img src="${url}" style="width:100%; height:100%; object-fit:cover; border-radius:4px; border:1px solid var(--accent-gold);">
+                        <button type="button" onclick="removeImg(${idx})" style="position:absolute; top:-5px; right:-5px; background:var(--danger); color:#fff; border:none; border-radius:50%; width:18px; height:18px; font-size:10px;">✕</button>
+                    </div>
+                `;
+            });
+        }
+
+        window.removeImg = (idx) => {
+            currentUploadedImages.splice(idx, 1);
+            document.getElementById("prodImage").value = currentUploadedImages.join(", ");
+            renderPreviews();
+        };
+
+        // Загрузка товаров из базы
         onValue(ref(db, 'products'), (snapshot) => {
             const data = snapshot.val();
             allProducts = [];
@@ -695,8 +852,26 @@
             } else {
                 await set(push(ref(db, 'products')), pData);
             }
+            currentUploadedImages = [];
+            document.getElementById("imagePreviewContainer").innerHTML = "";
             document.getElementById("productForm").reset();
         });
+
+        // Сохранение настроек сайта
+        window.saveSiteSettings = async function() {
+            const settingsData = {
+                logo: document.getElementById("settingLogo").value,
+                title: document.getElementById("settingTitle").value,
+                subtitle: document.getElementById("settingSubtitle").value,
+                accentColor: document.getElementById("settingAccentColor").value,
+                phone: document.getElementById("settingPhone").value,
+                address: document.getElementById("settingAddress").value,
+                instagram: document.getElementById("settingInstagram").value,
+                telegram: document.getElementById("settingTelegram").value
+            };
+            await set(ref(db, 'settings'), settingsData);
+            alert("Настройки сайта обновлены!");
+        };
 
         // Отрисовка каталога
         window.renderCatalog = function(products) {
@@ -704,18 +879,31 @@
             container.innerHTML = "";
 
             products.forEach(p => {
+                const imgList = p.image ? p.image.split(",").map(i => i.trim()) : ['https://via.placeholder.com/350'];
+                const mainImg = imgList[0];
+
+                let galleryHtml = "";
+                if (imgList.length > 1) {
+                    galleryHtml = `<div style="display:flex; gap:5px; margin-top:8px; overflow-x:auto;">`;
+                    imgList.forEach(url => {
+                        galleryHtml += `<img src="${url}" loading="lazy" onclick="changeMainImg('img_${p.id}', '${url}')" style="width:40px; height:40px; object-fit:cover; border-radius:3px; cursor:pointer; border:1px solid var(--border-color);">`;
+                    });
+                    galleryHtml += `</div>`;
+                }
+
                 const card = document.createElement("div");
                 card.className = "product-card";
                 card.innerHTML = `
                     <span class="product-badge">${p.badge || 'NEW'}</span>
                     <div class="img-container">
-                        <img src="${p.image}" alt="${p.title}">
+                        <img id="img_${p.id}" src="${mainImg}" loading="lazy" alt="${p.title}">
                     </div>
                     <div class="product-info">
                         <div class="product-category">${p.category}</div>
                         <h3>${p.title}</h3>
                         <div class="product-price">${p.price} TJS</div>
-                        <div class="btn-buy-block">
+                        ${galleryHtml}
+                        <div class="btn-buy-block" style="margin-top:12px;">
                             <button class="btn-gold" onclick="openBuyModal('${p.id}', '${p.title}', '${p.price}', '${p.sizes}')">🛍️ Заказать</button>
                             <button class="btn-wa" onclick="orderWA('${p.title}', '${p.price}')">💬 WhatsApp</button>
                             ${isAdmin ? `
@@ -730,6 +918,8 @@
                 container.appendChild(card);
             });
         };
+
+        window.changeMainImg = (id, src) => document.getElementById(id).src = src;
 
         window.filterProducts = function() {
             const s = document.getElementById("searchInput").value.toLowerCase();
@@ -755,7 +945,8 @@
         };
 
         window.orderWA = (title, price) => {
-            window.open(`https://wa.me/992900000000?text=${encodeURIComponent(`Здравствуйте! Хочу заказать "${title}" за ${price} TJS.`)}`, '_blank');
+            const phone = siteSettings.phone || "992900000000";
+            window.open(`https://wa.me/${phone}?text=${encodeURIComponent(`Здравствуйте! Хочу заказать "${title}" за ${price} TJS.`)}`, '_blank');
         };
 
         window.openBuyModal = (id, title, price, sizes) => {
@@ -822,7 +1013,6 @@
             });
         }
 
-        // Управление списком админов
         function listenAdminUsers() {
             onValue(ref(db, 'admins'), (snapshot) => {
                 const data = snapshot.val();
@@ -831,7 +1021,7 @@
                 
                 container.innerHTML = "";
                 if (!data) {
-                    container.innerHTML = "<p style='font-size:12px; color:var(--text-muted);'>Используются администраторы по умолчанию.</p>";
+                    container.innerHTML = "<p style='font-size:12px; color:var(--text-muted);'>Администраторы по умолчанию активны.</p>";
                     return;
                 }
 
@@ -850,18 +1040,12 @@
         window.addAdminUser = async function() {
             const emailInput = document.getElementById("newAdminEmail");
             const email = emailInput.value.toLowerCase().trim();
-
             if (!email || !email.includes("@")) {
                 alert("Введите корректный Email!");
                 return;
             }
-
             const key = email.replace(/\./g, '_at_').replace(/@/g, '_at_');
-            await set(ref(db, `admins/${key}`), {
-                email: email,
-                addedAt: new Date().toLocaleString()
-            });
-
+            await set(ref(db, `admins/${key}`), { email: email, addedAt: new Date().toLocaleString() });
             alert(`Администратор ${email} добавлен!`);
             emailInput.value = "";
         };
