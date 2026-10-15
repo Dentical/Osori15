@@ -501,6 +501,9 @@
             <h3 style="color:var(--accent-gold); margin-bottom: 15px;">👗 Добавить / Изменить Товар</h3>
             <form id="productForm">
                 <input type="hidden" id="editProductId">
+                <!-- Скрытое поле для передачи фотографий в БД -->
+                <input type="hidden" id="prodImage" required>
+
                 <div class="admin-grid">
                     <div class="form-group">
                         <label>Название товара:</label>
@@ -534,17 +537,13 @@
                         <input type="text" id="prodSizes" value="XS, S, M, L" placeholder="S, M, L">
                     </div>
                     <div class="form-group">
-                        <label>Загрузить фото с телефона (несколько):</label>
+                        <label>Загрузить фото с телефона (выберите 1 или несколько):</label>
                         <input type="file" id="prodFiles" accept="image/*" multiple onchange="previewImages(event)">
                     </div>
                 </div>
 
+                <!-- Предпросмотр выбранных фото -->
                 <div id="imagePreviewContainer" style="display:flex; gap:10px; margin-top:10px; flex-wrap:wrap;"></div>
-
-                <div class="form-group" style="margin-top:10px;">
-                    <label>Ссылки на фото (через запятую):</label>
-                    <input type="text" id="prodImage" required placeholder="https://...">
-                </div>
 
                 <button type="submit" class="btn-gold" id="saveProductBtn" style="margin-top: 15px; width: 100%;">Сохранить товар в каталог</button>
             </form>
@@ -917,6 +916,7 @@
             }
         });
 
+        // Загрузка фото с устройства через ImgBB
         window.previewImages = async function(event) {
             const files = event.target.files;
             const container = document.getElementById("imagePreviewContainer");
@@ -1068,6 +1068,13 @@
             document.getElementById("prodBadge").value = p.badge || "NEW";
             document.getElementById("prodSizes").value = p.sizes;
             document.getElementById("prodImage").value = p.image;
+            
+            // Загружаем существующие фото в предпросмотр при редактировании
+            if (p.image) {
+                currentUploadedImages = p.image.split(",").map(i => i.trim());
+                renderPreviews();
+            }
+
             document.getElementById("saveProductBtn").innerText = "Обновить изменения";
             window.scrollTo({ top: 0, behavior: 'smooth' });
         };
