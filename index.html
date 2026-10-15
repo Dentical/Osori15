@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>OSORI15 — Haute Couture & Female Fashion</title>
     
-    <!-- Оптимизированное подключение шрифтов -->
+    <!-- Премиальные шрифты -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -46,7 +46,7 @@
         header {
             background-color: rgba(15, 15, 16, 0.95);
             backdrop-filter: blur(10px);
-            padding: 20px 40px;
+            padding: 15px 30px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -54,20 +54,38 @@
             position: sticky;
             top: 0;
             z-index: 100;
+            flex-wrap: wrap;
+            gap: 10px;
         }
 
         .logo {
-            font-size: 28px;
+            font-size: 26px;
             font-weight: 700;
             color: var(--accent-gold);
             text-transform: uppercase;
-            letter-spacing: 4px;
+            letter-spacing: 3px;
         }
 
         .header-actions {
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        select.lang-currency-select {
+            background: var(--bg-input);
+            color: var(--text-main);
+            border: 1px solid var(--border-color);
+            padding: 6px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            cursor: pointer;
+            outline: none;
+        }
+
+        select.lang-currency-select:focus {
+            border-color: var(--accent-gold);
         }
 
         button {
@@ -82,10 +100,10 @@
         .btn-gold {
             background: linear-gradient(135deg, var(--accent-gold), #b89228);
             color: #000;
-            padding: 10px 20px;
+            padding: 9px 18px;
             font-weight: 600;
             text-transform: uppercase;
-            font-size: 12px;
+            font-size: 11px;
             letter-spacing: 1px;
         }
 
@@ -98,8 +116,8 @@
             background: transparent;
             border: 1px solid var(--border-color);
             color: var(--text-main);
-            padding: 8px 16px;
-            font-size: 13px;
+            padding: 7px 14px;
+            font-size: 12px;
         }
 
         .btn-outline:hover {
@@ -110,28 +128,28 @@
         .container {
             max-width: 1280px;
             margin: 0 auto;
-            padding: 40px 20px;
+            padding: 30px 20px;
         }
 
         /* Главный баннер */
         .hero {
             text-align: center;
-            padding: 80px 20px;
+            padding: 60px 20px;
             background: linear-gradient(180deg, rgba(212, 175, 55, 0.05) 0%, rgba(15, 15, 16, 0) 100%);
             border: 1px solid var(--border-color);
             border-radius: 8px;
-            margin-bottom: 50px;
+            margin-bottom: 40px;
         }
 
         .hero h1 {
-            font-size: 48px;
+            font-size: 42px;
             color: var(--text-main);
-            margin-bottom: 15px;
+            margin-bottom: 12px;
         }
 
         .hero p {
             color: var(--text-muted);
-            font-size: 16px;
+            font-size: 15px;
             max-width: 600px;
             margin: 0 auto;
         }
@@ -140,7 +158,7 @@
         .controls-bar {
             display: flex;
             gap: 15px;
-            margin-bottom: 40px;
+            margin-bottom: 35px;
             flex-wrap: wrap;
         }
 
@@ -163,54 +181,54 @@
             min-width: 250px;
         }
 
-        /* МАКСИМАЛЬНАЯ АДМИН ПАНЕЛЬ */
+        /* АДМИН ПАНЕЛЬ */
         .admin-dashboard {
             display: none;
             background: var(--bg-card);
             border: 1px solid var(--accent-gold);
             border-radius: 8px;
-            padding: 30px;
-            margin-bottom: 50px;
+            padding: 25px;
+            margin-bottom: 40px;
         }
 
         .admin-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 25px;
+            margin-bottom: 20px;
             border-bottom: 1px solid var(--border-color);
-            padding-bottom: 15px;
+            padding-bottom: 12px;
         }
 
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            margin-bottom: 30px;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+            margin-bottom: 25px;
         }
 
         .stat-card {
             background: var(--bg-input);
-            padding: 20px;
+            padding: 18px;
             border-radius: 6px;
             border-left: 3px solid var(--accent-gold);
         }
 
         .stat-card div {
-            font-size: 12px;
+            font-size: 11px;
             color: var(--text-muted);
             text-transform: uppercase;
         }
 
         .stat-card span {
-            font-size: 24px;
+            font-size: 22px;
             font-weight: 700;
             color: var(--accent-gold);
         }
 
         .admin-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
             gap: 15px;
         }
 
@@ -220,7 +238,7 @@
 
         .form-group label {
             display: block;
-            font-size: 12px;
+            font-size: 11px;
             color: var(--text-muted);
             margin-bottom: 5px;
             text-transform: uppercase;
@@ -238,8 +256,8 @@
         /* Каталог */
         .catalog-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 30px;
+            grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+            gap: 25px;
         }
 
         .product-card {
@@ -275,7 +293,7 @@
 
         .img-container {
             width: 100%;
-            height: 350px;
+            height: 330px;
             overflow: hidden;
             position: relative;
             background: var(--bg-input);
@@ -293,7 +311,7 @@
         }
 
         .product-info {
-            padding: 20px;
+            padding: 18px;
         }
 
         .product-category {
@@ -304,8 +322,8 @@
         }
 
         .product-card h3 {
-            font-size: 20px;
-            margin: 8px 0;
+            font-size: 18px;
+            margin: 6px 0;
             font-weight: 400;
         }
 
@@ -313,7 +331,7 @@
             font-size: 18px;
             font-weight: 600;
             color: var(--text-main);
-            margin-bottom: 15px;
+            margin-bottom: 12px;
         }
 
         .btn-buy-block {
@@ -332,7 +350,6 @@
             text-transform: uppercase;
         }
 
-        /* Футер */
         footer {
             border-top: 1px solid var(--border-color);
             padding: 40px 20px;
@@ -354,7 +371,6 @@
             font-size: 14px;
         }
 
-        /* Модальные окна */
         .modal {
             display: none;
             position: fixed;
@@ -397,7 +413,7 @@
         .user-badge {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
         }
 
         .user-badge img {
@@ -430,8 +446,22 @@
     <header>
         <div class="logo" id="siteLogo">OSORI15</div>
         <div class="header-actions">
-            <button id="ordersBtn" class="btn-outline" style="display:none;" onclick="openOrdersModal()">📦 Заказы (<span id="ordersCount">0</span>)</button>
-            <button class="btn-outline" onclick="openSizeGuide()">📏 Размеры</button>
+            <!-- Выбор Языка -->
+            <select id="langSelect" class="lang-currency-select" onchange="changeLanguage(this.value)">
+                <option value="ru">RU 🇷🇺</option>
+                <option value="tj">TJ 🇹🇯</option>
+                <option value="en">EN 🇬🇧</option>
+            </select>
+
+            <!-- Выбор Валюты -->
+            <select id="currencySelect" class="lang-currency-select" onchange="changeCurrency(this.value)">
+                <option value="TJS">TJS (ЅM)</option>
+                <option value="USD">USD ($)</option>
+                <option value="RUB">RUB (₽)</option>
+            </select>
+
+            <button id="ordersBtn" class="btn-outline" style="display:none;" onclick="openOrdersModal()"><span id="txtOrdersBtn">📦 Заказы</span> (<span id="ordersCount">0</span>)</button>
+            <button class="btn-outline" onclick="openSizeGuide()" id="txtSizeBtn">📏 Размеры</button>
             <div id="authContainer">
                 <button id="googleLoginBtn" class="btn-gold">Вход через Google</button>
             </div>
@@ -454,20 +484,20 @@
             <!-- Аналитика -->
             <div class="stats-grid">
                 <div class="stat-card">
-                    <div>Всего заказов</div>
+                    <div id="txtStatOrders">Всего заказов</div>
                     <span id="statTotalOrders">0</span>
                 </div>
                 <div class="stat-card">
-                    <div>Выручка (TJS)</div>
+                    <div id="txtStatRevenue">Выручка</div>
                     <span id="statRevenue">0</span>
                 </div>
                 <div class="stat-card">
-                    <div>Товаров в каталоге</div>
+                    <div id="txtStatProducts">Товаров в каталоге</div>
                     <span id="statProductsCount">0</span>
                 </div>
             </div>
 
-            <!-- Добавление / Редактирование товара с фото с телефона -->
+            <!-- Добавление / Редактирование товара -->
             <h3 style="color:var(--accent-gold); margin-bottom: 15px;">👗 Добавить / Изменить Товар</h3>
             <form id="productForm">
                 <input type="hidden" id="editProductId">
@@ -487,7 +517,7 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label>Цена (TJS):</label>
+                        <label>Цена (в TJS):</label>
                         <input type="number" id="prodPrice" required placeholder="650">
                     </div>
                     <div class="form-group">
@@ -504,7 +534,7 @@
                         <input type="text" id="prodSizes" value="XS, S, M, L" placeholder="S, M, L">
                     </div>
                     <div class="form-group">
-                        <label>Загрузить фото с телефона (выберите 2-3+ фото):</label>
+                        <label>Загрузить фото с телефона (несколько):</label>
                         <input type="file" id="prodFiles" accept="image/*" multiple onchange="previewImages(event)">
                     </div>
                 </div>
@@ -512,16 +542,16 @@
                 <div id="imagePreviewContainer" style="display:flex; gap:10px; margin-top:10px; flex-wrap:wrap;"></div>
 
                 <div class="form-group" style="margin-top:10px;">
-                    <label>Ссылки на фото (автозаполнение или вручную через запятую):</label>
+                    <label>Ссылки на фото (через запятую):</label>
                     <input type="text" id="prodImage" required placeholder="https://...">
                 </div>
 
                 <button type="submit" class="btn-gold" id="saveProductBtn" style="margin-top: 15px; width: 100%;">Сохранить товар в каталог</button>
             </form>
 
-            <!-- НАСТРОЙКИ СТИЛЯ И КОНТАКТОВ СЕКЦИЯ -->
+            <!-- НАСТРОЙКИ СТИЛЯ И КУРСОВ ВАЛЮТ -->
             <div style="margin-top: 30px; border-top: 1px solid var(--border-color); padding-top: 20px;">
-                <h3 style="color: var(--accent-gold); margin-bottom: 15px;">🎨 Настройки СТИЛЯ, Контактов и Заголовков</h3>
+                <h3 style="color: var(--accent-gold); margin-bottom: 15px;">🎨 Настройки СТИЛЯ, Курсов Валют и Контактов</h3>
                 <div class="admin-grid">
                     <div class="form-group">
                         <label>Заголовок магазина:</label>
@@ -540,6 +570,14 @@
                         <input type="color" id="settingAccentColor" value="#d4af37">
                     </div>
                     <div class="form-group">
+                        <label>Курс USD (сколько сомони за 1 $):</label>
+                        <input type="number" step="0.01" id="settingRateUsd" value="10.90">
+                    </div>
+                    <div class="form-group">
+                        <label>Курс RUB (сколько сомони за 1 ₽):</label>
+                        <input type="number" step="0.001" id="settingRateRub" value="0.120">
+                    </div>
+                    <div class="form-group">
                         <label>Номер WhatsApp (+992...):</label>
                         <input type="text" id="settingPhone" value="992900000000">
                     </div>
@@ -547,16 +585,8 @@
                         <label>Адрес в Душанбе:</label>
                         <input type="text" id="settingAddress" value="Душанбе, пр. Рудаки 15">
                     </div>
-                    <div class="form-group">
-                        <label>Ссылка на Instagram:</label>
-                        <input type="text" id="settingInstagram" value="https://instagram.com/osori15">
-                    </div>
-                    <div class="form-group">
-                        <label>Ссылка на Telegram:</label>
-                        <input type="text" id="settingTelegram" value="https://t.me/osori15">
-                    </div>
                 </div>
-                <button type="button" class="btn-gold" onclick="saveSiteSettings()" style="width: 100%;">Сохранить настройки сайта</button>
+                <button type="button" class="btn-gold" onclick="saveSiteSettings()" style="width: 100%;">Сохранить настройки и курсы валют</button>
             </div>
 
             <!-- УПРАВЛЕНИЕ АДМИНИСТРАТОРАМИ -->
@@ -574,12 +604,12 @@
         <div class="controls-bar">
             <input type="text" id="searchInput" placeholder="🔎 Поиск по коллекции..." oninput="filterProducts()">
             <select id="categoryFilter" onchange="filterProducts()">
-                <option value="all">Все категории</option>
-                <option value="Платья">Платья</option>
-                <option value="Костюмы">Костюмы</option>
-                <option value="Верхняя одежда">Верхняя одежда</option>
-                <option value="Блузки">Блузки</option>
-                <option value="Аксессуары">Аксессуары</option>
+                <option value="all" id="optCatAll">Все категории</option>
+                <option value="Платья" id="optCatDresses">Платья</option>
+                <option value="Костюмы" id="optCatSuits">Костюмы</option>
+                <option value="Верхняя одежда" id="optCatOuterwear">Верхняя одежда</option>
+                <option value="Блузки" id="optCatBlouses">Блузки</option>
+                <option value="Аксессуары" id="optCatAccessories">Аксессуары</option>
             </select>
         </div>
 
@@ -601,7 +631,7 @@
     <div id="ordersModal" class="modal">
         <div class="modal-content">
             <span class="close-btn" onclick="closeModal('ordersModal')">&times;</span>
-            <h3 style="color:var(--accent-gold); margin-bottom:20px;">📦 Управление заказами</h3>
+            <h3 style="color:var(--accent-gold); margin-bottom:20px;" id="txtModalOrdersTitle">📦 Управление заказами</h3>
             <div id="ordersListContainer">Загрузка...</div>
         </div>
     </div>
@@ -616,30 +646,30 @@
                 <input type="hidden" id="orderProdPrice">
                 
                 <div class="form-group">
-                    <label>Выберите размер:</label>
+                    <label id="lblSelectSize">Выберите размер:</label>
                     <select id="orderSizeSelect"></select>
                 </div>
                 <div class="form-group">
-                    <label>Ваше имя:</label>
+                    <label id="lblName">Ваше имя:</label>
                     <input type="text" id="orderClientName" required placeholder="Мадина">
                 </div>
                 <div class="form-group">
-                    <label>Телефон:</label>
+                    <label id="lblPhone">Телефон:</label>
                     <input type="tel" id="orderClientPhone" required placeholder="+992 900 000 000">
                 </div>
                 <div class="form-group">
-                    <label>Адрес доставки:</label>
+                    <label id="lblAddress">Адрес доставки:</label>
                     <input type="text" id="orderClientAddress" required placeholder="Душанбе, пр. Рудаки 10">
                 </div>
                 <div class="form-group">
-                    <label>Способ оплаты:</label>
+                    <label id="lblPayment">Способ оплаты:</label>
                     <select id="orderPayment">
                         <option value="Наличными курьеру">Наличными при получении</option>
                         <option value="Alif QR / Salom">Alif QR / Salom</option>
                         <option value="Dushanbe City">Dushanbe City</option>
                     </select>
                 </div>
-                <button type="submit" class="btn-gold" style="width: 100%; margin-top: 15px;">Подтвердить заказ</button>
+                <button type="submit" class="btn-gold" id="btnConfirmOrder" style="width: 100%; margin-top: 15px;">Подтвердить заказ</button>
             </form>
         </div>
     </div>
@@ -648,14 +678,14 @@
     <div id="sizeGuideModal" class="modal">
         <div class="modal-content">
             <span class="close-btn" onclick="closeModal('sizeGuideModal')">&times;</span>
-            <h3 style="color:var(--accent-gold); margin-bottom:15px;">📏 Таблица размеров</h3>
+            <h3 style="color:var(--accent-gold); margin-bottom:15px;" id="txtSizeGuideTitle">📏 Таблица размеров</h3>
             <table>
                 <thead>
                     <tr>
-                        <th>Размер</th>
-                        <th>Грудь (см)</th>
-                        <th>Талия (см)</th>
-                        <th>Бёдра (см)</th>
+                        <th id="thSize">Размер</th>
+                        <th id="thChest">Грудь (см)</th>
+                        <th id="thWaist">Талия (см)</th>
+                        <th id="thHips">Бёдра (см)</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -689,26 +719,142 @@
         const db = getDatabase(app);
         const provider = new GoogleAuthProvider();
 
-        let adminEmailsList = [
-            "samirdv888@gmail.com",
-            "abdullochoriev4242@gmail.com"
-        ];
-
+        let adminEmailsList = ["samirdv888@gmail.com", "abdullochoriev4242@gmail.com"];
         let allProducts = [];
         let isAdmin = false;
         let siteSettings = {};
         let currentUploadedImages = [];
 
+        let currentLang = localStorage.getItem("osori_lang") || "ru";
+        let currentCurrency = localStorage.getItem("osori_currency") || "TJS";
+
+        const translations = {
+            ru: {
+                login: "Вход через Google",
+                orders: "📦 Заказы",
+                sizeGuide: "📏 Размеры",
+                search: "🔎 Поиск по коллекции...",
+                allCat: "Все категории",
+                dresses: "Платья",
+                suits: "Костюмы",
+                outerwear: "Верхняя одежда",
+                blouses: "Блузки",
+                accessories: "Аксессуары",
+                buy: "🛍️ Заказать",
+                statOrders: "Всего заказов",
+                statRevenue: "Выручка",
+                statProducts: "Товаров в каталоге",
+                sizeTitle: "📏 Таблица размеров",
+                size: "Размер", chest: "Грудь (см)", waist: "Талия (см)", hips: "Бёдра (см)",
+                selectSize: "Выберите размер:", name: "Ваше имя:", phone: "Телефон:", address: "Адрес доставки:", payment: "Способ оплаты:",
+                confirm: "Подтвердить заказ"
+            },
+            tj: {
+                login: "Вуруд бо Google",
+                orders: "📦 Супоришҳо",
+                sizeGuide: "📏 Андозаҳо",
+                search: "🔎 Ҷустуҷӯи либос...",
+                allCat: "Ҳамаи категорияҳо",
+                dresses: "Донаҳо (Кӯйнок)",
+                suits: "Костюмҳо",
+                outerwear: "Либоси гарм",
+                blouses: "Кофта ва куртаҳо",
+                accessories: "Лавозимот",
+                buy: "🛍️ Харидан",
+                statOrders: "Ҳамагӣ супоришҳо",
+                statRevenue: "Даромад",
+                statProducts: "Маҳсулот дар каталог",
+                sizeTitle: "📏 Ҷадвали андозаҳо",
+                size: "Андоза", chest: "Сина (см)", waist: "Миён (см)", hips: "Болои по (см)",
+                selectSize: "Андозаро интихоб кунед:", name: "Номи шумо:", phone: "Телефон:", address: "Суроғаи расонидан:", payment: "Усули пардохт:",
+                confirm: "Тасдиқи супориш"
+            },
+            en: {
+                login: "Sign in with Google",
+                orders: "📦 Orders",
+                sizeGuide: "📏 Size Guide",
+                search: "🔎 Search collection...",
+                allCat: "All categories",
+                dresses: "Dresses",
+                suits: "Suits",
+                outerwear: "Outerwear",
+                blouses: "Blouses & Shirts",
+                accessories: "Accessories",
+                buy: "🛍️ Order Now",
+                statOrders: "Total Orders",
+                statRevenue: "Total Revenue",
+                statProducts: "Catalog Products",
+                sizeTitle: "📏 Size Guide",
+                size: "Size", chest: "Chest (cm)", waist: "Waist (cm)", hips: "Hips (cm)",
+                selectSize: "Select Size:", name: "Your Name:", phone: "Phone:", address: "Delivery Address:", payment: "Payment Method:",
+                confirm: "Confirm Order"
+            }
+        };
+
+        window.changeLanguage = function(lang) {
+            currentLang = lang;
+            localStorage.setItem("osori_lang", lang);
+            document.getElementById("langSelect").value = lang;
+            const t = translations[lang];
+
+            document.getElementById("txtOrdersBtn").innerText = t.orders;
+            document.getElementById("txtSizeBtn").innerText = t.sizeGuide;
+            document.getElementById("searchInput").placeholder = t.search;
+            document.getElementById("optCatAll").innerText = t.allCat;
+            document.getElementById("optCatDresses").innerText = t.dresses;
+            document.getElementById("optCatSuits").innerText = t.suits;
+            document.getElementById("optCatOuterwear").innerText = t.outerwear;
+            document.getElementById("optCatBlouses").innerText = t.blouses;
+            document.getElementById("optCatAccessories").innerText = t.accessories;
+            document.getElementById("txtStatOrders").innerText = t.statOrders;
+            document.getElementById("txtStatRevenue").innerText = t.statRevenue;
+            document.getElementById("txtStatProducts").innerText = t.statProducts;
+            document.getElementById("txtSizeGuideTitle").innerText = t.sizeTitle;
+            document.getElementById("thSize").innerText = t.size;
+            document.getElementById("thChest").innerText = t.chest;
+            document.getElementById("thWaist").innerText = t.waist;
+            document.getElementById("thHips").innerText = t.hips;
+            document.getElementById("lblSelectSize").innerText = t.selectSize;
+            document.getElementById("lblName").innerText = t.name;
+            document.getElementById("lblPhone").innerText = t.phone;
+            document.getElementById("lblAddress").innerText = t.address;
+            document.getElementById("lblPayment").innerText = t.payment;
+            document.getElementById("btnConfirmOrder").innerText = t.confirm;
+
+            renderCatalog(allProducts);
+        };
+
+        window.changeCurrency = function(curr) {
+            currentCurrency = curr;
+            localStorage.setItem("osori_currency", curr);
+            document.getElementById("currencySelect").value = curr;
+            renderCatalog(allProducts);
+            if (isAdmin) listenOrders();
+        };
+
+        function formatPrice(priceTjs) {
+            const p = Number(priceTjs);
+            const rateUsd = Number(siteSettings.rateUsd) || 10.90;
+            const rateRub = Number(siteSettings.rateRub) || 0.12;
+
+            if (currentCurrency === "USD") {
+                return (p / rateUsd).toFixed(1) + " $";
+            } else if (currentCurrency === "RUB") {
+                return Math.round(p / rateRub) + " ₽";
+            }
+            return p + " ЅM";
+        }
+
         const authContainer = document.getElementById("authContainer");
         const adminPanel = document.getElementById("adminPanel");
         const ordersBtn = document.getElementById("ordersBtn");
 
-        // Загрузка настроек сайта из базы
         onValue(ref(db, 'settings'), (snapshot) => {
             const data = snapshot.val();
             if (data) {
                 siteSettings = data;
                 applySiteSettings(data);
+                renderCatalog(allProducts);
             }
         });
 
@@ -717,23 +863,22 @@
             if (s.title) document.getElementById("heroTitle").innerText = s.title;
             if (s.subtitle) document.getElementById("heroSubtitle").innerText = s.subtitle;
             if (s.address) document.getElementById("footerAddress").innerText = s.address;
-            if (s.instagram) document.getElementById("footerInstagram").href = s.instagram;
-            if (s.telegram) document.getElementById("footerTelegram").href = s.telegram;
             if (s.phone) document.getElementById("footerWhatsapp").href = `https://wa.me/${s.phone}`;
-            if (s.accentColor) {
-                document.documentElement.style.setProperty('--accent-gold', s.accentColor);
-            }
+            if (s.accentColor) document.documentElement.style.setProperty('--accent-gold', s.accentColor);
+            
+            if (s.rateUsd) document.getElementById("settingRateUsd").value = s.rateUsd;
+            if (s.rateRub) document.getElementById("settingRateRub").value = s.rateRub;
+            if (s.phone) document.getElementById("settingPhone").value = s.phone;
+            if (s.address) document.getElementById("settingAddress").value = s.address;
+            if (s.logo) document.getElementById("settingLogo").value = s.logo;
+            if (s.title) document.getElementById("settingTitle").value = s.title;
+            if (s.subtitle) document.getElementById("settingSubtitle").value = s.subtitle;
         }
 
-        // Загрузка админов
         onValue(ref(db, 'admins'), (snapshot) => {
             const data = snapshot.val();
-            if (data) {
-                adminEmailsList = Object.values(data).map(a => a.email.toLowerCase().trim());
-            }
-            if (auth.currentUser) {
-                checkAdminAccess(auth.currentUser.email);
-            }
+            if (data) adminEmailsList = Object.values(data).map(a => a.email.toLowerCase().trim());
+            if (auth.currentUser) checkAdminAccess(auth.currentUser.email);
         });
 
         function checkAdminAccess(userEmail) {
@@ -764,7 +909,7 @@
                 checkAdminAccess(user.email);
             } else {
                 isAdmin = false;
-                authContainer.innerHTML = `<button id="googleLoginBtn" class="btn-gold">Вход через Google</button>`;
+                authContainer.innerHTML = `<button id="googleLoginBtn" class="btn-gold">${translations[currentLang].login}</button>`;
                 document.getElementById("googleLoginBtn").addEventListener("click", () => signInWithPopup(auth, provider));
                 adminPanel.style.display = "none";
                 ordersBtn.style.display = "none";
@@ -772,32 +917,21 @@
             }
         });
 
-        // Загрузка изображений с телефона через ImgBB
         window.previewImages = async function(event) {
             const files = event.target.files;
             const container = document.getElementById("imagePreviewContainer");
             container.innerHTML = "<p style='color:var(--accent-gold); font-size:12px;'>Загрузка фотографий...</p>";
-            
             const apiKey = "6d257f2c1d0138241434c44161b3699b";
 
             for (let i = 0; i < files.length; i++) {
                 const formData = new FormData();
                 formData.append("image", files[i]);
-
                 try {
-                    const res = await fetch(`https://api.imgbb.com/1/upload?key=${apiKey}`, {
-                        method: "POST",
-                        body: formData
-                    });
+                    const res = await fetch(`https://api.imgbb.com/1/upload?key=${apiKey}`, { method: "POST", body: formData });
                     const result = await res.json();
-                    if (result.success) {
-                        currentUploadedImages.push(result.data.url);
-                    }
-                } catch (e) {
-                    console.error("Ошибка фото:", e);
-                }
+                    if (result.success) currentUploadedImages.push(result.data.url);
+                } catch (e) { console.error(e); }
             }
-
             document.getElementById("prodImage").value = currentUploadedImages.join(", ");
             renderPreviews();
         };
@@ -807,9 +941,9 @@
             container.innerHTML = "";
             currentUploadedImages.forEach((url, idx) => {
                 container.innerHTML += `
-                    <div style="position:relative; width:60px; height:60px;">
+                    <div style="position:relative; width:55px; height:55px;">
                         <img src="${url}" style="width:100%; height:100%; object-fit:cover; border-radius:4px; border:1px solid var(--accent-gold);">
-                        <button type="button" onclick="removeImg(${idx})" style="position:absolute; top:-5px; right:-5px; background:var(--danger); color:#fff; border:none; border-radius:50%; width:18px; height:18px; font-size:10px;">✕</button>
+                        <button type="button" onclick="removeImg(${idx})" style="position:absolute; top:-5px; right:-5px; background:var(--danger); color:#fff; border:none; border-radius:50%; width:16px; height:16px; font-size:9px;">✕</button>
                     </div>
                 `;
             });
@@ -821,18 +955,14 @@
             renderPreviews();
         };
 
-        // Загрузка товаров из базы
         onValue(ref(db, 'products'), (snapshot) => {
             const data = snapshot.val();
             allProducts = [];
-            if (data) {
-                Object.keys(data).forEach(key => allProducts.push({ id: key, ...data[key] }));
-            }
+            if (data) Object.keys(data).forEach(key => allProducts.push({ id: key, ...data[key] }));
             document.getElementById("statProductsCount").innerText = allProducts.length;
             renderCatalog(allProducts);
         });
 
-        // Сохранение товара
         document.getElementById("productForm").addEventListener("submit", async (e) => {
             e.preventDefault();
             const editId = document.getElementById("editProductId").value;
@@ -857,23 +987,21 @@
             document.getElementById("productForm").reset();
         });
 
-        // Сохранение настроек сайта
         window.saveSiteSettings = async function() {
             const settingsData = {
                 logo: document.getElementById("settingLogo").value,
                 title: document.getElementById("settingTitle").value,
                 subtitle: document.getElementById("settingSubtitle").value,
                 accentColor: document.getElementById("settingAccentColor").value,
+                rateUsd: document.getElementById("settingRateUsd").value,
+                rateRub: document.getElementById("settingRateRub").value,
                 phone: document.getElementById("settingPhone").value,
-                address: document.getElementById("settingAddress").value,
-                instagram: document.getElementById("settingInstagram").value,
-                telegram: document.getElementById("settingTelegram").value
+                address: document.getElementById("settingAddress").value
             };
             await set(ref(db, 'settings'), settingsData);
-            alert("Настройки сайта обновлены!");
+            alert("Настройки сайта и курсы валют успешно сохранены!");
         };
 
-        // Отрисовка каталога
         window.renderCatalog = function(products) {
             const container = document.getElementById("catalogContainer");
             container.innerHTML = "";
@@ -886,7 +1014,7 @@
                 if (imgList.length > 1) {
                     galleryHtml = `<div style="display:flex; gap:5px; margin-top:8px; overflow-x:auto;">`;
                     imgList.forEach(url => {
-                        galleryHtml += `<img src="${url}" loading="lazy" onclick="changeMainImg('img_${p.id}', '${url}')" style="width:40px; height:40px; object-fit:cover; border-radius:3px; cursor:pointer; border:1px solid var(--border-color);">`;
+                        galleryHtml += `<img src="${url}" loading="lazy" onclick="changeMainImg('img_${p.id}', '${url}')" style="width:38px; height:38px; object-fit:cover; border-radius:3px; cursor:pointer; border:1px solid var(--border-color);">`;
                     });
                     galleryHtml += `</div>`;
                 }
@@ -901,10 +1029,10 @@
                     <div class="product-info">
                         <div class="product-category">${p.category}</div>
                         <h3>${p.title}</h3>
-                        <div class="product-price">${p.price} TJS</div>
+                        <div class="product-price">${formatPrice(p.price)}</div>
                         ${galleryHtml}
                         <div class="btn-buy-block" style="margin-top:12px;">
-                            <button class="btn-gold" onclick="openBuyModal('${p.id}', '${p.title}', '${p.price}', '${p.sizes}')">🛍️ Заказать</button>
+                            <button class="btn-gold" onclick="openBuyModal('${p.id}', '${p.title}', '${p.price}', '${p.sizes}')">${translations[currentLang].buy}</button>
                             <button class="btn-wa" onclick="orderWA('${p.title}', '${p.price}')">💬 WhatsApp</button>
                             ${isAdmin ? `
                                 <div style="display:flex; gap:5px; margin-top:5px;">
@@ -946,13 +1074,13 @@
 
         window.orderWA = (title, price) => {
             const phone = siteSettings.phone || "992900000000";
-            window.open(`https://wa.me/${phone}?text=${encodeURIComponent(`Здравствуйте! Хочу заказать "${title}" за ${price} TJS.`)}`, '_blank');
+            window.open(`https://wa.me/${phone}?text=${encodeURIComponent(`Здравствуйте! Хочу заказать "${title}" за ${formatPrice(price)}.`)}`, '_blank');
         };
 
         window.openBuyModal = (id, title, price, sizes) => {
             document.getElementById("orderProdTitle").value = title;
             document.getElementById("orderProdPrice").value = price;
-            document.getElementById("buyModalTitle").innerText = `Заказ: ${title}`;
+            document.getElementById("buyModalTitle").innerText = `Заказ: ${title} (${formatPrice(price)})`;
             const sElem = document.getElementById("orderSizeSelect");
             sElem.innerHTML = "";
             sizes.split(",").forEach(s => sElem.innerHTML += `<option value="${s.trim()}">${s.trim()}</option>`);
@@ -1009,7 +1137,7 @@
                         </div>
                     `;
                 });
-                document.getElementById("statRevenue").innerText = revenue;
+                document.getElementById("statRevenue").innerText = formatPrice(revenue);
             });
         }
 
@@ -1040,10 +1168,7 @@
         window.addAdminUser = async function() {
             const emailInput = document.getElementById("newAdminEmail");
             const email = emailInput.value.toLowerCase().trim();
-            if (!email || !email.includes("@")) {
-                alert("Введите корректный Email!");
-                return;
-            }
+            if (!email || !email.includes("@")) { alert("Введите Email!"); return; }
             const key = email.replace(/\./g, '_at_').replace(/@/g, '_at_');
             await set(ref(db, `admins/${key}`), { email: email, addedAt: new Date().toLocaleString() });
             alert(`Администратор ${email} добавлен!`);
@@ -1060,6 +1185,9 @@
         window.openSizeGuide = () => document.getElementById("sizeGuideModal").style.display = "flex";
         window.openOrdersModal = () => document.getElementById("ordersModal").style.display = "flex";
         window.closeModal = (id) => document.getElementById(id).style.display = "none";
+
+        changeLanguage(currentLang);
+        changeCurrency(currentCurrency);
     </script>
 </body>
 </html>
