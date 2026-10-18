@@ -708,7 +708,7 @@
                     <input type="text" id="prodSizes" value="XS, S, M, L" placeholder="S, M, L">
                 </div>
                 <div class="form-group">
-                    <label>Загрузить фото с телефона (можно несколько):</label>
+                    <label>Загрузить фото (без ограничений по количеству и формату):</label>
                     <input type="file" id="prodFiles" accept="image/*" multiple onchange="previewImages(event)">
                 </div>
 
@@ -921,13 +921,11 @@
             if (s.instagram) document.getElementById("footerInstagram").href = s.instagram;
             if (s.telegram) document.getElementById("footerTelegram").href = s.telegram;
 
-            // Применение цветов и шрифтов
             if (s.accentColor) document.documentElement.style.setProperty('--accent-gold', s.accentColor);
             if (s.bgCard) document.documentElement.style.setProperty('--bg-card', s.bgCard);
             if (s.headingFont) document.documentElement.style.setProperty('--heading-font', s.headingFont);
             if (s.siteFont) document.documentElement.style.setProperty('--site-font', s.siteFont);
 
-            // Заполнение полей формы настроек
             if (s.rateUsd) document.getElementById("settingRateUsd").value = s.rateUsd;
             if (s.rateRub) document.getElementById("settingRateRub").value = s.rateRub;
             if (s.phone) document.getElementById("settingPhone").value = s.phone;
@@ -1033,10 +1031,11 @@
             document.getElementById("addProductModal").style.display = "flex";
         };
 
+        // Загрузка любых фото без ограничений по количеству и формату
         window.previewImages = async function(event) {
             const files = event.target.files;
             const container = document.getElementById("imagePreviewContainer");
-            container.innerHTML = "<p style='color:var(--accent-gold); font-size:12px;'>Загрузка фотографий...</p>";
+            container.innerHTML += "<p style='color:var(--accent-gold); font-size:12px;'>Загрузка фотографий...</p>";
             const apiKey = "6d257f2c1d0138241434c44161b3699b";
 
             for (let i = 0; i < files.length; i++) {
@@ -1045,8 +1044,19 @@
                 try {
                     const res = await fetch(`https://api.imgbb.com/1/upload?key=${apiKey}`, { method: "POST", body: formData });
                     const result = await res.json();
-                    if (result.success) currentUploadedImages.push(result.data.url);
-                } catch (e) { console.error(e); }
+                    if (result.success) {
+                        currentUploadedImages.push(result.data.url);
+                    }
+                } catch (e) { 
+                    // Резервный вариант на случай ошибки хостинга: превращаем файл в локальную ссылку (DataURL), чтобы фото загрузилось при любых условиях
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        currentUploadedImages.push(e.target.result);
+                        document.getElementById("prodImage").value = currentUploadedImages.join(", ");
+                        renderPreviews();
+                    };
+                    reader.readAsDataURL(files[i]);
+                }
             }
             document.getElementById("prodImage").value = currentUploadedImages.join(", ");
             renderPreviews();
