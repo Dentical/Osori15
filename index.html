@@ -273,7 +273,7 @@
             flex-direction: column;
             justify-content: space-between;
             position: relative;
-            transition: border-color 0.3s;
+            transition: border-color 0.3s, background-color 0.3s;
         }
 
         .product-card:hover {
@@ -471,6 +471,11 @@
     <header>
         <div class="logo" id="siteLogo">OSORI15</div>
         <div class="header-actions">
+            <!-- КНОПКИ БЫСТРОГО ДОСТУПА В ШАПКЕ ДЛЯ АДМИНА -->
+            <button id="addProdHeaderBtn" class="btn-gold" style="display:none;" onclick="openAddProductModal()" title="Добавить товар">➕</button>
+            <button id="fontHeaderBtn" class="btn-outline" style="display:none;" onclick="openFontModal()" title="Шрифты">А</button>
+            <button id="settingsHeaderBtn" class="btn-outline" style="display:none;" onclick="openSiteSettingsModal()" title="Настройки сайта">⚙️</button>
+
             <select id="langSelect" class="lang-currency-select" onchange="changeLanguage(this.value)">
                 <option value="ru">RU 🇷🇺</option>
                 <option value="tj">TJ 🇹🇯</option>
@@ -519,70 +524,14 @@
                 </div>
             </div>
 
-            <!-- КНОПКА ДЛЯ ОТКРЫТИЯ ВСПЛЫВАЮЩЕГО ОКНА ДОБАВЛЕНИЯ ТОВАРА -->
-            <div style="margin-bottom: 25px;">
-                <button type="button" class="btn-gold" onclick="openAddProductModal()" style="width: 100%; padding: 12px; font-size: 13px;">➕ Добавить новый товар в каталог</button>
-            </div>
-
-            <!-- ГЛОБАЛЬНЫЕ НАСТРОЙКИ СТИЛЯ, ШРИФТА И КУРСОВ -->
-            <div style="border-top: 1px solid var(--border-color); padding-top: 15px;">
-                <h3 style="color: var(--accent-gold); margin-bottom: 12px; font-size:16px;">🎨 Настройки СТИЛЯ, ШРИФТОВ и Валют</h3>
-                <div class="admin-grid">
-                    <div class="form-group">
-                        <label>Шрифт заголовков:</label>
-                        <select id="settingHeadingFont">
-                            <option value="'Playfair Display', serif">Playfair Display (Классический роскошный)</option>
-                            <option value="'Cormorant Garamond', serif">Cormorant Garamond (Элегантный)</option>
-                            <option value="'Montserrat', sans-serif">Montserrat (Современный)</option>
-                            <option value="'Plus Jakarta Sans', sans-serif">Plus Jakarta Sans (Минимализм)</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>Основной шрифт сайта:</label>
-                        <select id="settingSiteFont">
-                            <option value="'Plus Jakarta Sans', sans-serif">Plus Jakarta Sans</option>
-                            <option value="'Inter', sans-serif">Inter</option>
-                            <option value="'Montserrat', sans-serif">Montserrat</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>Название магазина:</label>
-                        <input type="text" id="settingLogo" value="OSORI15">
-                    </div>
-                    <div class="form-group">
-                        <label>Заголовок баннера:</label>
-                        <input type="text" id="settingTitle" value="OSORI15 FASHION">
-                    </div>
-                    <div class="form-group">
-                        <label>Подзаголовок баннера:</label>
-                        <input type="text" id="settingSubtitle" value="Премиальная женская одежда в Душанбе">
-                    </div>
-                    <div class="form-group">
-                        <label>Акцентный цвет (Gold):</label>
-                        <input type="color" id="settingAccentColor" value="#d4af37">
-                    </div>
-                    <div class="form-group">
-                        <label>Курс USD ($):</label>
-                        <input type="number" step="0.01" id="settingRateUsd" value="10.90">
-                    </div>
-                    <div class="form-group">
-                        <label>Курс RUB (₽):</label>
-                        <input type="number" step="0.001" id="settingRateRub" value="0.120">
-                    </div>
-                    <div class="form-group">
-                        <label>WhatsApp:</label>
-                        <input type="text" id="settingPhone" value="992900000000">
-                    </div>
-                    <div class="form-group">
-                        <label>Адрес:</label>
-                        <input type="text" id="settingAddress" value="Душанбе, пр. Рудаки 15">
-                    </div>
-                </div>
-                <button type="button" class="btn-gold" onclick="saveSiteSettings()" style="width: 100%;">Сохранить настройки стиля и сайта</button>
+            <!-- БЫСТРЫЕ ДЕЙСТВИЯ -->
+            <div style="display: flex; gap: 10px; margin-bottom: 25px; flex-wrap: wrap;">
+                <button type="button" class="btn-gold" onclick="openAddProductModal()" style="flex:1; padding: 12px; font-size: 13px;">➕ Добавить новый товар</button>
+                <button type="button" class="btn-outline" onclick="openSiteSettingsModal()" style="padding: 12px; font-size: 13px;">⚙️ Полные настройки сайта</button>
             </div>
 
             <!-- УПРАВЛЕНИЕ АДМИНАМИ (Только для samirdv888@gmail.com) -->
-            <div id="superAdminSection" style="display: none; margin-top: 25px; border-top: 1px solid var(--border-color); padding-top: 15px;">
+            <div id="superAdminSection" style="display: none; border-top: 1px solid var(--border-color); padding-top: 15px;">
                 <h3 style="color: var(--accent-gold); margin-bottom: 12px; font-size:16px;">👥 Управление администраторами</h3>
                 <div style="display: flex; gap: 8px; margin-bottom: 12px; flex-wrap: wrap;">
                     <input type="email" id="newAdminEmail" placeholder="email@gmail.com" style="flex:1; background:var(--bg-input); border:1px solid var(--border-color); color:#fff; padding:8px; border-radius:4px; min-width:200px;">
@@ -617,6 +566,106 @@
         </div>
         <p style="font-size: 10px; color: var(--text-muted); margin-top: 10px;">© 2026 OSORI15. Все права защищены.</p>
     </footer>
+
+    <!-- ВСПЛЫВАЮЩЕЕ ОКНО "ПОЛНЫЕ НАСТРОЙКИ САЙТА" (КНОПКА "⚙️") -->
+    <div id="siteSettingsModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('siteSettingsModal')">&times;</span>
+            <h3 style="color:var(--accent-gold); margin-bottom: 15px; font-size:18px;">⚙️ Полные настройки сайта</h3>
+            
+            <div class="admin-grid">
+                <div class="form-group">
+                    <label>Название магазина (Логотип):</label>
+                    <input type="text" id="settingLogo" value="OSORI15">
+                </div>
+                <div class="form-group">
+                    <label>Заголовок баннера:</label>
+                    <input type="text" id="settingTitle" value="OSORI15 FASHION">
+                </div>
+                <div class="form-group">
+                    <label>Подзаголовок баннера:</label>
+                    <input type="text" id="settingSubtitle" value="Премиальная женская одежда в Душанбе">
+                </div>
+                <div class="form-group">
+                    <label>Шрифт заголовков:</label>
+                    <select id="settingHeadingFont">
+                        <option value="'Playfair Display', serif">Playfair Display (Классика)</option>
+                        <option value="'Cormorant Garamond', serif">Cormorant Garamond (Элегантный)</option>
+                        <option value="'Montserrat', sans-serif">Montserrat (Современный)</option>
+                        <option value="'Plus Jakarta Sans', sans-serif">Plus Jakarta Sans (Минимализм)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Основной шрифт сайта:</label>
+                    <select id="settingSiteFont">
+                        <option value="'Plus Jakarta Sans', sans-serif">Plus Jakarta Sans</option>
+                        <option value="'Inter', sans-serif">Inter</option>
+                        <option value="'Montserrat', sans-serif">Montserrat</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Главный акцентный цвет (Gold):</label>
+                    <input type="color" id="settingAccentColor" value="#d4af37">
+                </div>
+                <div class="form-group">
+                    <label>Цвет фона карточек:</label>
+                    <input type="color" id="settingBgCard" value="#18181a">
+                </div>
+                <div class="form-group">
+                    <label>Курс USD ($):</label>
+                    <input type="number" step="0.01" id="settingRateUsd" value="10.90">
+                </div>
+                <div class="form-group">
+                    <label>Курс RUB (₽):</label>
+                    <input type="number" step="0.001" id="settingRateRub" value="0.120">
+                </div>
+                <div class="form-group">
+                    <label>Номер WhatsApp (+992...):</label>
+                    <input type="text" id="settingPhone" value="992900000000">
+                </div>
+                <div class="form-group">
+                    <label>Ссылка Instagram:</label>
+                    <input type="text" id="settingInstagram" placeholder="https://instagram.com/...">
+                </div>
+                <div class="form-group">
+                    <label>Ссылка Telegram:</label>
+                    <input type="text" id="settingTelegram" placeholder="https://t.me/...">
+                </div>
+                <div class="form-group" style="grid-column: 1 / -1;">
+                    <label>Адрес в Душанбе:</label>
+                    <input type="text" id="settingAddress" value="Душанбе, пр. Рудаки 15">
+                </div>
+            </div>
+            
+            <button type="button" class="btn-gold" onclick="saveSiteSettings()" style="width: 100%; margin-top: 15px; padding: 12px;">Сохранить изменения и обновить сайт</button>
+        </div>
+    </div>
+
+    <!-- ВСПЛЫВАЮЩЕЕ ОКНО ДЛЯ ВЫБОРА ШРИФТА (КНОПКА "А") -->
+    <div id="fontModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('fontModal')">&times;</span>
+            <h3 style="color:var(--accent-gold); margin-bottom: 15px; font-size:18px;">🔤 Быстрая настройка шрифтов</h3>
+            <div class="form-group">
+                <label>Шрифт заголовков:</label>
+                <select id="modalHeadingFont">
+                    <option value="'Playfair Display', serif">Playfair Display (Роскошный)</option>
+                    <option value="'Cormorant Garamond', serif">Cormorant Garamond (Элегантный)</option>
+                    <option value="'Montserrat', sans-serif">Montserrat (Современный)</option>
+                    <option value="'Plus Jakarta Sans', sans-serif">Plus Jakarta Sans (Минимализм)</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Основной шрифт текста:</label>
+                <select id="modalSiteFont">
+                    <option value="'Plus Jakarta Sans', sans-serif">Plus Jakarta Sans</option>
+                    <option value="'Inter', sans-serif">Inter</option>
+                    <option value="'Montserrat', sans-serif">Montserrat</option>
+                </select>
+            </div>
+            <button type="button" class="btn-gold" onclick="applyFontModal()" style="width: 100%; margin-top: 10px;">Применить шрифты</button>
+        </div>
+    </div>
 
     <!-- ВСПЛЫВАЮЩЕЕ ОКНО ДЛЯ ДОБАВЛЕНИЯ / РЕДАКТИРОВАНИЯ ТОВАРА -->
     <div id="addProductModal" class="modal">
@@ -869,12 +918,16 @@
             if (s.subtitle) document.getElementById("heroSubtitle").innerText = s.subtitle;
             if (s.address) document.getElementById("footerAddress").innerText = s.address;
             if (s.phone) document.getElementById("footerWhatsapp").href = `https://wa.me/${s.phone}`;
+            if (s.instagram) document.getElementById("footerInstagram").href = s.instagram;
+            if (s.telegram) document.getElementById("footerTelegram").href = s.telegram;
+
+            // Применение цветов и шрифтов
             if (s.accentColor) document.documentElement.style.setProperty('--accent-gold', s.accentColor);
-            
-            // Применение шрифтов
+            if (s.bgCard) document.documentElement.style.setProperty('--bg-card', s.bgCard);
             if (s.headingFont) document.documentElement.style.setProperty('--heading-font', s.headingFont);
             if (s.siteFont) document.documentElement.style.setProperty('--site-font', s.siteFont);
 
+            // Заполнение полей формы настроек
             if (s.rateUsd) document.getElementById("settingRateUsd").value = s.rateUsd;
             if (s.rateRub) document.getElementById("settingRateRub").value = s.rateRub;
             if (s.phone) document.getElementById("settingPhone").value = s.phone;
@@ -884,6 +937,10 @@
             if (s.subtitle) document.getElementById("settingSubtitle").value = s.subtitle;
             if (s.headingFont) document.getElementById("settingHeadingFont").value = s.headingFont;
             if (s.siteFont) document.getElementById("settingSiteFont").value = s.siteFont;
+            if (s.accentColor) document.getElementById("settingAccentColor").value = s.accentColor;
+            if (s.bgCard) document.getElementById("settingBgCard").value = s.bgCard;
+            if (s.instagram) document.getElementById("settingInstagram").value = s.instagram;
+            if (s.telegram) document.getElementById("settingTelegram").value = s.telegram;
         }
 
         onValue(ref(db, 'admins'), (snapshot) => {
@@ -900,6 +957,9 @@
                 isAdmin = true;
                 adminPanel.style.display = "block";
                 ordersBtn.style.display = "inline-block";
+                document.getElementById("addProdHeaderBtn").style.display = "inline-block";
+                document.getElementById("fontHeaderBtn").style.display = "inline-block";
+                document.getElementById("settingsHeaderBtn").style.display = "inline-block";
                 listenOrders();
 
                 if (email === "samirdv888@gmail.com") {
@@ -912,18 +972,16 @@
                 isAdmin = false;
                 adminPanel.style.display = "none";
                 ordersBtn.style.display = "none";
+                document.getElementById("addProdHeaderBtn").style.display = "none";
+                document.getElementById("fontHeaderBtn").style.display = "none";
+                document.getElementById("settingsHeaderBtn").style.display = "none";
             }
             renderCatalog(allProducts);
         }
 
         onAuthStateChanged(auth, (user) => {
             if (user) {
-                authContainer.innerHTML = `
-                    <div class="user-badge">
-                        <img src="${user.photoURL || 'https://via.placeholder.com/32'}" alt="User">
-                        <button id="logoutBtn" class="btn-outline" style="font-size:11px;">Выйти</button>
-                    </div>
-                `;
+                authContainer.innerHTML = `<button id="logoutBtn" class="btn-outline" style="font-size:11px;">Выйти</button>`;
                 document.getElementById("logoutBtn").addEventListener("click", () => signOut(auth));
                 checkAdminAccess(user.email);
             } else {
@@ -932,9 +990,38 @@
                 document.getElementById("googleLoginBtn").addEventListener("click", () => signInWithPopup(auth, provider));
                 adminPanel.style.display = "none";
                 ordersBtn.style.display = "none";
+                document.getElementById("addProdHeaderBtn").style.display = "none";
+                document.getElementById("fontHeaderBtn").style.display = "none";
+                document.getElementById("settingsHeaderBtn").style.display = "none";
                 renderCatalog(allProducts);
             }
         });
+
+        window.openSiteSettingsModal = function() {
+            document.getElementById("siteSettingsModal").style.display = "flex";
+        };
+
+        window.openFontModal = function() {
+            if (siteSettings.headingFont) document.getElementById("modalHeadingFont").value = siteSettings.headingFont;
+            if (siteSettings.siteFont) document.getElementById("modalSiteFont").value = siteSettings.siteFont;
+            document.getElementById("fontModal").style.display = "flex";
+        };
+
+        window.applyFontModal = async function() {
+            const hFont = document.getElementById("modalHeadingFont").value;
+            const sFont = document.getElementById("modalSiteFont").value;
+            
+            document.documentElement.style.setProperty('--heading-font', hFont);
+            document.documentElement.style.setProperty('--site-font', sFont);
+
+            const updatedSettings = {
+                ...siteSettings,
+                headingFont: hFont,
+                siteFont: sFont
+            };
+            await set(ref(db, 'settings'), updatedSettings);
+            closeModal('fontModal');
+        };
 
         window.openAddProductModal = function() {
             document.getElementById("editProductId").value = "";
@@ -1021,15 +1108,19 @@
                 title: document.getElementById("settingTitle").value,
                 subtitle: document.getElementById("settingSubtitle").value,
                 accentColor: document.getElementById("settingAccentColor").value,
+                bgCard: document.getElementById("settingBgCard").value,
                 headingFont: document.getElementById("settingHeadingFont").value,
                 siteFont: document.getElementById("settingSiteFont").value,
                 rateUsd: document.getElementById("settingRateUsd").value,
                 rateRub: document.getElementById("settingRateRub").value,
                 phone: document.getElementById("settingPhone").value,
-                address: document.getElementById("settingAddress").value
+                address: document.getElementById("settingAddress").value,
+                instagram: document.getElementById("settingInstagram").value,
+                telegram: document.getElementById("settingTelegram").value
             };
             await set(ref(db, 'settings'), settingsData);
-            alert("Настройки стиля и сайта успешно сохранены!");
+            alert("Настройки сайта успешно обновлены!");
+            closeModal('siteSettingsModal');
         };
 
         window.renderCatalog = function(products) {
