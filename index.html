@@ -298,7 +298,7 @@
             width: 100%;
             height: 320px;
             position: relative;
-            background: #000;
+            background: #1a1a1d;
             overflow: hidden;
             cursor: pointer;
         }
@@ -306,8 +306,7 @@
         .img-slider-container img {
             width: 100%;
             height: 100%;
-            object-fit: contain;
-            background-color: #121214;
+            object-fit: cover;
             position: absolute;
             top: 0; left: 0;
             opacity: 0;
@@ -708,7 +707,7 @@
                     <input type="text" id="prodSizes" value="XS, S, M, L" placeholder="S, M, L">
                 </div>
                 <div class="form-group">
-                    <label>Загрузить фото (без ограничений по количеству и формату):</label>
+                    <label>Загрузить фото (без ограничений, любые файлы):</label>
                     <input type="file" id="prodFiles" accept="image/*" multiple onchange="previewImages(event)">
                 </div>
 
@@ -1032,37 +1031,23 @@
             document.getElementById("addProductModal").style.display = "flex";
         };
 
-        // Загрузка абсолютно любых фото без ограничений и с надежным преобразованием
+        // НАДЕЖНАЯ КОНВЕРТАЦИЯ ФОТО БУКВАЛЬНО БЕЗ ОГРАНИЧЕНИЙ (Локальное сохранение)
         window.previewImages = async function(event) {
             const files = event.target.files;
             if (!files || files.length === 0) return;
             const container = document.getElementById("imagePreviewContainer");
-            container.innerHTML += "<p style='color:var(--accent-gold); font-size:12px;'>Загрузка фотографий...</p>";
-            const apiKey = "6d257f2c1d0138241434c44161b3699b";
+            container.innerHTML += "<p style='color:var(--accent-gold); font-size:12px;'>Обработка фото...</p>";
 
             for (let i = 0; i < files.length; i++) {
                 const file = files[i];
-                try {
-                    const formData = new FormData();
-                    formData.append("image", file);
-                    const res = await fetch(`https://api.imgbb.com/1/upload?key=${apiKey}`, { method: "POST", body: formData });
-                    const result = await res.json();
-                    if (result && result.success) {
-                        currentUploadedImages.push(result.data.url);
-                    } else {
-                        throw new Error("ImgBB error");
-                    }
-                } catch (e) {
-                    // Если внешний сервер недоступен, конвертируем файл локально в DataURL (гарантия загрузки 100%)
-                    await new Promise((resolve) => {
-                        const reader = new FileReader();
-                        reader.onload = function(e) {
-                            currentUploadedImages.push(e.target.result);
-                            resolve();
-                        };
-                        reader.readAsDataURL(file);
-                    });
-                }
+                await new Promise((resolve) => {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        currentUploadedImages.push(e.target.result);
+                        resolve();
+                    };
+                    reader.readAsDataURL(file);
+                });
             }
             document.getElementById("prodImage").value = currentUploadedImages.join(", ");
             renderPreviews();
@@ -1152,7 +1137,6 @@
             container.innerHTML = "";
 
             products.forEach(p => {
-                // Если картинка не заполнена, ставим стильное фото по умолчанию вместо серого квадрата
                 const imgList = (p.image && p.image.trim() !== "") 
                     ? p.image.split(",").map(i => i.trim()) 
                     : ['https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=600'];
