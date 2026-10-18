@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>OSORI15 — Haute Couture & Female Fashion</title>
     
-    <!-- Премиальные шрифты -->
+    <!-- Шрифты Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     <style>
         :root {
@@ -22,6 +22,8 @@
             --border-color: #2a2a2d;
             --danger: #e63946;
             --success: #2a9d8f;
+            --site-font: 'Plus Jakarta Sans', sans-serif;
+            --heading-font: 'Playfair Display', serif;
         }
 
         * {
@@ -32,18 +34,19 @@
         }
 
         body {
-            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-family: var(--site-font);
             background-color: var(--bg-dark);
             color: var(--text-main);
             line-height: 1.6;
+            transition: background-color 0.3s, color 0.3s;
         }
 
         h1, h2, h3, .logo {
-            font-family: 'Playfair Display', serif;
+            font-family: var(--heading-font);
             letter-spacing: 1px;
         }
 
-        /* Шапка с адаптивностью */
+        /* Шапка */
         header {
             background-color: rgba(15, 15, 16, 0.95);
             backdrop-filter: blur(10px);
@@ -86,7 +89,7 @@
         }
 
         button {
-            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-family: var(--site-font);
             cursor: pointer;
             border: none;
             border-radius: 4px;
@@ -291,7 +294,6 @@
             z-index: 3;
         }
 
-        /* Контейнер карусели фото (с фиксированной адаптивной высотой и защитой от обрезки) */
         .img-slider-container {
             width: 100%;
             height: 320px;
@@ -304,7 +306,7 @@
         .img-slider-container img {
             width: 100%;
             height: 100%;
-            object-fit: contain; /* Картинка любого размера помещается целиком без обрезки */
+            object-fit: contain;
             background-color: #121214;
             position: absolute;
             top: 0; left: 0;
@@ -316,7 +318,6 @@
             opacity: 1;
         }
 
-        /* Индикаторы слайдера (точки внизу картинки) */
         .slider-dots {
             position: absolute;
             bottom: 8px;
@@ -382,7 +383,7 @@
             text-transform: uppercase;
         }
 
-        /* Модальные окна (Лайтбокс для фото на весь экран) */
+        /* Модальные окна */
         .modal {
             display: none;
             position: fixed;
@@ -416,7 +417,6 @@
             z-index: 10;
         }
 
-        /* Лайтбокс конкретно для картинки */
         #lightboxModal img {
             max-width: 100%;
             max-height: 80vh;
@@ -519,71 +519,46 @@
                 </div>
             </div>
 
-            <h3 style="color:var(--accent-gold); margin-bottom: 12px; font-size:16px;">👗 Добавить / Изменить Товар</h3>
-            <form id="productForm">
-                <input type="hidden" id="editProductId">
-                <input type="hidden" id="prodImage" required>
+            <!-- КНОПКА ДЛЯ ОТКРЫТИЯ ВСПЛЫВАЮЩЕГО ОКНА ДОБАВЛЕНИЯ ТОВАРА -->
+            <div style="margin-bottom: 25px;">
+                <button type="button" class="btn-gold" onclick="openAddProductModal()" style="width: 100%; padding: 12px; font-size: 13px;">➕ Добавить новый товар в каталог</button>
+            </div>
 
+            <!-- ГЛОБАЛЬНЫЕ НАСТРОЙКИ СТИЛЯ, ШРИФТА И КУРСОВ -->
+            <div style="border-top: 1px solid var(--border-color); padding-top: 15px;">
+                <h3 style="color: var(--accent-gold); margin-bottom: 12px; font-size:16px;">🎨 Настройки СТИЛЯ, ШРИФТОВ и Валют</h3>
                 <div class="admin-grid">
                     <div class="form-group">
-                        <label>Название товара:</label>
-                        <input type="text" id="prodTitle" required placeholder="Платье 'Silk'">
-                    </div>
-                    <div class="form-group">
-                        <label>Категория:</label>
-                        <select id="prodCategory">
-                            <option value="Платья">Платья</option>
-                            <option value="Костюмы">Костюмы</option>
-                            <option value="Верхняя одежда">Верхняя одежда</option>
-                            <option value="Блузки">Блузки и Рубашки</option>
-                            <option value="Аксессуары">Аксессуары</option>
+                        <label>Шрифт заголовков:</label>
+                        <select id="settingHeadingFont">
+                            <option value="'Playfair Display', serif">Playfair Display (Классический роскошный)</option>
+                            <option value="'Cormorant Garamond', serif">Cormorant Garamond (Элегантный)</option>
+                            <option value="'Montserrat', sans-serif">Montserrat (Современный)</option>
+                            <option value="'Plus Jakarta Sans', sans-serif">Plus Jakarta Sans (Минимализм)</option>
                         </select>
                     </div>
                     <div class="form-group">
-                        <label>Цена (в TJS):</label>
-                        <input type="number" id="prodPrice" required placeholder="650">
-                    </div>
-                    <div class="form-group">
-                        <label>Метка:</label>
-                        <select id="prodBadge">
-                            <option value="NEW">NEW</option>
-                            <option value="SALE">SALE</option>
-                            <option value="HIT">HIT</option>
-                            <option value="EXCLUSIVE">EXCLUSIVE</option>
+                        <label>Основной шрифт сайта:</label>
+                        <select id="settingSiteFont">
+                            <option value="'Plus Jakarta Sans', sans-serif">Plus Jakarta Sans</option>
+                            <option value="'Inter', sans-serif">Inter</option>
+                            <option value="'Montserrat', sans-serif">Montserrat</option>
                         </select>
                     </div>
-                    <div class="form-group">
-                        <label>Размеры:</label>
-                        <input type="text" id="prodSizes" value="XS, S, M, L" placeholder="S, M, L">
-                    </div>
-                    <div class="form-group">
-                        <label>Загрузить фото (можно несколько):</label>
-                        <input type="file" id="prodFiles" accept="image/*" multiple onchange="previewImages(event)">
-                    </div>
-                </div>
-
-                <div id="imagePreviewContainer" style="display:flex; gap:8px; margin-top:8px; flex-wrap:wrap;"></div>
-
-                <button type="submit" class="btn-gold" id="saveProductBtn" style="margin-top: 12px; width: 100%;">Сохранить товар в каталог</button>
-            </form>
-
-            <div style="margin-top: 25px; border-top: 1px solid var(--border-color); padding-top: 15px;">
-                <h3 style="color: var(--accent-gold); margin-bottom: 12px; font-size:16px;">🎨 Настройки СТИЛЯ и Курсов Валют</h3>
-                <div class="admin-grid">
                     <div class="form-group">
                         <label>Название магазина:</label>
                         <input type="text" id="settingLogo" value="OSORI15">
                     </div>
                     <div class="form-group">
-                        <label>Баннер (Заголовок):</label>
+                        <label>Заголовок баннера:</label>
                         <input type="text" id="settingTitle" value="OSORI15 FASHION">
                     </div>
                     <div class="form-group">
-                        <label>Баннер (Подзаголовок):</label>
+                        <label>Подзаголовок баннера:</label>
                         <input type="text" id="settingSubtitle" value="Премиальная женская одежда в Душанбе">
                     </div>
                     <div class="form-group">
-                        <label>Цвет (Gold):</label>
+                        <label>Акцентный цвет (Gold):</label>
                         <input type="color" id="settingAccentColor" value="#d4af37">
                     </div>
                     <div class="form-group">
@@ -603,7 +578,7 @@
                         <input type="text" id="settingAddress" value="Душанбе, пр. Рудаки 15">
                     </div>
                 </div>
-                <button type="button" class="btn-gold" onclick="saveSiteSettings()" style="width: 100%;">Сохранить настройки</button>
+                <button type="button" class="btn-gold" onclick="saveSiteSettings()" style="width: 100%;">Сохранить настройки стиля и сайта</button>
             </div>
 
             <!-- УПРАВЛЕНИЕ АДМИНАМИ (Только для samirdv888@gmail.com) -->
@@ -643,7 +618,59 @@
         <p style="font-size: 10px; color: var(--text-muted); margin-top: 10px;">© 2026 OSORI15. Все права защищены.</p>
     </footer>
 
-    <!-- Лайтбокс для просмотра фото до конца на весь экран -->
+    <!-- ВСПЛЫВАЮЩЕЕ ОКНО ДЛЯ ДОБАВЛЕНИЯ / РЕДАКТИРОВАНИЯ ТОВАРА -->
+    <div id="addProductModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('addProductModal')">&times;</span>
+            <h3 id="addProductModalTitle" style="color:var(--accent-gold); margin-bottom: 15px; font-size:18px;">👗 Добавление товара</h3>
+            <form id="productForm">
+                <input type="hidden" id="editProductId">
+                <input type="hidden" id="prodImage" required>
+
+                <div class="form-group">
+                    <label>Название товара:</label>
+                    <input type="text" id="prodTitle" required placeholder="Платье 'Silk Luxury'">
+                </div>
+                <div class="form-group">
+                    <label>Категория:</label>
+                    <select id="prodCategory">
+                        <option value="Платья">Платья</option>
+                        <option value="Костюмы">Костюмы</option>
+                        <option value="Верхняя одежда">Верхняя одежда</option>
+                        <option value="Блузки">Блузки и Рубашки</option>
+                        <option value="Аксессуары">Аксессуары</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Цена (в TJS):</label>
+                    <input type="number" id="prodPrice" required placeholder="650">
+                </div>
+                <div class="form-group">
+                    <label>Метка:</label>
+                    <select id="prodBadge">
+                        <option value="NEW">NEW</option>
+                        <option value="SALE">SALE</option>
+                        <option value="HIT">HIT</option>
+                        <option value="EXCLUSIVE">EXCLUSIVE</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Размеры:</label>
+                    <input type="text" id="prodSizes" value="XS, S, M, L" placeholder="S, M, L">
+                </div>
+                <div class="form-group">
+                    <label>Загрузить фото с телефона (можно несколько):</label>
+                    <input type="file" id="prodFiles" accept="image/*" multiple onchange="previewImages(event)">
+                </div>
+
+                <div id="imagePreviewContainer" style="display:flex; gap:8px; margin-top:8px; flex-wrap:wrap;"></div>
+
+                <button type="submit" class="btn-gold" id="saveProductBtn" style="margin-top: 15px; width: 100%;">Сохранить товар в каталог</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Лайтбокс для просмотра фото -->
     <div id="lightboxModal" class="modal" onclick="closeLightbox()">
         <span class="close-btn">&times;</span>
         <img id="lightboxImg" src="" alt="Full size">
@@ -743,7 +770,7 @@
         let isAdmin = false;
         let siteSettings = {};
         let currentUploadedImages = [];
-        let activeSlidersIntervals = []; // Для управления автопрокруткой слайдеров
+        let activeSlidersIntervals = [];
 
         let currentLang = localStorage.getItem("osori_lang") || "ru";
         let currentCurrency = localStorage.getItem("osori_currency") || "TJS";
@@ -844,6 +871,10 @@
             if (s.phone) document.getElementById("footerWhatsapp").href = `https://wa.me/${s.phone}`;
             if (s.accentColor) document.documentElement.style.setProperty('--accent-gold', s.accentColor);
             
+            // Применение шрифтов
+            if (s.headingFont) document.documentElement.style.setProperty('--heading-font', s.headingFont);
+            if (s.siteFont) document.documentElement.style.setProperty('--site-font', s.siteFont);
+
             if (s.rateUsd) document.getElementById("settingRateUsd").value = s.rateUsd;
             if (s.rateRub) document.getElementById("settingRateRub").value = s.rateRub;
             if (s.phone) document.getElementById("settingPhone").value = s.phone;
@@ -851,6 +882,8 @@
             if (s.logo) document.getElementById("settingLogo").value = s.logo;
             if (s.title) document.getElementById("settingTitle").value = s.title;
             if (s.subtitle) document.getElementById("settingSubtitle").value = s.subtitle;
+            if (s.headingFont) document.getElementById("settingHeadingFont").value = s.headingFont;
+            if (s.siteFont) document.getElementById("settingSiteFont").value = s.siteFont;
         }
 
         onValue(ref(db, 'admins'), (snapshot) => {
@@ -903,7 +936,16 @@
             }
         });
 
-        // Загрузка фото через ImgBB с телефона
+        window.openAddProductModal = function() {
+            document.getElementById("editProductId").value = "";
+            document.getElementById("productForm").reset();
+            document.getElementById("imagePreviewContainer").innerHTML = "";
+            currentUploadedImages = [];
+            document.getElementById("addProductModalTitle").innerText = "👗 Добавление нового товара";
+            document.getElementById("saveProductBtn").innerText = "Сохранить товар в каталог";
+            document.getElementById("addProductModal").style.display = "flex";
+        };
+
         window.previewImages = async function(event) {
             const files = event.target.files;
             const container = document.getElementById("imagePreviewContainer");
@@ -964,11 +1006,10 @@
 
             if (editId) {
                 await update(ref(db, `products/${editId}`), pData);
-                document.getElementById("editProductId").value = "";
-                document.getElementById("saveProductBtn").innerText = "Сохранить товар в каталог";
             } else {
                 await set(push(ref(db, 'products')), pData);
             }
+            closeModal('addProductModal');
             currentUploadedImages = [];
             document.getElementById("imagePreviewContainer").innerHTML = "";
             document.getElementById("productForm").reset();
@@ -980,18 +1021,18 @@
                 title: document.getElementById("settingTitle").value,
                 subtitle: document.getElementById("settingSubtitle").value,
                 accentColor: document.getElementById("settingAccentColor").value,
+                headingFont: document.getElementById("settingHeadingFont").value,
+                siteFont: document.getElementById("settingSiteFont").value,
                 rateUsd: document.getElementById("settingRateUsd").value,
                 rateRub: document.getElementById("settingRateRub").value,
                 phone: document.getElementById("settingPhone").value,
                 address: document.getElementById("settingAddress").value
             };
             await set(ref(db, 'settings'), settingsData);
-            alert("Настройки успешно сохранены!");
+            alert("Настройки стиля и сайта успешно сохранены!");
         };
 
-        // Рендер каталога + АВТО-СЛАЙДЕР (если несколько фото, крутятся сами каждые 3 сек)
         window.renderCatalog = function(products) {
-            // Очищаем старые таймеры автопрокрутки
             activeSlidersIntervals.forEach(clearInterval);
             activeSlidersIntervals = [];
 
@@ -1037,7 +1078,6 @@
                 `;
                 container.appendChild(card);
 
-                // Запуск автоматического слайдера для каждого товара, если фото больше 1
                 if (imgList.length > 1) {
                     const interval = setInterval(() => {
                         const slider = document.getElementById(sliderId);
@@ -1046,13 +1086,12 @@
                         let count = parseInt(slider.getAttribute("data-count"));
                         let nextIndex = (currentIndex + 1) % count;
                         switchToSlide(sliderId, nextIndex);
-                    }, 3000); // 3 секунды автопрокрутка
+                    }, 3000);
                     activeSlidersIntervals.push(interval);
                 }
             });
         };
 
-        // Переключение слайда
         window.switchToSlide = function(sliderId, index) {
             const slider = document.getElementById(sliderId);
             if (!slider) return;
@@ -1076,7 +1115,6 @@
             switchToSlide(sliderId, index);
         };
 
-        // Открытие фото на весь экран (Лайтбокс)
         window.openLightbox = function(url) {
             document.getElementById("lightboxImg").src = url;
             document.getElementById("lightboxModal").style.display = "flex";
@@ -1111,8 +1149,9 @@
                 renderPreviews();
             }
 
+            document.getElementById("addProductModalTitle").innerText = "✏️ Редактирование товара";
             document.getElementById("saveProductBtn").innerText = "Обновить изменения";
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            document.getElementById("addProductModal").style.display = "flex";
         };
 
         window.orderWA = (title, price) => {
