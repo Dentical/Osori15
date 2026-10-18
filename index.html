@@ -298,7 +298,7 @@
             width: 100%;
             height: 320px;
             position: relative;
-            background: #1a1a1d;
+            background: #121214;
             overflow: hidden;
             cursor: pointer;
         }
@@ -707,7 +707,7 @@
                     <input type="text" id="prodSizes" value="XS, S, M, L" placeholder="S, M, L">
                 </div>
                 <div class="form-group">
-                    <label>Загрузить фото (без ограничений, любые файлы):</label>
+                    <label>Загрузить фото (любые файлы, без ограничений):</label>
                     <input type="file" id="prodFiles" accept="image/*" multiple onchange="previewImages(event)">
                 </div>
 
@@ -1031,24 +1031,64 @@
             document.getElementById("addProductModal").style.display = "flex";
         };
 
-        // НАДЕЖНАЯ КОНВЕРТАЦИЯ ФОТО БУКВАЛЬНО БЕЗ ОГРАНИЧЕНИЙ (Локальное сохранение)
+        // НАДЕЖНАЯ ЗАГРУЗКА ЛЮБЫХ ФОТО ЧЕРЕЗ ИНТЕРНЕТ-ХОСТИНГ ИМЕЙДЖЕЙ С СЕТЕВЫМ ДУБЛИРОВАНИЕМ
         window.previewImages = async function(event) {
             const files = event.target.files;
             if (!files || files.length === 0) return;
             const container = document.getElementById("imagePreviewContainer");
-            container.innerHTML += "<p style='color:var(--accent-gold); font-size:12px;'>Обработка фото...</p>";
+            container.innerHTML += "<p style='color:var(--accent-gold); font-size:12px;'>Загрузка фотографий на сервер...</p>";
+            const apiKey = "6d257f2c1d0138241434c44161b3699b";
 
             for (let i = 0; i < files.length; i++) {
                 const file = files[i];
-                await new Promise((resolve) => {
-                    const reader = new FileReader();
-                    reader.onload = function(e) {
-                        currentUploadedImages.push(e.target.result);
-                        resolve();
-                    };
-                    reader.readAsDataURL(file);
-                });
+                let uploadedUrl = "";
+                
+                try {
+                    const formData = new FormData();
+                    formData.append("image", file);
+                    const res = await fetch(`https://api.imgbb.com/1/upload?key=${apiKey}`, { method: "POST", body: formData });
+                    const result = await res.json();
+                    if (result && result.success) {
+                        uploadedUrl = result.data.url;
+                    }
+                } catch (err) {
+                    console.log("Хостинг недоступен, используем прямую конвертацию");
+                }
+
+                // Если по какой-то причине хостинг не ответил, используем локальное сжатие в картинку
+                if (!uploadedUrl) {
+                    await new Promise((resolve) => {
+                        const reader = new FileReader();
+                        reader.onload = function(e) {
+                            // Создаем уменьшенную копию в памяти, чтобы база данных точно её приняла без черных экранов
+                            const img = new Image();
+                            img.onload = function() {
+                                const canvas = document.createElement('canvas');
+                                const MAX_WIDTH = 800;
+                                const MAX_HEIGHT = 800;
+                                let width = img.width;
+                                let height = img.height;
+                                if (width > height) {
+                                    if (width > MAX_WIDTH) { height *= MAX_WIDTH / width; width = MAX_WIDTH; }
+                                } else {
+                                    if (height > MAX_HEIGHT) { width *= MAX_HEIGHT / height; height = MAX_HEIGHT; }
+                                }
+                                canvas.width = width;
+                                canvas.height = height;
+                                const ctx = canvas.getContext('2d');
+                                ctx.drawImage(img, 0, 0, width, height);
+                                currentUploadedImages.push(canvas.toDataURL('image/jpeg', 0.8));
+                                resolve();
+                            };
+                            img.src = e.target.result;
+                        };
+                        reader.readAsDataURL(file);
+                    });
+                } else {
+                    currentUploadedImages.push(uploadedUrl);
+                }
             }
+
             document.getElementById("prodImage").value = currentUploadedImages.join(", ");
             renderPreviews();
         };
