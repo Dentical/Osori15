@@ -707,7 +707,7 @@
                     <input type="text" id="prodSizes" value="XS, S, M, L" placeholder="S, M, L">
                 </div>
                 <div class="form-group">
-                    <label>Загрузить фото (любые файлы, без ограничений):</label>
+                    <label>Загрузить фото (любые файлы):</label>
                     <input type="file" id="prodFiles" accept="image/*" multiple onchange="previewImages(event)">
                 </div>
 
@@ -1024,19 +1024,21 @@
             document.getElementById("editProductId").value = "";
             document.getElementById("productForm").reset();
             document.getElementById("imagePreviewContainer").innerHTML = "";
-            currentUploadedImages = [];
+            currentUploadedImages = []; // Очищаем массив при открытии
             document.getElementById("prodImage").value = "";
             document.getElementById("addProductModalTitle").innerText = "👗 Добавление нового товара";
             document.getElementById("saveProductBtn").innerText = "Сохранить товар в каталог";
             document.getElementById("addProductModal").style.display = "flex";
         };
 
-        // НАДЕЖНАЯ ЗАГРУЗКА ЛЮБЫХ ФОТО ЧЕРЕЗ ИНТЕРНЕТ-ХОСТИНГ ИМЕЙДЖЕЙ С СЕТЕВЫМ ДУБЛИРОВАНИЕМ
+        // ИСПРАВЛЕНО: Полная очистка старых фото при выборе новых файлов
         window.previewImages = async function(event) {
             const files = event.target.files;
             if (!files || files.length === 0) return;
+            
+            currentUploadedImages = []; // Сбрасываем старые фото перед добавлением новых
             const container = document.getElementById("imagePreviewContainer");
-            container.innerHTML += "<p style='color:var(--accent-gold); font-size:12px;'>Загрузка фотографий на сервер...</p>";
+            container.innerHTML = "<p style='color:var(--accent-gold); font-size:12px;'>Загрузка фотографий...</p>";
             const apiKey = "6d257f2c1d0138241434c44161b3699b";
 
             for (let i = 0; i < files.length; i++) {
@@ -1052,15 +1054,13 @@
                         uploadedUrl = result.data.url;
                     }
                 } catch (err) {
-                    console.log("Хостинг недоступен, используем прямую конвертацию");
+                    console.log("Хостинг недоступен, используем резервную конвертацию");
                 }
 
-                // Если по какой-то причине хостинг не ответил, используем локальное сжатие в картинку
                 if (!uploadedUrl) {
                     await new Promise((resolve) => {
                         const reader = new FileReader();
                         reader.onload = function(e) {
-                            // Создаем уменьшенную копию в памяти, чтобы база данных точно её приняла без черных экранов
                             const img = new Image();
                             img.onload = function() {
                                 const canvas = document.createElement('canvas');
