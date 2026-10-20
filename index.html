@@ -38,7 +38,6 @@
             background-color: var(--bg-dark);
             color: var(--text-main);
             line-height: 1.6;
-            transition: background-color 0.3s, color 0.3s;
         }
 
         h1, h2, h3, .logo {
@@ -46,7 +45,6 @@
             letter-spacing: 1px;
         }
 
-        /* Шапка */
         header {
             background-color: rgba(15, 15, 16, 0.95);
             backdrop-filter: blur(10px);
@@ -130,7 +128,6 @@
             padding: 20px 15px;
         }
 
-        /* Главный баннер */
         .hero {
             text-align: center;
             padding: 50px 15px;
@@ -153,13 +150,6 @@
             margin: 0 auto;
         }
 
-        @media(min-width: 768px) {
-            .hero { padding: 70px 20px; }
-            .hero h1 { font-size: 42px; }
-            header { padding: 15px 30px; }
-        }
-
-        /* Поиск и фильтрация */
         .controls-bar {
             display: flex;
             gap: 12px;
@@ -182,7 +172,6 @@
             .controls-bar input { flex: 1; min-width: 250px; }
         }
 
-        /* АДМИН ПАНЕЛЬ */
         .admin-dashboard {
             display: none;
             background: var(--bg-card);
@@ -257,7 +246,6 @@
             border-radius: 4px;
         }
 
-        /* КАТАЛОГ И АВТО-СЛАЙДЕР ФОТО */
         .catalog-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
@@ -273,7 +261,7 @@
             flex-direction: column;
             justify-content: space-between;
             position: relative;
-            transition: border-color 0.3s, background-color 0.3s;
+            transition: border-color 0.3s;
         }
 
         .product-card:hover {
@@ -382,7 +370,6 @@
             text-transform: uppercase;
         }
 
-        /* Модальные окна */
         .modal {
             display: none;
             position: fixed;
@@ -470,7 +457,6 @@
     <header>
         <div class="logo" id="siteLogo">OSORI15</div>
         <div class="header-actions">
-            <!-- КНОПКИ БЫСТРОГО ДОСТУПА В ШАПКЕ ДЛЯ АДМИНА -->
             <button id="addProdHeaderBtn" class="btn-gold" style="display:none;" onclick="openAddProductModal()" title="Добавить товар">➕</button>
             <button id="fontHeaderBtn" class="btn-outline" style="display:none;" onclick="openFontModal()" title="Шрифты">А</button>
             <button id="settingsHeaderBtn" class="btn-outline" style="display:none;" onclick="openSiteSettingsModal()" title="Настройки сайта">⚙️</button>
@@ -501,7 +487,6 @@
             <p id="heroSubtitle">Премиальная концепция женской одежды в Душанбе</p>
         </div>
 
-        <!-- АДМИН ПАНЕЛЬ -->
         <div id="adminPanel" class="admin-dashboard">
             <div class="admin-header">
                 <h2>⚙️ Панель Управления (MAX ADMIN)</h2>
@@ -523,13 +508,11 @@
                 </div>
             </div>
 
-            <!-- БЫСТРЫЕ ДЕЙСТВИЯ -->
             <div style="display: flex; gap: 10px; margin-bottom: 25px; flex-wrap: wrap;">
                 <button type="button" class="btn-gold" onclick="openAddProductModal()" style="flex:1; padding: 12px; font-size: 13px;">➕ Добавить новый товар</button>
                 <button type="button" class="btn-outline" onclick="openSiteSettingsModal()" style="padding: 12px; font-size: 13px;">⚙️ Полные настройки сайта</button>
             </div>
 
-            <!-- УПРАВЛЕНИЕ АДМИНАМИ (Только для samirdv888@gmail.com) -->
             <div id="superAdminSection" style="display: none; border-top: 1px solid var(--border-color); padding-top: 15px;">
                 <h3 style="color: var(--accent-gold); margin-bottom: 12px; font-size:16px;">👥 Управление администраторами</h3>
                 <div style="display: flex; gap: 8px; margin-bottom: 12px; flex-wrap: wrap;">
@@ -540,7 +523,6 @@
             </div>
         </div>
 
-        <!-- Поиск и фильтры -->
         <div class="controls-bar">
             <input type="text" id="searchInput" placeholder="🔎 Поиск по коллекции..." oninput="filterProducts()">
             <select id="categoryFilter" onchange="filterProducts()">
@@ -566,7 +548,6 @@
         <p style="font-size: 10px; color: var(--text-muted); margin-top: 10px;">© 2026 OSORI15. Все права защищены.</p>
     </footer>
 
-    <!-- ВСПЛЫВАЮЩЕЕ ОКНО "ПОЛНЫЕ НАСТРОЙКИ САЙТА" (КНОПКА "⚙️") -->
     <div id="siteSettingsModal" class="modal">
         <div class="modal-content">
             <span class="close-btn" onclick="closeModal('siteSettingsModal')">&times;</span>
@@ -640,7 +621,6 @@
         </div>
     </div>
 
-    <!-- ВСПЛЫВАЮЩЕЕ ОКНО ДЛЯ ВЫБОРА ШРИФТА (КНОПКА "А") -->
     <div id="fontModal" class="modal">
         <div class="modal-content">
             <span class="close-btn" onclick="closeModal('fontModal')">&times;</span>
@@ -673,7 +653,6 @@
             <h3 id="addProductModalTitle" style="color:var(--accent-gold); margin-bottom: 15px; font-size:18px;">👗 Добавление товара</h3>
             <form id="productForm">
                 <input type="hidden" id="editProductId">
-                <input type="hidden" id="prodImage">
 
                 <div class="form-group">
                     <label>Название товара:</label>
@@ -706,25 +685,29 @@
                     <label>Размеры:</label>
                     <input type="text" id="prodSizes" value="XS, S, M, L" placeholder="S, M, L">
                 </div>
+
+                <!-- ЗАГРУЗКА ИЗ УСТРОЙСТВА ИЛИ ССЫЛКОЙ -->
                 <div class="form-group">
-                    <label>Загрузить фото (любые файлы):</label>
-                    <input type="file" id="prodFiles" accept="image/*" multiple onchange="previewImages(event)">
+                    <label>Загрузить фото с устройства (в 100% качестве):</label>
+                    <input type="file" id="prodFilePicker" accept="image/*" multiple>
+                </div>
+                <div class="form-group">
+                    <label>Или укажите прямые ссылки (через запятую):</label>
+                    <input type="text" id="prodImage" placeholder="https://...">
                 </div>
 
-                <div id="imagePreviewContainer" style="display:flex; gap:8px; margin-top:8px; flex-wrap:wrap;"></div>
+                <div id="uploadStatus" style="font-size: 12px; color: var(--accent-gold); margin-bottom: 10px;"></div>
 
                 <button type="submit" class="btn-gold" id="saveProductBtn" style="margin-top: 15px; width: 100%;">Сохранить товар в каталог</button>
             </form>
         </div>
     </div>
 
-    <!-- Лайтбокс для просмотра фото -->
     <div id="lightboxModal" class="modal" onclick="closeLightbox()">
         <span class="close-btn">&times;</span>
         <img id="lightboxImg" src="" alt="Full size">
     </div>
 
-    <!-- Модальные окна: Заказы, Покупка, Размеры -->
     <div id="ordersModal" class="modal">
         <div class="modal-content">
             <span class="close-btn" onclick="closeModal('ordersModal')">&times;</span>
@@ -792,11 +775,12 @@
         </div>
     </div>
 
-    <!-- Firebase SDK (Версия 13) -->
+    <!-- Firebase SDK (Версия 13) с подключением Firebase Storage -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/13.0.0/firebase-app.js";
         import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/13.0.0/firebase-auth.js";
         import { getDatabase, ref, set, push, onValue, remove, update } from "https://www.gstatic.com/firebasejs/13.0.0/firebase-database.js";
+        import { getStorage, ref as storageRef, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/13.0.0/firebase-storage.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyDL3fvNpu8FfZBY85gpg4FjQ_0GcMwr-pY",
@@ -811,13 +795,13 @@
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getDatabase(app);
+        const storage = getStorage(app);
         const provider = new GoogleAuthProvider();
 
         let adminEmailsList = ["samirdv888@gmail.com", "abdullochoriev4242@gmail.com"];
         let allProducts = [];
         let isAdmin = false;
         let siteSettings = {};
-        let currentUploadedImages = [];
         let activeSlidersIntervals = [];
 
         let currentLang = localStorage.getItem("osori_lang") || "ru";
@@ -1023,93 +1007,10 @@
         window.openAddProductModal = function() {
             document.getElementById("editProductId").value = "";
             document.getElementById("productForm").reset();
-            document.getElementById("imagePreviewContainer").innerHTML = "";
-            currentUploadedImages = []; // Очищаем массив при открытии
-            document.getElementById("prodImage").value = "";
+            document.getElementById("uploadStatus").innerText = "";
             document.getElementById("addProductModalTitle").innerText = "👗 Добавление нового товара";
             document.getElementById("saveProductBtn").innerText = "Сохранить товар в каталог";
             document.getElementById("addProductModal").style.display = "flex";
-        };
-
-        // ИСПРАВЛЕНО: Полная очистка старых фото при выборе новых файлов
-        window.previewImages = async function(event) {
-            const files = event.target.files;
-            if (!files || files.length === 0) return;
-            
-            currentUploadedImages = []; // Сбрасываем старые фото перед добавлением новых
-            const container = document.getElementById("imagePreviewContainer");
-            container.innerHTML = "<p style='color:var(--accent-gold); font-size:12px;'>Загрузка фотографий...</p>";
-            const apiKey = "6d257f2c1d0138241434c44161b3699b";
-
-            for (let i = 0; i < files.length; i++) {
-                const file = files[i];
-                let uploadedUrl = "";
-                
-                try {
-                    const formData = new FormData();
-                    formData.append("image", file);
-                    const res = await fetch(`https://api.imgbb.com/1/upload?key=${apiKey}`, { method: "POST", body: formData });
-                    const result = await res.json();
-                    if (result && result.success) {
-                        uploadedUrl = result.data.url;
-                    }
-                } catch (err) {
-                    console.log("Хостинг недоступен, используем резервную конвертацию");
-                }
-
-                if (!uploadedUrl) {
-                    await new Promise((resolve) => {
-                        const reader = new FileReader();
-                        reader.onload = function(e) {
-                            const img = new Image();
-                            img.onload = function() {
-                                const canvas = document.createElement('canvas');
-                                const MAX_WIDTH = 800;
-                                const MAX_HEIGHT = 800;
-                                let width = img.width;
-                                let height = img.height;
-                                if (width > height) {
-                                    if (width > MAX_WIDTH) { height *= MAX_WIDTH / width; width = MAX_WIDTH; }
-                                } else {
-                                    if (height > MAX_HEIGHT) { width *= MAX_HEIGHT / height; height = MAX_HEIGHT; }
-                                }
-                                canvas.width = width;
-                                canvas.height = height;
-                                const ctx = canvas.getContext('2d');
-                                ctx.drawImage(img, 0, 0, width, height);
-                                currentUploadedImages.push(canvas.toDataURL('image/jpeg', 0.8));
-                                resolve();
-                            };
-                            img.src = e.target.result;
-                        };
-                        reader.readAsDataURL(file);
-                    });
-                } else {
-                    currentUploadedImages.push(uploadedUrl);
-                }
-            }
-
-            document.getElementById("prodImage").value = currentUploadedImages.join(", ");
-            renderPreviews();
-        };
-
-        function renderPreviews() {
-            const container = document.getElementById("imagePreviewContainer");
-            container.innerHTML = "";
-            currentUploadedImages.forEach((url, idx) => {
-                container.innerHTML += `
-                    <div style="position:relative; width:50px; height:50px;">
-                        <img src="${url}" style="width:100%; height:100%; object-fit:cover; border-radius:4px; border:1px solid var(--accent-gold);">
-                        <button type="button" onclick="removeImg(${idx})" style="position:absolute; top:-5px; right:-5px; background:var(--danger); color:#fff; border:none; border-radius:50%; width:16px; height:16px; font-size:9px;">✕</button>
-                    </div>
-                `;
-            });
-        }
-
-        window.removeImg = (idx) => {
-            currentUploadedImages.splice(idx, 1);
-            document.getElementById("prodImage").value = currentUploadedImages.join(", ");
-            renderPreviews();
         };
 
         onValue(ref(db, 'products'), (snapshot) => {
@@ -1120,21 +1021,46 @@
             renderCatalog(allProducts);
         });
 
+        // ОБРАБОТКА ЗАГРУЗКИ ФАЙЛОВ В 100% КАЧЕСТВЕ
         document.getElementById("productForm").addEventListener("submit", async (e) => {
             e.preventDefault();
-            const imgVal = document.getElementById("prodImage").value.trim();
-            if (!imgVal && currentUploadedImages.length > 0) {
-                document.getElementById("prodImage").value = currentUploadedImages.join(", ");
+            const editId = document.getElementById("editProductId").value;
+            const fileInput = document.getElementById("prodFilePicker");
+            const files = fileInput.files;
+            const statusDiv = document.getElementById("uploadStatus");
+
+            let uploadedUrls = [];
+
+            // Если были выбраны файлы с устройства, загружаем их в Firebase Storage
+            if (files && files.length > 0) {
+                statusDiv.innerText = "Загрузка фото в 100% качестве...";
+                for (let i = 0; i < files.length; i++) {
+                    const file = files[i];
+                    const fileRef = storageRef(storage, `products/${Date.now()}_${file.name}`);
+                    await uploadBytes(fileRef, file);
+                    const url = await getDownloadURL(fileRef);
+                    uploadedUrls.push(url);
+                }
             }
 
-            const editId = document.getElementById("editProductId").value;
+            // Добавляем ранее введенные вручную ссылки, если они есть
+            const textImages = document.getElementById("prodImage").value.trim();
+            if (textImages) {
+                const manualList = textImages.split(",").map(s => s.trim()).filter(Boolean);
+                uploadedUrls = [...uploadedUrls, ...manualList];
+            }
+
+            const finalImageUrl = uploadedUrls.length > 0 
+                ? uploadedUrls.join(", ") 
+                : "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=600";
+
             const pData = {
                 title: document.getElementById("prodTitle").value,
                 category: document.getElementById("prodCategory").value,
                 price: document.getElementById("prodPrice").value,
                 badge: document.getElementById("prodBadge").value,
                 sizes: document.getElementById("prodSizes").value,
-                image: document.getElementById("prodImage").value || "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=600"
+                image: finalImageUrl
             };
 
             if (editId) {
@@ -1142,9 +1068,9 @@
             } else {
                 await set(push(ref(db, 'products')), pData);
             }
+
+            statusDiv.innerText = "";
             closeModal('addProductModal');
-            currentUploadedImages = [];
-            document.getElementById("imagePreviewContainer").innerHTML = "";
             document.getElementById("productForm").reset();
         });
 
@@ -1208,8 +1134,8 @@
                             <button class="btn-gold" onclick="openBuyModal('${p.id}', '${p.title}', '${p.price}', '${p.sizes}')">${translations[currentLang].buy}</button>
                             <button class="btn-wa" onclick="orderWA('${p.title}', '${p.price}')">💬 WhatsApp</button>
                             ${isAdmin ? `
-                                <div style="display:flex; gap:5px; margin-top:5px;">
-                                    <button class="btn-outline" style="flex:1;" onclick="editProduct('${p.id}')">✏️ Ред.</button>
+                                <div style="display:flex; gap:5px; margin-top:8px;">
+                                    <button class="btn-outline" style="flex:1;" onclick="editProduct('${p.id}')">✏️ Редактировать</button>
                                     <button class="btn-outline" style="color:var(--danger); border-color:var(--danger);" onclick="deleteProduct('${p.id}')">🗑️</button>
                                 </div>
                             ` : ''}
@@ -1283,11 +1209,6 @@
             document.getElementById("prodBadge").value = p.badge || "NEW";
             document.getElementById("prodSizes").value = p.sizes;
             document.getElementById("prodImage").value = p.image;
-            
-            if (p.image) {
-                currentUploadedImages = p.image.split(",").map(i => i.trim());
-                renderPreviews();
-            }
 
             document.getElementById("addProductModalTitle").innerText = "✏️ Редактирование товара";
             document.getElementById("saveProductBtn").innerText = "Обновить изменения";
