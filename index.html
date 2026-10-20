@@ -298,7 +298,7 @@
             position: absolute;
             top: 0; left: 0;
             opacity: 0;
-            transition: opacity 0.6s ease-in-out;
+            transition: opacity 0.4s ease-in-out;
         }
 
         .img-slider-container img.active {
@@ -646,7 +646,6 @@
         </div>
     </div>
 
-    <!-- ВСПЛЫВАЮЩЕЕ ОКНО ДЛЯ ДОБАВЛЕНИЯ / РЕДАКТИРОВАНИЯ ТОВАРА -->
     <div id="addProductModal" class="modal">
         <div class="modal-content">
             <span class="close-btn" onclick="closeModal('addProductModal')">&times;</span>
@@ -686,9 +685,9 @@
                     <input type="text" id="prodSizes" value="XS, S, M, L" placeholder="S, M, L">
                 </div>
 
-                <!-- ЗАГРУЗКА ИЗ УСТРОЙСТВА ИЛИ ССЫЛКОЙ -->
+                <!-- Быстрая загрузка фотографий -->
                 <div class="form-group">
-                    <label>Загрузить фото с устройства (в 100% качестве):</label>
+                    <label>Загрузить фото с устройства:</label>
                     <input type="file" id="prodFilePicker" accept="image/*" multiple>
                 </div>
                 <div class="form-group">
@@ -775,12 +774,12 @@
         </div>
     </div>
 
-    <!-- Firebase SDK (Версия 13) с подключением Firebase Storage -->
+    <!-- Firebase SDK (Версия 13) -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/13.0.0/firebase-app.js";
         import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/13.0.0/firebase-auth.js";
         import { getDatabase, ref, set, push, onValue, remove, update } from "https://www.gstatic.com/firebasejs/13.0.0/firebase-database.js";
-        import { getStorage, ref as storageRef, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/13.0.0/firebase-storage.js";
+        import { getStorage, ref as storageRef, uploadString, getDownloadURL } from "https://www.gstatic.com/firebasejs/13.0.0/firebase-storage.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyDL3fvNpu8FfZBY85gpg4FjQ_0GcMwr-pY",
@@ -1021,7 +1020,32 @@
             renderCatalog(allProducts);
         });
 
-        // ОБРАБОТКА ЗАГРУЗКИ ФАЙЛОВ В 100% КАЧЕСТВЕ
+        // Функция быстрой подготовки и сжатия изображения на устройстве перед загрузкой
+        function compressImage(file, maxWidth = 1200, quality = 0.85) {
+            return new Promise((resolve) => {
+                const reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = (e) => {
+                    const img = new Image();
+                    img.src = e.target.result;
+                    img.onload = () => {
+                        const canvas = document.createElement('canvas');
+                        let w = img.width;
+                        let h = img.height;
+                        if (w > maxWidth) {
+                            h = Math.round((h * maxWidth) / w);
+                            w = maxWidth;
+                        }
+                        canvas.width = w;
+                        canvas.height = h;
+                        const ctx = canvas.getContext('2d');
+                        ctx.drawImage(img, 0, 0, w, h);
+                        resolve(canvas.toDataURL('image/jpeg', quality));
+                    };
+                };
+            });
+        }
+
         document.getElementById("productForm").addEventListener("submit", async (e) => {
             e.preventDefault();
             const editId = document.getElementById("editProductId").value;
@@ -1031,19 +1055,17 @@
 
             let uploadedUrls = [];
 
-            // Если были выбраны файлы с устройства, загружаем их в Firebase Storage
             if (files && files.length > 0) {
-                statusDiv.innerText = "Загрузка фото в 100% качестве...";
+                statusDiv.innerText = "Быстрая оптимизация и сохранение изображений...";
                 for (let i = 0; i < files.length; i++) {
-                    const file = files[i];
-                    const fileRef = storageRef(storage, `products/${Date.now()}_${file.name}`);
-                    await uploadBytes(fileRef, file);
+                    const compressedDataUrl = await compressImage(files[i]);
+                    const fileRef = storageRef(storage, `products/${Date.now()}_${i}.jpg`);
+                    await uploadString(fileRef, compressedDataUrl, 'data_url');
                     const url = await getDownloadURL(fileRef);
                     uploadedUrls.push(url);
                 }
             }
 
-            // Добавляем ранее введенные вручную ссылки, если они есть
             const textImages = document.getElementById("prodImage").value.trim();
             if (textImages) {
                 const manualList = textImages.split(",").map(s => s.trim()).filter(Boolean);
