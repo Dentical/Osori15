@@ -685,7 +685,6 @@
                     <input type="text" id="prodSizes" value="XS, S, M, L" placeholder="S, M, L">
                 </div>
 
-                <!-- Быстрая загрузка фотографий -->
                 <div class="form-group">
                     <label>Загрузить фото с устройства:</label>
                     <input type="file" id="prodFilePicker" accept="image/*" multiple>
@@ -1020,7 +1019,6 @@
             renderCatalog(allProducts);
         });
 
-        // Функция быстрой подготовки и сжатия изображения на устройстве перед загрузкой
         function compressImage(file, maxWidth = 1200, quality = 0.85) {
             return new Promise((resolve) => {
                 const reader = new FileReader();
