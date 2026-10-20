@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>OSORI15 — Haute Couture & Female Fashion</title>
     
-    <!-- Шрифты Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -261,7 +260,7 @@
             flex-direction: column;
             justify-content: space-between;
             position: relative;
-            transition: border-color 0.3s;
+            transition: border-color 0.2s;
         }
 
         .product-card:hover {
@@ -298,7 +297,7 @@
             position: absolute;
             top: 0; left: 0;
             opacity: 0;
-            transition: opacity 0.4s ease-in-out;
+            transition: opacity 0.3s ease-in-out;
         }
 
         .img-slider-container img.active {
@@ -321,7 +320,7 @@
             border-radius: 50%;
             background: rgba(255,255,255,0.4);
             cursor: pointer;
-            transition: background 0.3s;
+            transition: background 0.2s;
         }
 
         .slider-dot.active {
@@ -773,7 +772,6 @@
         </div>
     </div>
 
-    <!-- Firebase SDK (Версия 13) -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/13.0.0/firebase-app.js";
         import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/13.0.0/firebase-auth.js";
@@ -1019,7 +1017,7 @@
             renderCatalog(allProducts);
         });
 
-        function compressImage(file, maxWidth = 1200, quality = 0.85) {
+        function compressImage(file, maxWidth = 1000, quality = 0.8) {
             return new Promise((resolve) => {
                 const reader = new FileReader();
                 reader.readAsDataURL(file);
@@ -1054,7 +1052,7 @@
             let uploadedUrls = [];
 
             if (files && files.length > 0) {
-                statusDiv.innerText = "Быстрая оптимизация и сохранение изображений...";
+                statusDiv.innerText = "⚡ Загрузка фото...";
                 for (let i = 0; i < files.length; i++) {
                     const compressedDataUrl = await compressImage(files[i]);
                     const fileRef = storageRef(storage, `products/${Date.now()}_${i}.jpg`);
