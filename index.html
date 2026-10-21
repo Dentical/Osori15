@@ -40,13 +40,13 @@
         
         nav { display: flex; gap: 16px; font-size: 14px; font-weight: 500; flex-wrap: wrap; }
         nav button { background: none; border: none; color: #e5e7eb; cursor: pointer; transition: color 0.2s; white-space: nowrap; }
-        nav button:hover, nav button.active { color: #d4af37; }
+        nav button:hover, nav button.active { color: var(--accent-amber); }
 
         .actions { display: flex; align-items: center; gap: 8px; }
         .btn-icon { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(212, 175, 55, 0.3); color: #e5e7eb; width: 38px; height: 38px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; position: relative; transition: 0.2s; flex-shrink: 0; }
-        .btn-icon:hover { border-color: #d4af37; color: #d4af37; }
+        .btn-icon:hover { border-color: var(--accent-amber); color: var(--accent-amber); }
         
-        .badge { position: absolute; top: -4px; right: -4px; background: #d4af37; color: black; font-size: 10px; font-weight: bold; width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+        .badge { position: absolute; top: -4px; right: -4px; background: var(--accent-amber); color: black; font-size: 10px; font-weight: bold; width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
         
         .main-content { flex-grow: 1; max-width: 1280px; margin: 0 auto; width: 100%; padding: 24px 16px; }
         .tab-pane { display: none; }
@@ -67,7 +67,7 @@
         
         .card-dots { position: absolute; bottom: 8px; left: 0; right: 0; display: flex; justify-content: center; gap: 4px; z-index: 2; pointer-events: none; }
         .card-dot { width: 6px; height: 6px; border-radius: 50%; background: rgba(255,255,255,0.4); }
-        .card-dot.active { background: #d4af37; width: 12px; border-radius: 4px; }
+        .card-dot.active { background: var(--accent-amber); width: 12px; border-radius: 4px; }
 
         .fullscreen-hint { position: absolute; bottom: 8px; right: 8px; background: rgba(0,0,0,0.6); color: white; font-size: 10px; padding: 3px 6px; border-radius: 6px; z-index: 3; pointer-events: none; display: flex; align-items: center; gap: 4px; }
 
@@ -98,8 +98,8 @@
         .footer-inner { max-width: 1280px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 24px; text-align: left; }
         
         .hidden { display: none !important; }
-        .text-gold { color: #d4af37; }
-        .text-amber { color: #d4af37; }
+        .text-gold { color: var(--accent-amber); }
+        .text-amber { color: var(--accent-amber); }
     </style>
 </head>
 <body>
@@ -107,13 +107,13 @@
     <div class="top-bar">
         <div class="top-bar-inner">
             <div style="display: flex; gap: 16px; align-items: center;">
-                <span><i class="fa-solid fa-location-dot text-gold"></i> Душанбе, пр. Рудаки 15</span>
-                <span><i class="fa-solid fa-phone text-gold"></i> +992 (90) 000-00-00</span>
+                <span><i class="fa-solid fa-location-dot text-gold"></i> <span id="topBarLocation">Душанбе, пр. Рудаки 15</span></span>
+                <span><i class="fa-solid fa-phone text-gold"></i> <span id="topBarPhone">+992 (90) 000-00-00</span></span>
             </div>
             <div style="display: flex; gap: 12px; align-items: center;">
                 <div>
                     <span>Язык:</span>
-                    <select id="langSelect" onchange="changeLanguage(this.value)" style="background: #222225; color: #d4af37; border: 1px solid #2a2a2d; padding: 4px 8px; border-radius: 4px; font-weight: bold;">
+                    <select id="langSelect" onchange="changeLanguage(this.value)" style="background: #222225; color: var(--accent-amber); border: 1px solid #2a2a2d; padding: 4px 8px; border-radius: 4px; font-weight: bold;">
                         <option value="ru">RU</option>
                         <option value="tj">TJ</option>
                         <option value="en">EN</option>
@@ -121,14 +121,14 @@
                 </div>
                 <div>
                     <span>Валюта:</span>
-                    <select id="currencySelect" onchange="changeCurrency(this.value)" style="background: #222225; color: #d4af37; border: 1px solid #2a2a2d; padding: 4px 8px; border-radius: 4px; font-weight: bold;">
+                    <select id="currencySelect" onchange="changeCurrency(this.value)" style="background: #222225; color: var(--accent-amber); border: 1px solid #2a2a2d; padding: 4px 8px; border-radius: 4px; font-weight: bold;">
                         <option value="TJS">TJS (ЅM)</option>
                         <option value="USD">USD ($)</option>
                         <option value="RUB">RUB (₽)</option>
                     </select>
                 </div>
                 <div id="authContainer">
-                    <button onclick="openModal('authModal')" style="background: rgba(212,175,55,0.1); border: 1px solid rgba(212,175,55,0.3); color: #d4af37; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-weight: bold;">
+                    <button onclick="openModal('authModal')" style="background: rgba(212,175,55,0.1); border: 1px solid rgba(212,175,55,0.3); color: var(--accent-amber); padding: 6px 12px; border-radius: 6px; cursor: pointer; font-weight: bold;">
                         <i class="fa-solid fa-user"></i> Войти
                     </button>
                 </div>
@@ -142,29 +142,32 @@
                 <div class="logo-icon"><i class="fa-solid fa-gem"></i></div>
                 <div>
                     <span id="siteBrandName" style="font-size: 20px; font-weight: 900; letter-spacing: 1px;" class="serif">OSORI15</span>
-                    <span id="siteBrandSub" style="display: block; font-size: 8px; color: #d4af37; letter-spacing: 2px; font-weight: 600;">HAUTE COUTURE</span>
+                    <span id="siteBrandSub" style="display: block; font-size: 8px; color: var(--accent-amber); letter-spacing: 2px; font-weight: 600;">HAUTE COUTURE</span>
                 </div>
             </div>
 
             <nav>
                 <button onclick="switchTab('home')" class="nav-btn active" data-tab="home">Главная</button>
                 <button onclick="switchTab('catalog')" class="nav-btn" data-tab="catalog">Каталог</button>
-                <button onclick="switchTab('compare')" class="nav-btn" data-tab="compare">Сравнение <span id="compareBadge" style="background:#d4af37; color:black; padding:1px 6px; border-radius:10px; font-size:10px;" class="hidden">0</span></button>
+                <button onclick="switchTab('compare')" class="nav-btn" data-tab="compare">Сравнение <span id="compareBadge" style="background:var(--accent-amber); color:black; padding:1px 6px; border-radius:10px; font-size:10px;" class="hidden">0</span></button>
                 <button onclick="switchTab('reviews')" class="nav-btn" data-tab="reviews">Отзывы</button>
             </nav>
 
             <div class="actions">
-                <button id="addProductBtn" onclick="openProductModal()" class="btn-icon" title="Добавить товар" style="background: #d4af37; color: black; border-color: #d4af37; font-weight: bold;">
+                <button id="siteSettingsBtn" onclick="openSettingsModal()" class="btn-icon hidden" title="Настройки сайта (CMS)" style="background: rgba(212,175,55,0.15); color: var(--accent-amber); border-color: rgba(212,175,55,0.4);">
+                    <i class="fa-solid fa-gear"></i>
+                </button>
+                <button id="addProductBtn" onclick="openProductModal()" class="btn-icon hidden" title="Добавить товар" style="background: var(--accent-amber); color: black; border-color: var(--accent-amber); font-weight: bold;">
                     <i class="fa-solid fa-plus"></i>
                 </button>
-                <button id="skuSearchBtn" onclick="openModal('skuSearchModal')" class="btn-icon" title="Поиск по артикулу (SKU)" style="background: rgba(212,175,55,0.15); color: #d4af37; border-color: rgba(212,175,55,0.4);">
+                <button id="skuSearchBtn" onclick="openModal('skuSearchModal')" class="btn-icon hidden" title="Поиск по артикулу (SKU)" style="background: rgba(212,175,55,0.15); color: var(--accent-amber); border-color: rgba(212,175,55,0.4);">
                     <i class="fa-solid fa-hashtag"></i>
                 </button>
                 <button id="clientOrdersBtn" onclick="openClientOrdersModal()" class="btn-icon hidden" title="Мои заказы" style="color: #60a5fa; border-color: rgba(96,165,250,0.4);">
                     <i class="fa-solid fa-receipt"></i>
                     <span id="clientBadge" class="badge hidden" style="background:#60a5fa; color:white;">0</span>
                 </button>
-                <button id="adminOrdersBtn" onclick="openAdminModal()" class="btn-icon" title="Панель заказов" style="color: #d4af37; border-color: rgba(212,175,55,0.4);">
+                <button id="adminOrdersBtn" onclick="openAdminModal()" class="btn-icon hidden" title="Панель заказов" style="color: var(--accent-amber); border-color: rgba(212,175,55,0.4);">
                     <i class="fa-solid fa-file-lines"></i>
                     <span id="adminBadge" class="badge hidden">0</span>
                 </button>
@@ -180,7 +183,7 @@
         <div id="tab-home" class="tab-pane active">
             <div style="padding: 20px 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 30px; align-items: center;">
                 <div>
-                    <span style="background: rgba(212,175,55,0.1); border: 1px solid rgba(212,175,55,0.3); color: #d4af37; padding: 6px 12px; border-radius: 20px; font-size: 11px; font-weight: 600; text-transform: uppercase;">Премиум коллекция</span>
+                    <span style="background: rgba(212,175,55,0.1); border: 1px solid rgba(212,175,55,0.3); color: var(--accent-amber); padding: 6px 12px; border-radius: 20px; font-size: 11px; font-weight: 600; text-transform: uppercase;">Премиум коллекция</span>
                     <h1 class="serif" style="font-size: clamp(26px, 5vw, 36px); line-height: 1.1; margin: 16px 0;">Изысканность и стиль в каждом наряде</h1>
                     <p style="opacity: 0.8; margin-bottom: 20px; font-size: 14px;">Эксклюзивная женская одежда в Душанбе для самых особенных моментов вашей жизни.</p>
                     <button onclick="switchTab('catalog')" class="btn-gold" style="width: auto; padding: 12px 24px;">Перейти в каталог</button>
@@ -220,15 +223,15 @@
             <div>
                 <div class="logo" style="margin-bottom: 10px;">
                     <div class="logo-icon"><i class="fa-solid fa-gem"></i></div>
-                    <span style="font-size: 18px; font-weight: 900; color: white;" class="serif">OSORI15</span>
+                    <span id="footerBrandName" style="font-size: 18px; font-weight: 900; color: white;" class="serif">OSORI15</span>
                 </div>
-                <p>Премиальная женская одежда в Душанбе. Высочайшее качество тканей и безупречный крой.</p>
+                <p id="footerDesc">Премиальная женская одежда в Душанбе. Высочайшее качество тканей и безупречный крой.</p>
             </div>
             <div>
                 <h4 style="color: white; font-weight: bold; margin-bottom: 10px;">Контакты</h4>
                 <div style="display: flex; flex-direction: column; gap: 6px;">
-                    <span><i class="fa-solid fa-phone text-gold"></i> +992 (90) 000-00-00</span>
-                    <span><i class="fa-solid fa-location-dot text-gold"></i> Душанбе, пр. Рудаки 15</span>
+                    <span><i class="fa-solid fa-phone text-gold"></i> <span id="footerPhone">+992 (90) 000-00-00</span></span>
+                    <span><i class="fa-solid fa-location-dot text-gold"></i> <span id="footerAddress">Душанбе, пр. Рудаки 15</span></span>
                 </div>
             </div>
         </div>
@@ -244,6 +247,33 @@
     </div>
 
     <!-- МОДАЛЬНЫЕ ОКНА -->
+    <div id="settingsModal" class="modal">
+        <div class="modal-box">
+            <button onclick="closeModal('settingsModal')" class="modal-close"><i class="fa-solid fa-xmark"></i></button>
+            <h3 class="serif" style="font-size: 22px; margin-bottom: 16px;"><i class="fa-solid fa-gear text-amber"></i> Настройки сайта (CMS)</h3>
+            <form onsubmit="saveSiteSettings(event)">
+                <div><label>Название бренда</label><input type="text" id="settingBrand" required></div>
+                <div><label>Подзаголовок</label><input type="text" id="settingSub" required></div>
+                <div><label>Телефон магазина</label><input type="text" id="settingPhone" required></div>
+                <div><label>Адрес магазина</label><input type="text" id="settingAddress" required></div>
+                <div><label>Цвет фона сайта</label><input type="color" id="settingBgColor" style="height: 45px; padding: 2px;"></div>
+                <div><label>Цвет золотого акцента</label><input type="color" id="settingAccentColor" style="height: 45px; padding: 2px;"></div>
+                
+                <div style="border-top: 1px solid #2a2a2d; padding-top: 14px; margin-top: 14px;">
+                    <label style="color: #60a5fa;">Управление администраторами</label>
+                    <p style="font-size: 11px; color: #a0a0a5; margin-bottom: 8px;">Добавьте email человека, которого хотите сделать администратором (теперь это могут делать все админы, включая вас и Max):</p>
+                    <div style="display: flex; gap: 8px;">
+                        <input type="email" id="newAdminEmail" placeholder="new-admin@gmail.com" style="margin-bottom: 0;">
+                        <button type="button" onclick="addNewAdmin()" style="background: #2563eb; color: white; border: none; padding: 0 16px; border-radius: 10px; font-weight: bold; cursor: pointer;">Добавить</button>
+                    </div>
+                    <div id="adminsListContainer" style="margin-top: 10px; font-size: 12px; color: #f3f3f3; max-height: 120px; overflow-y: auto;"></div>
+                </div>
+
+                <button type="submit" class="btn-gold" style="margin-top: 14px;">Сохранить настройки</button>
+            </form>
+        </div>
+    </div>
+
     <div id="skuSearchModal" class="modal">
         <div class="modal-box">
             <button onclick="closeModal('skuSearchModal')" class="modal-close"><i class="fa-solid fa-xmark"></i></button>
@@ -331,7 +361,7 @@
     <div id="adminModal" class="modal">
         <div class="modal-box">
             <button onclick="closeModal('adminModal')" class="modal-close"><i class="fa-solid fa-xmark"></i></button>
-            <h3 class="serif" style="font-size: 22px; margin-bottom: 16px;"><i class="fa-solid fa-file-lines text-amber"></i> Панель админа</h3>
+            <h3 class="serif" style="font-size: 22px; margin-bottom: 16px;"><i class="fa-solid fa-file-lines text-amber"></i> Панель заказов</h3>
             <div id="adminOrdersContainer" style="display: flex; flex-direction: column; gap: 10px; max-height: 50dvh; overflow-y: auto;">
                 <p style="color: #a0a0a5; text-align: center;">Загрузка...</p>
             </div>
@@ -380,10 +410,88 @@
         let cachedOrders = [];
         window.tempProductBase64Images = [];
         window.products = [];
+        window.siteAdmins = ["samirdv888@gmail.com"];
+        window.siteAdminsDbKeys = {}; // храним ключи записей для удаления
+        window.siteSettings = {
+            brand: "OSORI15",
+            sub: "HAUTE COUTURE",
+            phone: "+992 (90) 000-00-00",
+            address: "Душанбе, пр. Рудаки 15",
+            bgColor: "#0f0f10",
+            accentColor: "#d4af37"
+        };
+
+        function initRealtimeConfig() {
+            onValue(ref(rtdb, 'settings'), (snapshot) => {
+                const data = snapshot.val();
+                if (data) {
+                    window.siteSettings = { ...window.siteSettings, ...data };
+                    applySiteSettingsUI();
+                }
+            });
+
+            onValue(ref(rtdb, 'admins'), (snapshot) => {
+                const data = snapshot.val();
+                let list = ["samirdv888@gmail.com"];
+                window.siteAdminsDbKeys = {};
+                if (data) {
+                    Object.keys(data).forEach(key => {
+                        let email = data[key];
+                        if (email) {
+                            let cleanEmail = email.toLowerCase().trim();
+                            if (!list.includes(cleanEmail)) list.push(cleanEmail);
+                            window.siteAdminsDbKeys[cleanEmail] = key;
+                        }
+                    });
+                }
+                window.siteAdmins = list;
+                updateAdminUIVisibility();
+            });
+        }
+        initRealtimeConfig();
+
+        function applySiteSettingsUI() {
+            const s = window.siteSettings;
+            document.getElementById('siteBrandName').innerText = s.brand;
+            document.getElementById('footerBrandName').innerText = s.brand;
+            document.getElementById('pageTitle').innerText = `${s.brand} — Haute Couture & Female Fashion`;
+            document.getElementById('siteBrandSub').innerText = s.sub;
+            document.getElementById('topBarPhone').innerText = s.phone;
+            document.getElementById('footerPhone').innerText = s.phone;
+            document.getElementById('topBarLocation').innerText = s.address;
+            document.getElementById('footerAddress').innerText = s.address;
+
+            document.documentElement.style.setProperty('--bg-color', s.bgColor);
+            document.documentElement.style.setProperty('--accent-amber', s.accentColor);
+        }
+
+        window.isUserAdmin = function() {
+            if (!currentUser || !currentUser.email) return false;
+            return window.siteAdmins.includes(currentUser.email.toLowerCase().trim());
+        };
+
+        function updateAdminUIVisibility() {
+            const isAdmin = window.isUserAdmin();
+            const addProductBtn = document.getElementById('addProductBtn');
+            const skuSearchBtn = document.getElementById('skuSearchBtn');
+            const adminOrdersBtn = document.getElementById('adminOrdersBtn');
+            const siteSettingsBtn = document.getElementById('siteSettingsBtn');
+
+            if (isAdmin) {
+                addProductBtn.classList.remove('hidden');
+                skuSearchBtn.classList.remove('hidden');
+                adminOrdersBtn.classList.remove('hidden');
+                siteSettingsBtn.classList.remove('hidden');
+            } else {
+                addProductBtn.classList.add('hidden');
+                skuSearchBtn.classList.add('hidden');
+                adminOrdersBtn.classList.add('hidden');
+                siteSettingsBtn.classList.add('hidden');
+            }
+        }
 
         function initRealtimeProducts() {
-            const prodRef = ref(rtdb, 'products');
-            onValue(prodRef, (snapshot) => {
+            onValue(ref(rtdb, 'products'), (snapshot) => {
                 const data = snapshot.val();
                 let loadedProducts = [];
                 if (data) {
@@ -410,19 +518,20 @@
 
             if (user) {
                 authContainer.innerHTML = `
-                    <span style="color: #d4af37; font-weight: 600; margin-right: 10px;">${user.email.split('@')[0]}</span>
+                    <span style="color: var(--accent-amber); font-weight: 600; margin-right: 10px;">${user.email.split('@')[0]}</span>
                     <button onclick="logout()" style="background: rgba(244,63,94,0.1); border: 1px solid rgba(244,63,94,0.3); color: #f43f5e; padding: 4px 10px; border-radius: 6px; cursor: pointer;">Выйти</button>
                 `;
                 clientBtn.classList.remove('hidden');
                 initRealtimeOrders();
             } else {
                 authContainer.innerHTML = `
-                    <button onclick="openModal('authModal')" style="background: rgba(212,175,55,0.1); border: 1px solid rgba(212,175,55,0.3); color: #d4af37; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-weight: bold;">
+                    <button onclick="openModal('authModal')" style="background: rgba(212,175,55,0.1); border: 1px solid rgba(212,175,55,0.3); color: var(--accent-amber); padding: 6px 12px; border-radius: 6px; cursor: pointer; font-weight: bold;">
                         <i class="fa-solid fa-user"></i> Войти
                     </button>
                 `;
                 clientBtn.classList.add('hidden');
             }
+            updateAdminUIVisibility();
             if (typeof renderProducts === 'function') renderProducts();
         });
 
@@ -442,8 +551,7 @@
         };
 
         function initRealtimeOrders() {
-            const ordersRef = ref(rtdb, 'orders');
-            onValue(ordersRef, (snapshot) => {
+            onValue(ref(rtdb, 'orders'), (snapshot) => {
                 const data = snapshot.val();
                 cachedOrders = [];
                 if (data) {
@@ -454,7 +562,7 @@
                 }
                 
                 const adminBadge = document.getElementById('adminBadge');
-                if (cachedOrders.length > 0) {
+                if (window.isUserAdmin() && cachedOrders.length > 0) {
                     adminBadge.innerText = cachedOrders.length;
                     adminBadge.classList.remove('hidden');
                 } else {
@@ -468,7 +576,11 @@
             set(newOrderRef, orderData).catch(() => {});
         };
 
-        window.openAdminModal = () => { document.getElementById('adminModal').classList.add('open'); renderAdminOrders(); };
+        window.openAdminModal = () => {
+            if (!window.isUserAdmin()) return;
+            document.getElementById('adminModal').classList.add('open');
+            renderAdminOrders();
+        };
 
         function renderAdminOrders() {
             const container = document.getElementById('adminOrdersContainer');
@@ -478,7 +590,7 @@
             }
             container.innerHTML = cachedOrders.map((o, idx) => `
                 <div style="background: #222225; border: 1px solid #2a2a2d; border-radius: 12px; padding: 14px; color: #f3f3f3;">
-                    <div style="display: flex; justify-content: space-between; font-size: 13px; font-weight: bold; margin-bottom: 6px; color: #d4af37;">
+                    <div style="display: flex; justify-content: space-between; font-size: 13px; font-weight: bold; margin-bottom: 6px; color: var(--accent-amber);">
                         <span>Заказ #${cachedOrders.length - idx}</span>
                         <span style="color: #a0a0a5; font-weight: normal;">${o.date}</span>
                     </div>
@@ -527,7 +639,97 @@
             `).join('');
         }
 
-        window.deleteOrder = async (id) => { if(confirm("Удалить заказ?")) remove(ref(rtdb, `orders/${id}`)).catch(() => {}); };
+        window.deleteOrder = async (id) => { 
+            if(!window.isUserAdmin()) return;
+            if(confirm("Удалить заказ?")) remove(ref(rtdb, `orders/${id}`)).catch(() => {}); 
+        };
+
+        window.openSettingsModal = () => {
+            if (!window.isUserAdmin()) return;
+            const s = window.siteSettings;
+            document.getElementById('settingBrand').value = s.brand;
+            document.getElementById('settingSub').value = s.sub;
+            document.getElementById('settingPhone').value = s.phone;
+            document.getElementById('settingAddress').value = s.address;
+            document.getElementById('settingBgColor').value = s.bgColor;
+            document.getElementById('settingAccentColor').value = s.accentColor;
+
+            renderAdminsList();
+            document.getElementById('settingsModal').classList.add('open');
+        };
+
+        window.saveSiteSettings = async (e) => {
+            e.preventDefault();
+            if (!window.isUserAdmin()) return;
+
+            const newSettings = {
+                brand: document.getElementById('settingBrand').value,
+                sub: document.getElementById('settingSub').value,
+                phone: document.getElementById('settingPhone').value,
+                address: document.getElementById('settingAddress').value,
+                bgColor: document.getElementById('settingBgColor').value,
+                accentColor: document.getElementById('settingAccentColor').value
+            };
+
+            try {
+                await set(ref(rtdb, 'settings'), newSettings);
+                closeModal('settingsModal');
+                alert("Настройки успешно сохранены!");
+            } catch (err) {
+                alert("Ошибка: " + err.message);
+            }
+        };
+
+        window.addNewAdmin = async () => {
+            if (!window.isUserAdmin()) return;
+            const emailInput = document.getElementById('newAdminEmail');
+            const email = emailInput.value.trim().toLowerCase();
+            if (!email || !email.includes('@')) {
+                alert("Введите корректный email!");
+                return;
+            }
+            if (window.siteAdmins.includes(email)) {
+                alert("Этот пользователь уже является администратором!");
+                return;
+            }
+
+            try {
+                const newRef = push(ref(rtdb, 'admins'));
+                await set(newRef, email);
+                emailInput.value = '';
+                alert(`Администратор ${email} успешно добавлен!`);
+            } catch (err) {
+                alert("Ошибка: " + err.message);
+            }
+        };
+
+        window.removeAdmin = async (email) => {
+            if (!window.isUserAdmin()) return;
+            if (email === "samirdv888@gmail.com") {
+                alert("Нельзя удалить главного администратора!");
+                return;
+            }
+            if (confirm(`Удалить права администратора у ${email}?`)) {
+                const dbKey = window.siteAdminsDbKeys[email];
+                if (dbKey) {
+                    await remove(ref(rtdb, `admins/${dbKey}`));
+                    renderAdminsList();
+                }
+            }
+        };
+
+        function renderAdminsList() {
+            const container = document.getElementById('adminsListContainer');
+            container.innerHTML = window.siteAdmins.map(email => `
+                <div style="display: flex; justify-content: space-between; align-items: center; background: #222225; padding: 6px 10px; border-radius: 6px; margin-bottom: 4px;">
+                    <span>${email}</span>
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        ${email === 'samirdv888@gmail.com' ? `<span style="color: #d4af37; font-size: 11px;">Главный</span>` : `<span style="color: #60a5fa; font-size: 11px;">Админ</span>`}
+                        ${email !== 'samirdv888@gmail.com' ? `<button type="button" onclick="removeAdmin('${email}')" style="background: none; border: none; color: #dc2626; cursor: pointer; font-size: 12px;"><i class="fa-solid fa-trash"></i></button>` : ''}
+                    </div>
+                </div>
+            `).join('');
+        }
 
         window.handleMultipleImagesUpload = async (event) => {
             const files = Array.from(event.target.files);
@@ -538,7 +740,7 @@
             if (files.length === 0) return;
             
             uploadLabel.innerText = `Обработка ${files.length} фото...`;
-            previewContainer.innerHTML = '<span style="font-size: 11px; color: #d4af37;">Оптимизация...</span>';
+            previewContainer.innerHTML = '<span style="font-size: 11px; color: var(--accent-amber);">Оптимизация...</span>';
 
             const processSingleImage = (file) => {
                 return new Promise((resolve) => {
@@ -584,12 +786,14 @@
             uploadLabel.innerText = `Фотографии товара (выбрано: ${loadedImages.length} шт.)`;
             
             previewContainer.innerHTML = window.tempProductBase64Images.map(img => `
-                <img src="${img}" style="width: 45px; height: 45px; object-fit: cover; border-radius: 6px; border: 1px solid #d4af37;" loading="lazy">
+                <img src="${img}" style="width: 45px; height: 45px; object-fit: cover; border-radius: 6px; border: 1px solid var(--accent-amber);" loading="lazy">
             `).join('');
         };
 
         window.saveProduct = async (e) => {
             e.preventDefault();
+            if (!window.isUserAdmin()) return;
+
             const editId = document.getElementById('editProductDocId').value;
             const name = document.getElementById('prodName').value;
             const brand = document.getElementById('prodBrand').value;
@@ -635,6 +839,7 @@
         };
 
         window.openProductModal = () => {
+            if (!window.isUserAdmin()) return;
             document.getElementById('editProductDocId').value = '';
             document.getElementById('prodName').value = '';
             document.getElementById('prodBrand').value = '';
@@ -651,6 +856,7 @@
         };
 
         window.editProduct = (id) => {
+            if (!window.isUserAdmin()) return;
             const p = window.products.find(prod => prod.id == id);
             if (!p) return;
             document.getElementById('editProductDocId').value = p.id;
@@ -666,7 +872,7 @@
             
             const previewContainer = document.getElementById('uploadedImagesPreview');
             previewContainer.innerHTML = window.tempProductBase64Images.map(img => `
-                <img src="${img}" style="width: 45px; height: 45px; object-fit: cover; border-radius: 6px; border: 1px solid #d4af37;" loading="lazy">
+                <img src="${img}" style="width: 45px; height: 45px; object-fit: cover; border-radius: 6px; border: 1px solid var(--accent-amber);" loading="lazy">
             `).join('');
 
             document.getElementById('productModalTitle').innerText = "Редактировать товар";
@@ -674,6 +880,7 @@
         };
 
         window.deleteProduct = async (id) => {
+            if (!window.isUserAdmin()) return;
             if (confirm("Удалить этот товар?")) {
                 remove(ref(rtdb, `products/${id}`)).catch(() => {});
             }
@@ -761,9 +968,10 @@
         }
 
         window.renderProducts = function() {
+            const admin = window.isUserAdmin();
             let list = window.products || [];
 
-            if (skuQuery !== '') {
+            if (admin && skuQuery !== '') {
                 list = list.filter(p => p.sku && p.sku.toLowerCase().includes(skuQuery));
             }
             
@@ -785,7 +993,7 @@
                 return `
                 <div class="card">
                     <div class="card-img-slider" onclick="openFullscreen('${p.id}')">
-                        <span style="position: absolute; top: 10px; left: 10px; background: #d4af37; color: black; font-size: 10px; font-weight: bold; padding: 4px 8px; border-radius: 20px; text-transform: uppercase; z-index: 3;">${p.badge || 'NEW'}</span>
+                        <span style="position: absolute; top: 10px; left: 10px; background: var(--accent-amber); color: black; font-size: 10px; font-weight: bold; padding: 4px 8px; border-radius: 20px; text-transform: uppercase; z-index: 3;">${p.badge || 'NEW'}</span>
                         
                         <div class="fullscreen-hint"><i class="fa-solid fa-expand"></i> Полный экран</div>
 
@@ -808,8 +1016,8 @@
                     <div class="card-body">
                         <div>
                             <div style="display: flex; justify-content: space-between; align-items: center;">
-                                <span style="font-size: 11px; color: #d4af37; text-transform: uppercase;">${p.brand}</span>
-                                <span style="font-size: 10px; background: #222225; color: #d4af37; padding: 2px 6px; border-radius: 4px;">SKU: ${skuText}</span>
+                                <span style="font-size: 11px; color: var(--accent-amber); text-transform: uppercase;">${p.brand}</span>
+                                ${admin ? `<span style="font-size: 10px; background: #222225; color: var(--accent-amber); padding: 2px 6px; border-radius: 4px;">SKU: ${skuText}</span>` : ''}
                             </div>
                             <h3 style="font-size: 15px; font-weight: bold; margin: 4px 0 10px;" class="serif">${p.name}</h3>
                         </div>
@@ -817,8 +1025,8 @@
                             <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #2a2a2d; padding-top: 10px; margin-bottom: 8px;">
                                 <span style="font-size: 15px; font-weight: 900;" class="text-amber">${formatPrice(p.priceTJS)}</span>
                                 <div style="display: flex; gap: 6px;">
-                                    <button onclick="toggleCompare('${p.id}')" title="Сравнить" style="background: ${compareList.includes(p.id) ? '#d4af37' : '#222225'}; color: ${compareList.includes(p.id) ? 'black' : 'inherit'}; border: 1px solid #2a2a2d; width: 34px; height: 34px; border-radius: 10px; cursor: pointer;"><i class="fa-solid fa-scale-balanced"></i></button>
-                                    <button onclick="addToCart('${p.id}')" title="В корзину" style="background: #d4af37; border: none; width: 34px; height: 34px; border-radius: 10px; cursor: pointer; font-weight: bold;"><i class="fa-solid fa-bag-shopping"></i></button>
+                                    <button onclick="toggleCompare('${p.id}')" title="Сравнить" style="background: ${compareList.includes(p.id) ? 'var(--accent-amber)' : '#222225'}; color: ${compareList.includes(p.id) ? 'black' : 'inherit'}; border: 1px solid #2a2a2d; width: 34px; height: 34px; border-radius: 10px; cursor: pointer;"><i class="fa-solid fa-scale-balanced"></i></button>
+                                    <button onclick="addToCart('${p.id}')" title="В корзину" style="background: var(--accent-amber); border: none; width: 34px; height: 34px; border-radius: 10px; cursor: pointer; font-weight: bold;"><i class="fa-solid fa-bag-shopping"></i></button>
                                 </div>
                             </div>
                             
@@ -826,10 +1034,12 @@
                                 <i class="fa-brands fa-whatsapp" style="font-size: 16px;"></i> Купить через WhatsApp
                             </a>
 
-                            <div style="display: flex; gap: 6px; border-top: 1px dashed #2a2a2d; padding-top: 6px; margin-top: 6px;">
-                                <button onclick="editProduct('${p.id}')" style="flex: 1; background: #2563eb; color: white; border: none; padding: 6px; border-radius: 6px; font-size: 11px; cursor: pointer;"><i class="fa-solid fa-pen"></i> Ред.</button>
-                                <button onclick="deleteProduct('${p.id}')" style="flex: 1; background: #dc2626; color: white; border: none; padding: 6px; border-radius: 6px; font-size: 11px; cursor: pointer;"><i class="fa-solid fa-trash"></i> Уд.</button>
-                            </div>
+                            ${admin ? `
+                                <div style="display: flex; gap: 6px; border-top: 1px dashed #2a2a2d; padding-top: 6px; margin-top: 6px;">
+                                    <button onclick="editProduct('${p.id}')" style="flex: 1; background: #2563eb; color: white; border: none; padding: 6px; border-radius: 6px; font-size: 11px; cursor: pointer;"><i class="fa-solid fa-pen"></i> Ред.</button>
+                                    <button onclick="deleteProduct('${p.id}')" style="flex: 1; background: #dc2626; color: white; border: none; padding: 6px; border-radius: 6px; font-size: 11px; cursor: pointer;"><i class="fa-solid fa-trash"></i> Уд.</button>
+                                </div>
+                            ` : ''}
                         </div>
                     </div>
                 </div>
@@ -985,7 +1195,7 @@
                 grid.innerHTML = reviews.map(r => `
                     <div style="background: #18181a; border: 1px solid #2a2a2d; border-radius: 16px; padding: 16px; color: #f3f3f3;">
                         <div style="font-weight: bold; margin-bottom: 4px; font-size: 14px;">${r.author}</div>
-                        <div style="color: #d4af37; font-size: 12px; margin-bottom: 6px;">${'★'.repeat(r.rating)}</div>
+                        <div style="color: var(--accent-amber); font-size: 12px; margin-bottom: 6px;">${'★'.repeat(r.rating)}</div>
                         <p style="color: #a0a0a5; font-size: 13px;">"${r.text}"</p>
                     </div>
                 `).join('');
