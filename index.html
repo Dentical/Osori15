@@ -154,17 +154,17 @@
             </nav>
 
             <div class="actions">
-                <button id="addProductBtn" onclick="openProductModal()" class="btn-icon hidden" title="Добавить товар" style="background: #d4af37; color: black; border-color: #d4af37; font-weight: bold;">
+                <button id="addProductBtn" onclick="openProductModal()" class="btn-icon" title="Добавить товар" style="background: #d4af37; color: black; border-color: #d4af37; font-weight: bold;">
                     <i class="fa-solid fa-plus"></i>
                 </button>
-                <button id="skuSearchBtn" onclick="openModal('skuSearchModal')" class="btn-icon hidden" title="Поиск по артикулу (SKU)" style="background: rgba(212,175,55,0.15); color: #d4af37; border-color: rgba(212,175,55,0.4);">
+                <button id="skuSearchBtn" onclick="openModal('skuSearchModal')" class="btn-icon" title="Поиск по артикулу (SKU)" style="background: rgba(212,175,55,0.15); color: #d4af37; border-color: rgba(212,175,55,0.4);">
                     <i class="fa-solid fa-hashtag"></i>
                 </button>
                 <button id="clientOrdersBtn" onclick="openClientOrdersModal()" class="btn-icon hidden" title="Мои заказы" style="color: #60a5fa; border-color: rgba(96,165,250,0.4);">
                     <i class="fa-solid fa-receipt"></i>
                     <span id="clientBadge" class="badge hidden" style="background:#60a5fa; color:white;">0</span>
                 </button>
-                <button id="adminOrdersBtn" onclick="openAdminModal()" class="btn-icon hidden" title="Панель заказов" style="color: #d4af37; border-color: rgba(212,175,55,0.4);">
+                <button id="adminOrdersBtn" onclick="openAdminModal()" class="btn-icon" title="Панель заказов" style="color: #d4af37; border-color: rgba(212,175,55,0.4);">
                     <i class="fa-solid fa-file-lines"></i>
                     <span id="adminBadge" class="badge hidden">0</span>
                 </button>
@@ -362,7 +362,7 @@
         const firebaseConfig = {
             apiKey: "AIzaSyDL3fvNpu8FfZBY85gpg4FjQ_0GcMwr-pY",
             authDomain: "osori-17.firebaseapp.com",
-            databaseURL: "https://osori-17-default-rtdb.europe-west1.firebasedatabase.app", // Базовый URL Realtime Database
+            databaseURL: "https://osori-17-default-rtdb.europe-west1.firebasedatabase.app",
             projectId: "osori-17",
             storageBucket: "osori-17.appspot.com",
             messagingSenderId: "112011730643",
@@ -376,13 +376,11 @@
 
         window.firebaseAuth = auth;
 
-        const ADMINS = ["samirdv888@gmail.com", "abdullochoriev4242@gmail.com"];
         let currentUser = null;
         let cachedOrders = [];
         window.tempProductBase64Images = [];
         window.products = [];
 
-        // Реальное время для товаров из Realtime Database
         function initRealtimeProducts() {
             const prodRef = ref(rtdb, 'products');
             onValue(prodRef, (snapshot) => {
@@ -397,7 +395,6 @@
                             images: item.images || (item.image ? [item.image] : [])
                         });
                     });
-                    // Сортировка по времени (новые сверху)
                     loadedProducts.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
                 }
                 window.products = loadedProducts;
@@ -409,27 +406,14 @@
         onAuthStateChanged(auth, async (user) => {
             currentUser = user;
             const authContainer = document.getElementById('authContainer');
-            const adminBtn = document.getElementById('adminOrdersBtn');
             const clientBtn = document.getElementById('clientOrdersBtn');
-            const addProductBtn = document.getElementById('addProductBtn');
-            const skuSearchBtn = document.getElementById('skuSearchBtn');
 
             if (user) {
-                const isAdmin = ADMINS.includes(user.email.toLowerCase());
                 authContainer.innerHTML = `
                     <span style="color: #d4af37; font-weight: 600; margin-right: 10px;">${user.email.split('@')[0]}</span>
                     <button onclick="logout()" style="background: rgba(244,63,94,0.1); border: 1px solid rgba(244,63,94,0.3); color: #f43f5e; padding: 4px 10px; border-radius: 6px; cursor: pointer;">Выйти</button>
                 `;
                 clientBtn.classList.remove('hidden');
-                if (isAdmin) {
-                    adminBtn.classList.remove('hidden');
-                    addProductBtn.classList.remove('hidden');
-                    skuSearchBtn.classList.remove('hidden');
-                } else {
-                    adminBtn.classList.add('hidden');
-                    addProductBtn.classList.add('hidden');
-                    skuSearchBtn.classList.add('hidden');
-                }
                 initRealtimeOrders();
             } else {
                 authContainer.innerHTML = `
@@ -437,10 +421,7 @@
                         <i class="fa-solid fa-user"></i> Войти
                     </button>
                 `;
-                adminBtn.classList.add('hidden');
                 clientBtn.classList.add('hidden');
-                addProductBtn.classList.add('hidden');
-                skuSearchBtn.classList.add('hidden');
             }
             if (typeof renderProducts === 'function') renderProducts();
         });
@@ -473,13 +454,11 @@
                 }
                 
                 const adminBadge = document.getElementById('adminBadge');
-                if (currentUser && ADMINS.includes(currentUser.email.toLowerCase())) {
-                    if (cachedOrders.length > 0) {
-                        adminBadge.innerText = cachedOrders.length;
-                        adminBadge.classList.remove('hidden');
-                    } else {
-                        adminBadge.classList.add('hidden');
-                    }
+                if (cachedOrders.length > 0) {
+                    adminBadge.innerText = cachedOrders.length;
+                    adminBadge.classList.remove('hidden');
+                } else {
+                    adminBadge.classList.add('hidden');
                 }
             });
         }
@@ -550,7 +529,6 @@
 
         window.deleteOrder = async (id) => { if(confirm("Удалить заказ?")) remove(ref(rtdb, `orders/${id}`)).catch(() => {}); };
 
-        // УМНОЕ ЛЕГКОЕ СЖАТИЕ ДЛЯ REALTIME DATABASE
         window.handleMultipleImagesUpload = async (event) => {
             const files = Array.from(event.target.files);
             window.tempProductBase64Images = [];
@@ -572,7 +550,7 @@
                             const canvas = document.createElement('canvas');
                             let width = img.width;
                             let height = img.height;
-                            const maxDim = 450;
+                            const maxDim = 400;
                             if (width > maxDim || height > maxDim) {
                                 if (width > height) {
                                     height = Math.round((height * maxDim) / width);
@@ -586,7 +564,7 @@
                             canvas.height = height;
                             const ctx = canvas.getContext('2d');
                             ctx.drawImage(img, 0, 0, width, height);
-                            resolve(canvas.toDataURL('image/jpeg', 0.5));
+                            resolve(canvas.toDataURL('image/jpeg', 0.45));
                         };
                         img.onerror = () => resolve(null);
                     };
@@ -612,11 +590,6 @@
 
         window.saveProduct = async (e) => {
             e.preventDefault();
-            if (!currentUser || !ADMINS.includes(currentUser.email.toLowerCase())) {
-                alert("Ошибка! Вы должны быть вошедшим администратором.");
-                return;
-            }
-
             const editId = document.getElementById('editProductDocId').value;
             const name = document.getElementById('prodName').value;
             const brand = document.getElementById('prodBrand').value;
@@ -662,7 +635,6 @@
         };
 
         window.openProductModal = () => {
-            if (!currentUser || !ADMINS.includes(currentUser.email.toLowerCase())) return;
             document.getElementById('editProductDocId').value = '';
             document.getElementById('prodName').value = '';
             document.getElementById('prodBrand').value = '';
@@ -679,7 +651,6 @@
         };
 
         window.editProduct = (id) => {
-            if (!currentUser || !ADMINS.includes(currentUser.email.toLowerCase())) return;
             const p = window.products.find(prod => prod.id == id);
             if (!p) return;
             document.getElementById('editProductDocId').value = p.id;
@@ -703,7 +674,6 @@
         };
 
         window.deleteProduct = async (id) => {
-            if (!currentUser || !ADMINS.includes(currentUser.email.toLowerCase())) return;
             if (confirm("Удалить этот товар?")) {
                 remove(ref(rtdb, `products/${id}`)).catch(() => {});
             }
@@ -736,12 +706,6 @@
         }
 
         function changeCurrency(val) { currentCurrency = val; renderProducts(); }
-
-        function isAdminUser() {
-            const ADMINS = ["samirdv888@gmail.com", "abdullochoriev4242@gmail.com"];
-            const activeUser = window.firebaseAuth ? window.firebaseAuth.currentUser : null;
-            return activeUser && ADMINS.includes(activeUser.email.toLowerCase());
-        }
 
         window.filterBySku = function(val) {
             skuQuery = val.trim().toLowerCase();
@@ -797,10 +761,9 @@
         }
 
         window.renderProducts = function() {
-            const admin = isAdminUser();
             let list = window.products || [];
 
-            if (admin && skuQuery !== '') {
+            if (skuQuery !== '') {
                 list = list.filter(p => p.sku && p.sku.toLowerCase().includes(skuQuery));
             }
             
@@ -846,7 +809,7 @@
                         <div>
                             <div style="display: flex; justify-content: space-between; align-items: center;">
                                 <span style="font-size: 11px; color: #d4af37; text-transform: uppercase;">${p.brand}</span>
-                                ${admin ? `<span style="font-size: 10px; background: #222225; color: #d4af37; padding: 2px 6px; border-radius: 4px;">SKU: ${skuText}</span>` : ''}
+                                <span style="font-size: 10px; background: #222225; color: #d4af37; padding: 2px 6px; border-radius: 4px;">SKU: ${skuText}</span>
                             </div>
                             <h3 style="font-size: 15px; font-weight: bold; margin: 4px 0 10px;" class="serif">${p.name}</h3>
                         </div>
@@ -863,12 +826,10 @@
                                 <i class="fa-brands fa-whatsapp" style="font-size: 16px;"></i> Купить через WhatsApp
                             </a>
 
-                            ${admin ? `
-                                <div style="display: flex; gap: 6px; border-top: 1px dashed #2a2a2d; padding-top: 6px; margin-top: 6px;">
-                                    <button onclick="editProduct('${p.id}')" style="flex: 1; background: #2563eb; color: white; border: none; padding: 6px; border-radius: 6px; font-size: 11px; cursor: pointer;"><i class="fa-solid fa-pen"></i> Ред.</button>
-                                    <button onclick="deleteProduct('${p.id}')" style="flex: 1; background: #dc2626; color: white; border: none; padding: 6px; border-radius: 6px; font-size: 11px; cursor: pointer;"><i class="fa-solid fa-trash"></i> Уд.</button>
-                                </div>
-                            ` : ''}
+                            <div style="display: flex; gap: 6px; border-top: 1px dashed #2a2a2d; padding-top: 6px; margin-top: 6px;">
+                                <button onclick="editProduct('${p.id}')" style="flex: 1; background: #2563eb; color: white; border: none; padding: 6px; border-radius: 6px; font-size: 11px; cursor: pointer;"><i class="fa-solid fa-pen"></i> Ред.</button>
+                                <button onclick="deleteProduct('${p.id}')" style="flex: 1; background: #dc2626; color: white; border: none; padding: 6px; border-radius: 6px; font-size: 11px; cursor: pointer;"><i class="fa-solid fa-trash"></i> Уд.</button>
+                            </div>
                         </div>
                     </div>
                 </div>
