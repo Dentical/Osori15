@@ -267,7 +267,7 @@
                 <div><label>Номер WhatsApp (+992...)</label><input type="text" id="prodWhatsapp" placeholder="992900000000"></div>
                 
                 <div>
-                    <label id="uploadLabelText">Фотография товара (мгновенное сжатие)</label>
+                    <label id="uploadLabelText">Фотография товара (Realtime DB)</label>
                     <input type="file" id="prodImageFiles" accept="image/*" multiple onchange="handleMultipleImagesUpload(event)">
                     <div id="uploadedImagesPreview" style="display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; max-height: 150px; overflow-y: auto;"></div>
                 </div>
@@ -353,15 +353,16 @@
         </div>
     </div>
 
-    <!-- FIREBASE И СЕРВЕРНАЯ ЛОГИКА -->
+    <!-- FIREBASE REALTIME DATABASE ЛОГИКА -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
         import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
-        import { getFirestore, collection, addDoc, doc, deleteDoc, onSnapshot, query, orderBy, updateDoc } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
+        import { getDatabase, ref, set, push, remove, onValue, update } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-database.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyDL3fvNpu8FfZBY85gpg4FjQ_0GcMwr-pY",
             authDomain: "osori-17.firebaseapp.com",
+            databaseURL: "https://osori-17-default-rtdb.europe-west1.firebasedatabase.app", // Базовый URL Realtime Database
             projectId: "osori-17",
             storageBucket: "osori-17.appspot.com",
             messagingSenderId: "112011730643",
@@ -370,11 +371,10 @@
 
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
-        const db = getFirestore(app);
+        const rtdb = getDatabase(app);
         const googleProvider = new GoogleAuthProvider();
 
         window.firebaseAuth = auth;
-        window.firebaseDb = db;
 
         const ADMINS = ["samirdv888@gmail.com", "abdullochoriev4242@gmail.com"];
         let currentUser = null;
@@ -382,24 +382,27 @@
         window.tempProductBase64Images = [];
         window.products = [];
 
+        // Реальное время для товаров из Realtime Database
         function initRealtimeProducts() {
-            try {
-                const qProd = query(collection(db, "products"), orderBy("timestamp", "desc"));
-                onSnapshot(qProd, (snapshot) => {
-                    let cloudProducts = [];
-                    snapshot.forEach(docSnap => {
-                        let data = docSnap.data();
-                        cloudProducts.push({ 
-                            id: docSnap.id, 
-                            ...data, 
-                            images: data.images || (data.image ? [data.image] : []),
-                            timestamp: data.timestamp || Date.now() 
+            const prodRef = ref(rtdb, 'products');
+            onValue(prodRef, (snapshot) => {
+                const data = snapshot.val();
+                let loadedProducts = [];
+                if (data) {
+                    Object.keys(data).forEach(key => {
+                        let item = data[key];
+                        loadedProducts.push({
+                            id: key,
+                            ...item,
+                            images: item.images || (item.image ? [item.image] : [])
                         });
                     });
-                    window.products = cloudProducts;
-                    if (typeof renderProducts === 'function') renderProducts();
-                });
-            } catch(e) {}
+                    // Сортировка по времени (новые сверху)
+                    loadedProducts.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
+                }
+                window.products = loadedProducts;
+                if (typeof renderProducts === 'function') renderProducts();
+            });
         }
         initRealtimeProducts();
 
@@ -458,27 +461,32 @@
         };
 
         function initRealtimeOrders() {
-            try {
-                const q = query(collection(db, "orders"), orderBy("timestamp", "desc"));
-                onSnapshot(q, (snapshot) => {
-                    cachedOrders = [];
-                    snapshot.forEach(docSnap => cachedOrders.push({ id: docSnap.id, ...docSnap.data() }));
-                    
-                    const adminBadge = document.getElementById('adminBadge');
-                    if (currentUser && ADMINS.includes(currentUser.email.toLowerCase())) {
-                        if (cachedOrders.length > 0) {
-                            adminBadge.innerText = cachedOrders.length;
-                            adminBadge.classList.remove('hidden');
-                        } else {
-                            adminBadge.classList.add('hidden');
-                        }
+            const ordersRef = ref(rtdb, 'orders');
+            onValue(ordersRef, (snapshot) => {
+                const data = snapshot.val();
+                cachedOrders = [];
+                if (data) {
+                    Object.keys(data).forEach(key => {
+                        cachedOrders.push({ id: key, ...data[key] });
+                    });
+                    cachedOrders.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
+                }
+                
+                const adminBadge = document.getElementById('adminBadge');
+                if (currentUser && ADMINS.includes(currentUser.email.toLowerCase())) {
+                    if (cachedOrders.length > 0) {
+                        adminBadge.innerText = cachedOrders.length;
+                        adminBadge.classList.remove('hidden');
+                    } else {
+                        adminBadge.classList.add('hidden');
                     }
-                });
-            } catch (e) {}
+                }
+            });
         }
 
         window.saveOrderToCloud = async (orderData) => {
-            addDoc(collection(db, "orders"), orderData).catch(() => {});
+            const newOrderRef = push(ref(rtdb, 'orders'));
+            set(newOrderRef, orderData).catch(() => {});
         };
 
         window.openAdminModal = () => { document.getElementById('adminModal').classList.add('open'); renderAdminOrders(); };
@@ -540,9 +548,9 @@
             `).join('');
         }
 
-        window.deleteOrder = async (id) => { if(confirm("Удалить заказ?")) deleteDoc(doc(db, "orders", id)).catch(() => {}); };
+        window.deleteOrder = async (id) => { if(confirm("Удалить заказ?")) remove(ref(rtdb, `orders/${id}`)).catch(() => {}); };
 
-        // АВТОМАТИЧЕСКОЕ СЖАТИЕ ДЛЯ ЗАЩИТЫ ОТ ПРЕВЫШЕНИЯ 1МБ В FIREBASE
+        // УМНОЕ ЛЕГКОЕ СЖАТИЕ ДЛЯ REALTIME DATABASE
         window.handleMultipleImagesUpload = async (event) => {
             const files = Array.from(event.target.files);
             window.tempProductBase64Images = [];
@@ -551,8 +559,8 @@
             
             if (files.length === 0) return;
             
-            uploadLabel.innerText = `Сжатие ${files.length} фото...`;
-            previewContainer.innerHTML = '<span style="font-size: 11px; color: #d4af37;">Оптимизация под базу...</span>';
+            uploadLabel.innerText = `Обработка ${files.length} фото...`;
+            previewContainer.innerHTML = '<span style="font-size: 11px; color: #d4af37;">Оптимизация...</span>';
 
             const processSingleImage = (file) => {
                 return new Promise((resolve) => {
@@ -564,7 +572,7 @@
                             const canvas = document.createElement('canvas');
                             let width = img.width;
                             let height = img.height;
-                            const maxDim = 400; // Оптимальный размер для мгновенного сохранения
+                            const maxDim = 450;
                             if (width > maxDim || height > maxDim) {
                                 if (width > height) {
                                     height = Math.round((height * maxDim) / width);
@@ -591,11 +599,11 @@
             for (let i = 0; i < files.length; i++) {
                 const optimized = await processSingleImage(files[i]);
                 if (optimized) loadedImages.push(optimized);
-                uploadLabel.innerText = `Обработано: ${i + 1} из ${files.length}`;
+                uploadLabel.innerText = `Готово фото: ${i + 1} из ${files.length}`;
             }
 
             window.tempProductBase64Images = loadedImages;
-            uploadLabel.innerText = `Фотографии товара (готово: ${loadedImages.length} шт.)`;
+            uploadLabel.innerText = `Фотографии товара (выбрано: ${loadedImages.length} шт.)`;
             
             previewContainer.innerHTML = window.tempProductBase64Images.map(img => `
                 <img src="${img}" style="width: 45px; height: 45px; object-fit: cover; border-radius: 6px; border: 1px solid #d4af37;" loading="lazy">
@@ -640,13 +648,14 @@
 
             try {
                 if (editId) {
-                    await updateDoc(doc(db, "products", editId), productData);
+                    await update(ref(rtdb, `products/${editId}`), productData);
                 } else {
-                    await addDoc(collection(db, "products"), productData);
+                    const newProdRef = push(ref(rtdb, 'products'));
+                    await set(newProdRef, productData);
                 }
                 closeModal('productModal');
             } catch (err) {
-                alert("Ошибка сохранения: файл слишком большой. Загружайте по 1-2 фото за раз.");
+                alert("Ошибка сохранения: " + err.message);
             } finally {
                 if (submitBtn) { submitBtn.innerText = "Сохранить товар"; submitBtn.disabled = false; }
             }
@@ -662,7 +671,7 @@
             document.getElementById('prodBadge').value = 'NEW';
             document.getElementById('prodWhatsapp').value = '';
             document.getElementById('prodImageFiles').value = '';
-            document.getElementById('uploadLabelText').innerText = "Фотография товара (мгновенное сжатие)";
+            document.getElementById('uploadLabelText').innerText = "Фотография товара (Realtime DB)";
             document.getElementById('uploadedImagesPreview').innerHTML = '';
             window.tempProductBase64Images = [];
             document.getElementById('productModalTitle').innerText = "Добавить товар";
@@ -695,8 +704,8 @@
 
         window.deleteProduct = async (id) => {
             if (!currentUser || !ADMINS.includes(currentUser.email.toLowerCase())) return;
-            if (confirm("Удалить этот товар у всех клиентов?")) {
-                deleteDoc(doc(db, "products", id)).catch(() => {});
+            if (confirm("Удалить этот товар?")) {
+                remove(ref(rtdb, `products/${id}`)).catch(() => {});
             }
         };
 
