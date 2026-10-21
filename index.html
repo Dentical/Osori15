@@ -23,7 +23,7 @@
             --card-min-width: 240px;
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: var(--site-font); -webkit-tap-highlight-color: transparent; }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: var(--site-font); -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
 
         body { background-color: var(--bg-color); color: var(--text-color); min-height: 100vh; display: flex; flex-direction: column; overflow-x: hidden; }
 
@@ -92,7 +92,7 @@
 
         form div { margin-bottom: 14px; }
         form label { display: block; font-size: 12px; font-weight: 600; margin-bottom: 6px; color: #a0a0a5; text-transform: uppercase; }
-        form input, form textarea, form select { width: 100%; padding: 10px 14px; background: #222225; border: 1px solid #2a2a2d; color: #f3f3f3; border-radius: 10px; font-size: 14px; }
+        form input, form textarea, form select { width: 100%; padding: 12px 14px; background: #222225; border: 1px solid #2a2a2d; color: #f3f3f3; border-radius: 10px; font-size: 16px; }
         
         footer { background: var(--footer-color); border-top: 1px solid rgba(212, 175, 55, 0.2); padding: 32px 16px; margin-top: 40px; color: #9ca3af; font-size: 13px; text-align: center; }
         .footer-inner { max-width: 1280px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 24px; text-align: left; }
@@ -113,7 +113,7 @@
             <div style="display: flex; gap: 12px; align-items: center;">
                 <div>
                     <span>Язык:</span>
-                    <select id="langSelect" onchange="changeLanguage(this.value)" style="background: #222225; color: #d4af37; border: 1px solid #2a2a2d; padding: 2px 6px; border-radius: 4px; font-weight: bold;">
+                    <select id="langSelect" onchange="changeLanguage(this.value)" style="background: #222225; color: #d4af37; border: 1px solid #2a2a2d; padding: 4px 8px; border-radius: 4px; font-weight: bold;">
                         <option value="ru">RU</option>
                         <option value="tj">TJ</option>
                         <option value="en">EN</option>
@@ -121,14 +121,14 @@
                 </div>
                 <div>
                     <span>Валюта:</span>
-                    <select id="currencySelect" onchange="changeCurrency(this.value)" style="background: #222225; color: #d4af37; border: 1px solid #2a2a2d; padding: 2px 6px; border-radius: 4px; font-weight: bold;">
+                    <select id="currencySelect" onchange="changeCurrency(this.value)" style="background: #222225; color: #d4af37; border: 1px solid #2a2a2d; padding: 4px 8px; border-radius: 4px; font-weight: bold;">
                         <option value="TJS">TJS (ЅM)</option>
                         <option value="USD">USD ($)</option>
                         <option value="RUB">RUB (₽)</option>
                     </select>
                 </div>
                 <div id="authContainer">
-                    <button onclick="openModal('authModal')" style="background: rgba(212,175,55,0.1); border: 1px solid rgba(212,175,55,0.3); color: #d4af37; padding: 4px 12px; border-radius: 6px; cursor: pointer;">
+                    <button onclick="openModal('authModal')" style="background: rgba(212,175,55,0.1); border: 1px solid rgba(212,175,55,0.3); color: #d4af37; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-weight: bold;">
                         <i class="fa-solid fa-user"></i> Войти
                     </button>
                 </div>
@@ -248,7 +248,7 @@
         <div class="modal-box">
             <button onclick="closeModal('skuSearchModal')" class="modal-close"><i class="fa-solid fa-xmark"></i></button>
             <h3 class="serif" style="font-size: 22px; margin-bottom: 16px;"><i class="fa-solid fa-hashtag text-amber"></i> Поиск по SKU</h3>
-            <input type="text" id="skuSearchInputModal" oninput="filterBySku(this.value)" placeholder="Введите артикул товара..." style="width: 100%; padding: 12px; border-radius: 10px; font-size: 14px; margin-bottom: 14px;">
+            <input type="text" id="skuSearchInputModal" oninput="filterBySku(this.value)" placeholder="Введите артикул товара..." style="width: 100%; padding: 12px; border-radius: 10px; font-size: 16px; margin-bottom: 14px;">
             <button onclick="switchTab('catalog'); closeModal('skuSearchModal');" class="btn-gold">Применить</button>
         </div>
     </div>
@@ -417,7 +417,7 @@
                 initRealtimeOrders();
             } else {
                 authContainer.innerHTML = `
-                    <button onclick="openModal('authModal')" style="background: rgba(212,175,55,0.1); border: 1px solid rgba(212,175,55,0.3); color: #d4af37; padding: 4px 12px; border-radius: 6px; cursor: pointer;">
+                    <button onclick="openModal('authModal')" style="background: rgba(212,175,55,0.1); border: 1px solid rgba(212,175,55,0.3); color: #d4af37; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-weight: bold;">
                         <i class="fa-solid fa-user"></i> Войти
                     </button>
                 `;
