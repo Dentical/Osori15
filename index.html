@@ -719,7 +719,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label id="previewLabel">Загрузить фото (до 20 шт):</label>
+                    <label id="previewLabel">Загрузить фото (рекомендуем до 10-15 шт):</label>
                     <input type="file" id="prodFilePicker" accept="image/*" multiple onchange="handleFileSelect(event)">
                     <div id="imagePreviewContainer" style="display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px;"></div>
                 </div>
@@ -1040,7 +1040,7 @@
             document.getElementById("productForm").reset();
             selectedFilesList = [];
             document.getElementById("imagePreviewContainer").innerHTML = "";
-            document.getElementById("previewLabel").innerText = "Загрузить фото (до 20 шт):";
+            document.getElementById("previewLabel").innerText = "Загрузить фото (рекомендуем до 10-15 шт):";
             document.getElementById("uploadStatus").innerText = "";
             document.getElementById("addProductModalTitle").innerText = "👗 Добавление нового товара";
             document.getElementById("saveProductBtn").innerText = "Сохранить товар в каталог";
@@ -1055,8 +1055,8 @@
             renderCatalog(allProducts);
         });
 
-        // МОЛНИЕНОСНОЕ СЖАТИЕ ДЛЯ 20 ФОТО (Оптимизировано под легкий вес)
-        function compressImageFast(file, maxDimension = 650, quality = 0.5) {
+        // МАКСИМАЛЬНОЕ СЖАТИЕ ДЛЯ ПРЕДОТВРАЩЕНИЯ ЧЕРНОГО ЭКРАНА
+        function compressImageFast(file, maxDimension = 500, quality = 0.45) {
             return new Promise((resolve) => {
                 const reader = new FileReader();
                 reader.readAsDataURL(file);
@@ -1093,7 +1093,7 @@
         window.handleFileSelect = function(event) {
             const files = Array.from(event.target.files);
             if (!files.length) return;
-            selectedFilesList = files.slice(0, 20);
+            selectedFilesList = files.slice(0, 15); // Ограничиваем до 15 фото за раз для стабильности базы
             renderPreviews();
         };
 
@@ -1103,7 +1103,7 @@
             container.innerHTML = "";
 
             if (selectedFilesList.length === 0) {
-                label.innerText = "Загрузить фото (до 20 шт):";
+                label.innerText = "Загрузить фото (рекомендуем до 10-15 шт):";
                 return;
             }
 
@@ -1138,7 +1138,7 @@
 
             if (selectedFilesList.length > 0) {
                 for (let i = 0; i < selectedFilesList.length; i++) {
-                    statusDiv.innerText = `⚡ Быстрое сжатие фото ${i + 1} из ${selectedFilesList.length}...`;
+                    statusDiv.innerText = `⚡ Сжатие фото ${i + 1} из ${selectedFilesList.length}...`;
                     const compressedBase64 = await compressImageFast(selectedFilesList[i]);
                     uploadedUrls.push(compressedBase64);
                 }
@@ -1150,7 +1150,8 @@
                 uploadedUrls = [...uploadedUrls, ...manualList];
             }
 
-            uploadedUrls = uploadedUrls.filter(u => u && u.length > 10);
+            // Фильтруем битые данные
+            uploadedUrls = uploadedUrls.filter(u => u && u.startsWith('data:image'));
 
             if (uploadedUrls.length === 0) {
                 alert("Пожалуйста, выберите хотя бы одно фото!");
@@ -1182,7 +1183,7 @@
                 document.getElementById("productForm").reset();
             } catch(err) {
                 console.error(err);
-                alert("Слишком много больших файлов. Попробуйте выбрать чуть меньше фото за один раз.");
+                alert("Слишком большой объем данных. Пожалуйста, загрузите чуть меньше фото (например, до 10-12 штук).");
                 statusDiv.innerText = "";
             }
         });
@@ -1218,7 +1219,7 @@
             products.forEach(p => {
                 let imgList = [];
                 if (p.image && typeof p.image === "string") {
-                    imgList = p.image.split(",").map(i => i.trim()).filter(i => i.length > 10);
+                    imgList = p.image.split(",").map(i => i.trim()).filter(i => i.length > 20);
                 }
 
                 if (imgList.length === 0) return;
@@ -1329,7 +1330,7 @@
             document.getElementById("prodImage").value = p.image;
             selectedFilesList = [];
             document.getElementById("imagePreviewContainer").innerHTML = "";
-            document.getElementById("previewLabel").innerText = "Загрузить фото (до 20 шт):";
+            document.getElementById("previewLabel").innerText = "Загрузить фото (рекомендуем до 10-15 шт):";
 
             document.getElementById("addProductModalTitle").innerText = "✏️ Редактирование товара";
             document.getElementById("saveProductBtn").innerText = "Обновить изменения";
