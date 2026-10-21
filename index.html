@@ -267,7 +267,7 @@
                 <div><label>Номер WhatsApp (+992...)</label><input type="text" id="prodWhatsapp" placeholder="992900000000"></div>
                 
                 <div>
-                    <label id="uploadLabelText">Фотография товара</label>
+                    <label id="uploadLabelText">Фотография товара (мгновенное сжатие)</label>
                     <input type="file" id="prodImageFiles" accept="image/*" multiple onchange="handleMultipleImagesUpload(event)">
                     <div id="uploadedImagesPreview" style="display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; max-height: 150px; overflow-y: auto;"></div>
                 </div>
@@ -542,25 +542,63 @@
 
         window.deleteOrder = async (id) => { if(confirm("Удалить заказ?")) deleteDoc(doc(db, "orders", id)).catch(() => {}); };
 
-        // ИСПРАВЛЕННАЯ БЫСТРАЯ ЗАГРУЗКА ФОТО КАК В B-TIME
+        // АВТОМАТИЧЕСКОЕ СЖАТИЕ ДЛЯ ЗАЩИТЫ ОТ ПРЕВЫШЕНИЯ 1МБ В FIREBASE
         window.handleMultipleImagesUpload = async (event) => {
             const files = Array.from(event.target.files);
             window.tempProductBase64Images = [];
             const previewContainer = document.getElementById('uploadedImagesPreview');
+            const uploadLabel = document.getElementById('uploadLabelText');
             
             if (files.length === 0) return;
+            
+            uploadLabel.innerText = `Сжатие ${files.length} фото...`;
+            previewContainer.innerHTML = '<span style="font-size: 11px; color: #d4af37;">Оптимизация под базу...</span>';
 
-            for (let file of files) {
-                const base64 = await new Promise((resolve) => {
+            const processSingleImage = (file) => {
+                return new Promise((resolve) => {
                     const reader = new FileReader();
-                    reader.onload = (e) => resolve(e.target.result);
+                    reader.onload = (e) => {
+                        const img = new Image();
+                        img.src = e.target.result;
+                        img.onload = () => {
+                            const canvas = document.createElement('canvas');
+                            let width = img.width;
+                            let height = img.height;
+                            const maxDim = 400; // Оптимальный размер для мгновенного сохранения
+                            if (width > maxDim || height > maxDim) {
+                                if (width > height) {
+                                    height = Math.round((height * maxDim) / width);
+                                    width = maxDim;
+                                } else {
+                                    width = Math.round((width * maxDim) / height);
+                                    height = maxDim;
+                                }
+                            }
+                            canvas.width = width;
+                            canvas.height = height;
+                            const ctx = canvas.getContext('2d');
+                            ctx.drawImage(img, 0, 0, width, height);
+                            resolve(canvas.toDataURL('image/jpeg', 0.5));
+                        };
+                        img.onerror = () => resolve(null);
+                    };
+                    reader.onerror = () => resolve(null);
                     reader.readAsDataURL(file);
                 });
-                window.tempProductBase64Images.push(base64);
+            };
+
+            let loadedImages = [];
+            for (let i = 0; i < files.length; i++) {
+                const optimized = await processSingleImage(files[i]);
+                if (optimized) loadedImages.push(optimized);
+                uploadLabel.innerText = `Обработано: ${i + 1} из ${files.length}`;
             }
 
+            window.tempProductBase64Images = loadedImages;
+            uploadLabel.innerText = `Фотографии товара (готово: ${loadedImages.length} шт.)`;
+            
             previewContainer.innerHTML = window.tempProductBase64Images.map(img => `
-                <img src="${img}" style="width: 45px; height: 45px; object-fit: cover; border-radius: 6px; border: 1px solid #d4af37;">
+                <img src="${img}" style="width: 45px; height: 45px; object-fit: cover; border-radius: 6px; border: 1px solid #d4af37;" loading="lazy">
             `).join('');
         };
 
@@ -608,7 +646,7 @@
                 }
                 closeModal('productModal');
             } catch (err) {
-                alert("Ошибка: файл слишком большой для базы данных. Выберите 1 небольшое фото.");
+                alert("Ошибка сохранения: файл слишком большой. Загружайте по 1-2 фото за раз.");
             } finally {
                 if (submitBtn) { submitBtn.innerText = "Сохранить товар"; submitBtn.disabled = false; }
             }
@@ -624,6 +662,7 @@
             document.getElementById('prodBadge').value = 'NEW';
             document.getElementById('prodWhatsapp').value = '';
             document.getElementById('prodImageFiles').value = '';
+            document.getElementById('uploadLabelText').innerText = "Фотография товара (мгновенное сжатие)";
             document.getElementById('uploadedImagesPreview').innerHTML = '';
             window.tempProductBase64Images = [];
             document.getElementById('productModalTitle').innerText = "Добавить товар";
@@ -643,10 +682,11 @@
             document.getElementById('prodWhatsapp').value = p.whatsapp || '';
             
             window.tempProductBase64Images = p.images || (p.image ? [p.image] : []);
+            document.getElementById('uploadLabelText').innerText = `Загружено фото: ${window.tempProductBase64Images.length}`;
             
             const previewContainer = document.getElementById('uploadedImagesPreview');
             previewContainer.innerHTML = window.tempProductBase64Images.map(img => `
-                <img src="${img}" style="width: 45px; height: 45px; object-fit: cover; border-radius: 6px; border: 1px solid #d4af37;">
+                <img src="${img}" style="width: 45px; height: 45px; object-fit: cover; border-radius: 6px; border: 1px solid #d4af37;" loading="lazy">
             `).join('');
 
             document.getElementById('productModalTitle').innerText = "Редактировать товар";
