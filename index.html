@@ -719,7 +719,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label id="previewLabel">Загрузить фото (рекомендуем до 10-15 шт):</label>
+                    <label id="previewLabel">Загрузить фото с устройства:</label>
                     <input type="file" id="prodFilePicker" accept="image/*" multiple onchange="handleFileSelect(event)">
                     <div id="imagePreviewContainer" style="display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px;"></div>
                 </div>
@@ -1040,7 +1040,7 @@
             document.getElementById("productForm").reset();
             selectedFilesList = [];
             document.getElementById("imagePreviewContainer").innerHTML = "";
-            document.getElementById("previewLabel").innerText = "Загрузить фото (рекомендуем до 10-15 шт):";
+            document.getElementById("previewLabel").innerText = "Загрузить фото с устройства:";
             document.getElementById("uploadStatus").innerText = "";
             document.getElementById("addProductModalTitle").innerText = "👗 Добавление нового товара";
             document.getElementById("saveProductBtn").innerText = "Сохранить товар в каталог";
@@ -1055,8 +1055,8 @@
             renderCatalog(allProducts);
         });
 
-        // МАКСИМАЛЬНОЕ СЖАТИЕ ДЛЯ ПРЕДОТВРАЩЕНИЯ ЧЕРНОГО ЭКРАНА
-        function compressImageFast(file, maxDimension = 500, quality = 0.45) {
+        // МГНОВЕННАЯ И БЕЗОПАСНАЯ ПОДГОТОВКА ФОТО
+        function processFileFast(file) {
             return new Promise((resolve) => {
                 const reader = new FileReader();
                 reader.readAsDataURL(file);
@@ -1065,26 +1065,21 @@
                     img.src = e.target.result;
                     img.onload = () => {
                         const canvas = document.createElement('canvas');
+                        let maxDim = 450; 
                         let w = img.width;
                         let h = img.height;
                         
                         if (w > h) {
-                            if (w > maxDimension) {
-                                h = Math.round((h * maxDimension) / w);
-                                w = maxDimension;
-                            }
+                            if (w > maxDim) { h = Math.round((h * maxDim) / w); w = maxDim; }
                         } else {
-                            if (h > maxDimension) {
-                                w = Math.round((w * maxDimension) / h);
-                                h = maxDimension;
-                            }
+                            if (h > maxDim) { w = Math.round((w * maxDim) / h); h = maxDim; }
                         }
 
                         canvas.width = w;
                         canvas.height = h;
                         const ctx = canvas.getContext('2d');
                         ctx.drawImage(img, 0, 0, w, h);
-                        resolve(canvas.toDataURL('image/jpeg', quality));
+                        resolve(canvas.toDataURL('image/jpeg', 0.4));
                     };
                 };
             });
@@ -1093,7 +1088,7 @@
         window.handleFileSelect = function(event) {
             const files = Array.from(event.target.files);
             if (!files.length) return;
-            selectedFilesList = files.slice(0, 15); // Ограничиваем до 15 фото за раз для стабильности базы
+            selectedFilesList = files;
             renderPreviews();
         };
 
@@ -1103,11 +1098,11 @@
             container.innerHTML = "";
 
             if (selectedFilesList.length === 0) {
-                label.innerText = "Загрузить фото (рекомендуем до 10-15 шт):";
+                label.innerText = "Загрузить фото с устройства:";
                 return;
             }
 
-            label.innerText = `Фотографии товара (${selectedFilesList.length} шт. готово)`;
+            label.innerText = `Выбрано фотографий: ${selectedFilesList.length} шт.`;
 
             selectedFilesList.forEach((file, index) => {
                 const reader = new FileReader();
@@ -1138,9 +1133,9 @@
 
             if (selectedFilesList.length > 0) {
                 for (let i = 0; i < selectedFilesList.length; i++) {
-                    statusDiv.innerText = `⚡ Сжатие фото ${i + 1} из ${selectedFilesList.length}...`;
-                    const compressedBase64 = await compressImageFast(selectedFilesList[i]);
-                    uploadedUrls.push(compressedBase64);
+                    statusDiv.innerText = `⚡ Быстрая обработка ${i + 1} из ${selectedFilesList.length}...`;
+                    const base64 = await processFileFast(selectedFilesList[i]);
+                    uploadedUrls.push(base64);
                 }
             }
 
@@ -1150,18 +1145,17 @@
                 uploadedUrls = [...uploadedUrls, ...manualList];
             }
 
-            // Фильтруем битые данные
-            uploadedUrls = uploadedUrls.filter(u => u && u.startsWith('data:image'));
+            uploadedUrls = uploadedUrls.filter(u => u && u.length > 10);
 
             if (uploadedUrls.length === 0) {
-                alert("Пожалуйста, выберите хотя бы одно фото!");
+                alert("Пожалуйста, выберите хотя бы одну фотографию!");
                 statusDiv.innerText = "";
                 return;
             }
 
             const finalImageUrl = uploadedUrls.join(", ");
 
-            statusDiv.innerText = "⚡ Сохранение в каталог...";
+            statusDiv.innerText = "⚡ Публикация...";
 
             const pData = {
                 title: document.getElementById("prodTitle").value,
@@ -1183,7 +1177,7 @@
                 document.getElementById("productForm").reset();
             } catch(err) {
                 console.error(err);
-                alert("Слишком большой объем данных. Пожалуйста, загрузите чуть меньше фото (например, до 10-12 штук).");
+                alert("Объем выбранных фото превысил лимит базы. Выберите немного меньше фото (например, 4-6 шт.) для одной отправки.");
                 statusDiv.innerText = "";
             }
         });
@@ -1219,7 +1213,7 @@
             products.forEach(p => {
                 let imgList = [];
                 if (p.image && typeof p.image === "string") {
-                    imgList = p.image.split(",").map(i => i.trim()).filter(i => i.length > 20);
+                    imgList = p.image.split(",").map(i => i.trim()).filter(i => i.length > 10);
                 }
 
                 if (imgList.length === 0) return;
@@ -1330,7 +1324,7 @@
             document.getElementById("prodImage").value = p.image;
             selectedFilesList = [];
             document.getElementById("imagePreviewContainer").innerHTML = "";
-            document.getElementById("previewLabel").innerText = "Загрузить фото (рекомендуем до 10-15 шт):";
+            document.getElementById("previewLabel").innerText = "Загрузить фото с устройства:";
 
             document.getElementById("addProductModalTitle").innerText = "✏️ Редактирование товара";
             document.getElementById("saveProductBtn").innerText = "Обновить изменения";
