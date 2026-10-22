@@ -436,7 +436,7 @@
                 let list = [OWNER_EMAIL];
                 if (data) {
                     Object.values(data).forEach(email => {
-                        if (email) {
+                        if (email && typeof email === 'string') {
                             let cleanEmail = email.toLowerCase().trim();
                             if (!list.includes(cleanEmail)) list.push(cleanEmail);
                         }
@@ -702,7 +702,6 @@
             }
 
             try {
-                // Создаем безопасный ключ из email для Firebase
                 const safeKey = email.replace(/[.#$\/\[\]]/g, "_");
                 await set(ref(rtdb, `admins/${safeKey}`), email);
                 emailInput.value = '';
