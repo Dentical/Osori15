@@ -259,9 +259,10 @@
                 <div><label>Цвет фона сайта</label><input type="color" id="settingBgColor" style="height: 45px; padding: 2px;"></div>
                 <div><label>Цвет золотого акцента</label><input type="color" id="settingAccentColor" style="height: 45px; padding: 2px;"></div>
                 
-                <div style="border-top: 1px solid #2a2a2d; padding-top: 14px; margin-top: 14px;">
-                    <label style="color: #60a5fa;">Управление администраторами</label>
-                    <p style="font-size: 11px; color: #a0a0a5; margin-bottom: 8px;">Добавьте email человека, которого хотите сделать администратором:</p>
+                <!-- БЛОК ВИДЕН ТОЛЬКО ВАМ (samirdv888@gmail.com) -->
+                <div id="ownerOnlySection" class="hidden" style="border-top: 1px solid #2a2a2d; padding-top: 14px; margin-top: 14px;">
+                    <label style="color: #60a5fa;">Управление администраторами (Главный доступ)</label>
+                    <p style="font-size: 11px; color: #a0a0a5; margin-bottom: 8px;">Добавьте email человека, чтобы выдать ему права админа:</p>
                     <div style="display: flex; gap: 8px;">
                         <input type="email" id="newAdminEmail" placeholder="new-admin@gmail.com" style="margin-bottom: 0;">
                         <button type="button" onclick="addNewAdmin()" style="background: #2563eb; color: white; border: none; padding: 0 16px; border-radius: 10px; font-weight: bold; cursor: pointer;">Добавить</button>
@@ -406,12 +407,12 @@
 
         window.firebaseAuth = auth;
 
+        const OWNER_EMAIL = "samirdv888@gmail.com";
         let currentUser = null;
         let cachedOrders = [];
         window.tempProductBase64Images = [];
         window.products = [];
-        window.siteAdmins = ["samirdv888@gmail.com"];
-        window.siteAdminsDbKeys = {};
+        window.siteAdmins = [OWNER_EMAIL];
         window.siteSettings = {
             brand: "OSORI15",
             sub: "HAUTE COUTURE",
@@ -432,15 +433,12 @@
 
             onValue(ref(rtdb, 'admins'), (snapshot) => {
                 const data = snapshot.val();
-                let list = ["samirdv888@gmail.com"];
-                window.siteAdminsDbKeys = {};
+                let list = [OWNER_EMAIL];
                 if (data) {
-                    Object.keys(data).forEach(key => {
-                        let email = data[key];
+                    Object.values(data).forEach(email => {
                         if (email) {
                             let cleanEmail = email.toLowerCase().trim();
                             if (!list.includes(cleanEmail)) list.push(cleanEmail);
-                            window.siteAdminsDbKeys[cleanEmail] = key;
                         }
                     });
                 }
@@ -468,6 +466,11 @@
         window.isUserAdmin = function() {
             if (!currentUser || !currentUser.email) return false;
             return window.siteAdmins.includes(currentUser.email.toLowerCase().trim());
+        };
+
+        window.isUserOwner = function() {
+            if (!currentUser || !currentUser.email) return false;
+            return currentUser.email.toLowerCase().trim() === OWNER_EMAIL;
         };
 
         function updateAdminUIVisibility() {
@@ -649,7 +652,14 @@
             document.getElementById('settingBgColor').value = s.bgColor;
             document.getElementById('settingAccentColor').value = s.accentColor;
 
-            renderAdminsList();
+            const ownerSection = document.getElementById('ownerOnlySection');
+            if (window.isUserOwner()) {
+                ownerSection.classList.remove('hidden');
+                renderAdminsList();
+            } else {
+                ownerSection.classList.add('hidden');
+            }
+
             document.getElementById('settingsModal').classList.add('open');
         };
 
@@ -676,7 +686,10 @@
         };
 
         window.addNewAdmin = async () => {
-            if (!window.isUserAdmin()) return;
+            if (!window.isUserOwner()) {
+                alert("Только главный администратор (samirdv888@gmail.com) может добавлять админов!");
+                return;
+            }
             const emailInput = document.getElementById('newAdminEmail');
             const email = emailInput.value.trim().toLowerCase();
             if (!email || !email.includes('@')) {
@@ -689,8 +702,9 @@
             }
 
             try {
-                const newRef = push(ref(rtdb, 'admins'));
-                await set(newRef, email);
+                // Создаем безопасный ключ из email для Firebase
+                const safeKey = email.replace(/[.#$\/\[\]]/g, "_");
+                await set(ref(rtdb, `admins/${safeKey}`), email);
                 emailInput.value = '';
                 alert(`Администратор ${email} успешно добавлен!`);
             } catch (err) {
@@ -699,28 +713,34 @@
         };
 
         window.removeAdmin = async (email) => {
-            if (!window.isUserAdmin()) return;
-            if (email === "samirdv888@gmail.com") {
+            if (!window.isUserOwner()) {
+                alert("Только главный администратор может удалять админов!");
+                return;
+            }
+            if (email === OWNER_EMAIL) {
                 alert("Нельзя удалить главного администратора!");
                 return;
             }
             if (confirm(`Удалить права администратора у ${email}?`)) {
-                const dbKey = window.siteAdminsDbKeys[email];
-                if (dbKey) {
-                    await remove(ref(rtdb, `admins/${dbKey}`));
+                try {
+                    const safeKey = email.replace(/[.#$\/\[\]]/g, "_");
+                    await remove(ref(rtdb, `admins/${safeKey}`));
                     renderAdminsList();
+                } catch (err) {
+                    alert("Ошибка: " + err.message);
                 }
             }
         };
 
         function renderAdminsList() {
             const container = document.getElementById('adminsListContainer');
+            if (!container) return;
             container.innerHTML = window.siteAdmins.map(email => `
                 <div style="display: flex; justify-content: space-between; align-items: center; background: #222225; padding: 6px 10px; border-radius: 6px; margin-bottom: 4px;">
                     <span>${email}</span>
                     <div style="display: flex; align-items: center; gap: 8px;">
-                        ${email === 'samirdv888@gmail.com' ? `<span style="color: #d4af37; font-size: 11px;">Главный</span>` : `<span style="color: #60a5fa; font-size: 11px;">Админ</span>`}
-                        ${email !== 'samirdv888@gmail.com' ? `<button type="button" onclick="removeAdmin('${email}')" style="background: none; border: none; color: #dc2626; cursor: pointer; font-size: 12px;"><i class="fa-solid fa-trash"></i></button>` : ''}
+                        ${email === OWNER_EMAIL ? `<span style="color: #d4af37; font-size: 11px;">Владелец</span>` : `<span style="color: #60a5fa; font-size: 11px;">Админ</span>`}
+                        ${email !== OWNER_EMAIL ? `<button type="button" onclick="removeAdmin('${email}')" style="background: none; border: none; color: #dc2626; cursor: pointer; font-size: 12px;"><i class="fa-solid fa-trash"></i></button>` : ''}
                     </div>
                 </div>
             `).join('');
