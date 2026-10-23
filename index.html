@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title id="pageTitle">B-TIME — LUXURY WATCHES</title>
+    <title id="pageTitle">OSORI15 — Haute Couture & Female Fashion</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -12,15 +12,15 @@
 
     <style>
         :root {
-            --bg-color: #0d0a26;
+            --bg-color: #0f0f10;
             --text-color: #ffffff;
-            --header-color: #0d0a26;
-            --footer-color: #000000;
+            --header-color: rgba(15, 15, 16, 0.95);
+            --footer-color: #070d1d;
             --topbar-color: #070d1d;
             --gold-gradient: linear-gradient(135deg, #d4af37, #f3e5ab);
             --accent-amber: #d4af37;
             --site-font: 'Plus Jakarta Sans', sans-serif;
-            --card-min-width: 194px;
+            --card-min-width: 240px;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: var(--site-font); -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
@@ -113,7 +113,8 @@
     <div class="top-bar">
         <div class="top-bar-inner">
             <div id="topBarContacts" style="display: flex; gap: 16px; align-items: center; flex-wrap: wrap;">
-                <span><i class="fa-solid fa-phone text-gold"></i> <span id="topBarPhone">901024242</span></span>
+                <span><i class="fa-solid fa-location-dot text-gold"></i> Душанбе, пр. Рудаки 15</span>
+                <span><i class="fa-solid fa-phone text-gold"></i> +992 (90) 000-00-00</span>
             </div>
             <div style="display: flex; gap: 12px; align-items: center;">
                 <div>
@@ -144,10 +145,10 @@
     <header>
         <div class="header-inner">
             <div class="logo" onclick="switchTab('catalog')">
-                <div class="logo-icon"><i class="fa-solid fa-clock"></i></div>
+                <div class="logo-icon"><i class="fa-solid fa-gem"></i></div>
                 <div>
-                    <span id="siteBrandName" style="font-size: 20px; font-weight: 900; letter-spacing: 1px;" class="serif">B-TIME</span>
-                    <span id="siteBrandSub" style="display: block; font-size: 8px; color: var(--accent-amber); letter-spacing: 2px; font-weight: 600;">LUXURY WATCHES</span>
+                    <span id="siteBrandName" style="font-size: 20px; font-weight: 900; letter-spacing: 1px;" class="serif">OSORI15</span>
+                    <span id="siteBrandSub" style="display: block; font-size: 8px; color: var(--accent-amber); letter-spacing: 2px; font-weight: 600;">HAUTE COUTURE</span>
                 </div>
             </div>
 
@@ -188,13 +189,13 @@
         <div id="tab-home" class="tab-pane active">
             <div style="padding: 20px 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 30px; align-items: center;">
                 <div>
-                    <span id="heroBadge" style="background: rgba(212,175,55,0.1); border: 1px solid rgba(212,175,55,0.3); color: var(--accent-amber); padding: 6px 12px; border-radius: 20px; font-size: 11px; font-weight: 600; text-transform: uppercase;">Официальный дилер</span>
-                    <h1 id="heroTitle" class="serif" style="font-size: clamp(26px, 5vw, 36px); line-height: 1.1; margin: 16px 0;">Элегантность в каждой секунде!</h1>
-                    <p id="heroDesc" style="opacity: 0.8; margin-bottom: 20px; font-size: 14px;">Эксклюзивная коллекция швейцарских и мировых брендов с гарантией качества.</p>
+                    <span id="heroBadge" style="background: rgba(212,175,55,0.1); border: 1px solid rgba(212,175,55,0.3); color: var(--accent-amber); padding: 6px 12px; border-radius: 20px; font-size: 11px; font-weight: 600; text-transform: uppercase;">Премиум коллекция</span>
+                    <h1 id="heroTitle" class="serif" style="font-size: clamp(26px, 5vw, 36px); line-height: 1.1; margin: 16px 0;">Изысканность и стиль в каждом наряде</h1>
+                    <p id="heroDesc" style="opacity: 0.8; margin-bottom: 20px; font-size: 14px;">Эксклюзивная женская одежда в Душанбе для самых особенных моментов вашей жизни.</p>
                     <button onclick="switchTab('catalog')" class="btn-gold" style="width: auto; padding: 12px 24px;">Перейти в каталог</button>
                 </div>
                 <div style="text-align: center;">
-                    <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=1600&auto=format&fit=crop&q=100" style="max-width: 100%; border-radius: 16px; box-shadow: 0 15px 25px -5px rgba(0,0,0,0.5);" alt="Watches">
+                    <img src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=1600&auto=format&fit=crop&q=100" style="max-width: 100%; border-radius: 16px; box-shadow: 0 15px 25px -5px rgba(0,0,0,0.5);" alt="Fashion">
                 </div>
             </div>
 
@@ -205,7 +206,7 @@
         </div>
 
         <div id="tab-catalog" class="tab-pane">
-            <h2 class="serif" style="font-size: clamp(18px, 4vw, 24px); margin-bottom: 20px;">Каталог товаров</h2>
+            <h2 class="serif" style="font-size: clamp(18px, 4vw, 24px); margin-bottom: 20px;">Каталог одежды</h2>
             <div id="catalogGrid" class="grid-products"></div>
         </div>
 
@@ -227,15 +228,16 @@
         <div class="footer-inner">
             <div>
                 <div class="logo" style="margin-bottom: 10px;">
-                    <div class="logo-icon"><i class="fa-solid fa-clock"></i></div>
-                    <span id="footerBrandName" style="font-size: 18px; font-weight: 900; color: inherit;" class="serif">B-TIME</span>
+                    <div class="logo-icon"><i class="fa-solid fa-gem"></i></div>
+                    <span id="footerBrandName" style="font-size: 18px; font-weight: 900; color: inherit;" class="serif">OSORI15</span>
                 </div>
-                <p id="footerDesc">Официальный дилер элитных часов в Таджикистане. Безупречное качество и премиальный сервис.</p>
+                <p id="footerDesc">Премиальная женская одежда в Душанбе. Высочайшее качество тканей и безупречный крой.</p>
             </div>
             <div>
                 <h4 style="color: inherit; font-weight: bold; margin-bottom: 10px;">Контакты</h4>
                 <div id="footerContactsContainer" style="display: flex; flex-direction: column; gap: 8px;">
-                    <span><i class="fa-solid fa-phone text-gold"></i> <span id="footerPhone">901024242</span></span>
+                    <span><i class="fa-solid fa-phone text-gold"></i> +992 (90) 000-00-00</span>
+                    <span><i class="fa-solid fa-location-dot text-gold"></i> Душанбе, пр. Рудаки 15</span>
                 </div>
             </div>
         </div>
@@ -250,7 +252,7 @@
         <div id="fullscreenCounter" style="color: white; margin-top: 14px; font-weight: bold; font-size: 14px;">1 / 1</div>
     </div>
 
-    <!-- МОДАЛЬНОЕ ОКНО НАСТРОЕК (СМС) С ПОЛНЫМ СООТВЕТСТВИЕМ СНИМКАМ ЭКРАНА -->
+    <!-- МОДАЛЬНОЕ ОКНО НАСТРОЕК (CMS) -->
     <div id="settingsModal" class="modal">
         <div class="modal-box">
             <button onclick="closeModal('settingsModal')" class="modal-close"><i class="fa-solid fa-xmark"></i></button>
@@ -262,15 +264,15 @@
                 <!-- РАЗМЕР КАРТОЧКИ -->
                 <div>
                     <label>Минимальный размер карточки товара (Ширина в пикселях)</label>
-                    <input type="range" id="settingCardWidth" min="150" max="400" value="194" oninput="document.getElementById('cardWidthVal').innerText = this.value + 'px'">
-                    <div id="cardWidthVal" style="color: #d97706; font-weight: bold; margin-top: 4px; font-size: 14px;">194px</div>
+                    <input type="range" id="settingCardWidth" min="150" max="400" value="240" oninput="document.getElementById('cardWidthVal').innerText = this.value + 'px'">
+                    <div id="cardWidthVal" style="color: #d97706; font-weight: bold; margin-top: 4px; font-size: 14px;">240px</div>
                 </div>
 
                 <!-- ЦВЕТА -->
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
                     <div>
                         <label>Фон сайта</label>
-                        <input type="color" id="settingBgColor" value="#0d0a26" style="height: 42px; padding: 2px; cursor: pointer;">
+                        <input type="color" id="settingBgColor" value="#0f0f10" style="height: 42px; padding: 2px; cursor: pointer;">
                     </div>
                     <div>
                         <label>Цвет текста</label>
@@ -281,43 +283,43 @@
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
                     <div>
                         <label>Фон шапки (Header)</label>
-                        <input type="color" id="settingHeaderColor" value="#0d0a26" style="height: 42px; padding: 2px; cursor: pointer;">
+                        <input type="color" id="settingHeaderColor" value="#0f0f10" style="height: 42px; padding: 2px; cursor: pointer;">
                     </div>
                     <div>
                         <label>Фон футера (Footer)</label>
-                        <input type="color" id="settingFooterColor" value="#000000" style="height: 42px; padding: 2px; cursor: pointer;">
+                        <input type="color" id="settingFooterColor" value="#070d1d" style="height: 42px; padding: 2px; cursor: pointer;">
                     </div>
                 </div>
 
                 <!-- БРЕНД И ТЕКСТЫ -->
                 <div>
                     <label>Название бренда</label>
-                    <input type="text" id="settingBrand" value="B-TIME" required>
+                    <input type="text" id="settingBrand" value="OSORI15" required>
                 </div>
 
                 <div>
                     <label>Подзаголовок бренда</label>
-                    <input type="text" id="settingSub" value="LUXURY WATCHES" required>
+                    <input type="text" id="settingSub" value="HAUTE COUTURE" required>
                 </div>
 
                 <div>
                     <label>Главный заголовок (Hero H1)</label>
-                    <input type="text" id="settingHeroTitle" value="Элегантность в каждой секунде!">
+                    <input type="text" id="settingHeroTitle" value="Изысканность и стиль в каждом наряде">
                 </div>
 
                 <div>
                     <label>Описание под заголовком</label>
-                    <textarea id="settingHeroDesc" rows="2">Эксклюзивная коллекция швейцарских и мировых брендов с гарантией качества.</textarea>
+                    <textarea id="settingHeroDesc" rows="2">Эксклюзивная женская одежда в Душанбе для самых особенных моментов вашей жизни.</textarea>
                 </div>
 
                 <div>
                     <label>Бейдж на главной</label>
-                    <input type="text" id="settingHeroBadge" value="Официальный дилер">
+                    <input type="text" id="settingHeroBadge" value="Премиум коллекция">
                 </div>
 
                 <div>
                     <label>Описание в футере</label>
-                    <textarea id="settingFooterDesc" rows="2">Официальный дилер элитных часов в Таджикистане. Безупречное качество и премиальный сервис.</textarea>
+                    <textarea id="settingFooterDesc" rows="2">Премиальная женская одежда в Душанбе. Высочайшее качество тканей и безупречный крой.</textarea>
                 </div>
 
                 <!-- КОНТАКТЫ И КНОПКИ -->
@@ -352,18 +354,19 @@
         </div>
     </div>
 
+    <!-- ФОРМА ДОБАВЛЕНИЯ ТОВАРА ДЛЯ ОДЕЖДЫ -->
     <div id="productModal" class="modal">
         <div class="modal-box">
             <button onclick="closeModal('productModal')" class="modal-close"><i class="fa-solid fa-xmark"></i></button>
             <h3 id="productModalTitle" class="serif" style="font-size: 22px; margin-bottom: 16px;">Добавить товар</h3>
             <form onsubmit="saveProduct(event)">
                 <input type="hidden" id="editProductDocId">
-                <div><label>Название</label><input type="text" id="prodName" required placeholder="Rolex Submariner"></div>
-                <div><label>Категория / Бренд</label><input type="text" id="prodBrand" required placeholder="Rolex / Watches"></div>
-                <div><label>Артикул (SKU)</label><input type="text" id="prodSku" required placeholder="RLX-01"></div>
-                <div><label>Цена (в сомони TJS)</label><input type="number" id="prodPrice" required min="1" placeholder="12500"></div>
+                <div><label>Название</label><input type="text" id="prodName" required placeholder="Платье 'Silk'"></div>
+                <div><label>Категория / Бренд</label><input type="text" id="prodBrand" required placeholder="Платья / Haute Couture"></div>
+                <div><label>Артикул (SKU)</label><input type="text" id="prodSku" required placeholder="DR-01"></div>
+                <div><label>Цена (в сомони TJS)</label><input type="number" id="prodPrice" required min="1" placeholder="650"></div>
                 <div><label>Бейдж</label><input type="text" id="prodBadge" value="NEW"></div>
-                <div><label>Номер WhatsApp (+992...)</label><input type="text" id="prodWhatsapp" placeholder="992901024242"></div>
+                <div><label>Номер WhatsApp (+992...)</label><input type="text" id="prodWhatsapp" placeholder="992900000000"></div>
                 
                 <div>
                     <label id="uploadLabelText">Фотография товара (Realtime DB)</label>
@@ -376,7 +379,7 @@
         </div>
     </div>
 
-    <!-- ОКНО ВХОДА (ТОЛЬКО ЧЕРЕЗ GOOGLE) -->
+    <!-- ОКНО ВХОДА -->
     <div id="authModal" class="modal">
         <div class="modal-box" style="text-align: center; padding: 32px 24px;">
             <button onclick="closeModal('authModal')" class="modal-close"><i class="fa-solid fa-xmark"></i></button>
@@ -482,21 +485,20 @@
         window.products = [];
         window.siteAdmins = [OWNER_EMAIL];
         window.siteSettings = {
-            cardMinWidth: 194,
-            bgColor: "#0d0a26",
+            cardMinWidth: 240,
+            bgColor: "#0f0f10",
             textColor: "#ffffff",
-            headerColor: "#0d0a26",
-            footerColor: "#000000",
-            brand: "B-TIME",
-            sub: "LUXURY WATCHES",
-            heroTitle: "Элегантность в каждой секунде!",
-            heroDesc: "Эксклюзивная коллекция швейцарских и мировых брендов с гарантией качества.",
-            heroBadge: "Официальный дилер",
-            footerDesc: "Официальный дилер элитных часов в Таджикистане. Безупречное качество и премиальный сервис.",
+            headerColor: "#0f0f10",
+            footerColor: "#070d1d",
+            brand: "OSORI15",
+            sub: "HAUTE COUTURE",
+            heroTitle: "Изысканность и стиль в каждом наряде",
+            heroDesc: "Эксклюзивная женская одежда в Душанбе для самых особенных моментов вашей жизни.",
+            heroBadge: "Премиум коллекция",
+            footerDesc: "Премиальная женская одежда в Душанбе. Высочайшее качество тканей и безупречный крой.",
             contacts: [
-                { icon: "fa-brands fa-facebook", title: "Facebook : @btime.tj", link: "https://facebook.com" },
-                { icon: "fa-regular fa-envelope", title: "Gmail : abdullochoriev@gmail.com", link: "mailto:abdullochoriev@gmail.com" },
-                { icon: "fa-solid fa-phone", title: "Phone : 901024242", link: "tel:901024242" }
+                { icon: "fa-solid fa-location-dot", title: "Душанбе, пр. Рудаки 15", link: "#" },
+                { icon: "fa-solid fa-phone", title: "+992 (90) 000-00-00", link: "tel:+992900000000" }
             ]
         };
 
@@ -528,21 +530,21 @@
 
         function applySiteSettingsUI() {
             const s = window.siteSettings;
-            document.getElementById('siteBrandName').innerText = s.brand || "B-TIME";
-            document.getElementById('footerBrandName').innerText = s.brand || "B-TIME";
-            document.getElementById('pageTitle').innerText = `${s.brand || "B-TIME"} — ${s.sub || "LUXURY WATCHES"}`;
-            document.getElementById('siteBrandSub').innerText = s.sub || "LUXURY WATCHES";
+            document.getElementById('siteBrandName').innerText = s.brand || "OSORI15";
+            document.getElementById('footerBrandName').innerText = s.brand || "OSORI15";
+            document.getElementById('pageTitle').innerText = `${s.brand || "OSORI15"} — ${s.sub || "HAUTE COUTURE"}`;
+            document.getElementById('siteBrandSub').innerText = s.sub || "HAUTE COUTURE";
             
             if (document.getElementById('heroTitle')) document.getElementById('heroTitle').innerText = s.heroTitle || "";
             if (document.getElementById('heroDesc')) document.getElementById('heroDesc').innerText = s.heroDesc || "";
             if (document.getElementById('heroBadge')) document.getElementById('heroBadge').innerText = s.heroBadge || "";
             if (document.getElementById('footerDesc')) document.getElementById('footerDesc').innerText = s.footerDesc || "";
 
-            document.documentElement.style.setProperty('--card-min-width', (s.cardMinWidth || 194) + 'px');
-            document.documentElement.style.setProperty('--bg-color', s.bgColor || "#0d0a26");
+            document.documentElement.style.setProperty('--card-min-width', (s.cardMinWidth || 240) + 'px');
+            document.documentElement.style.setProperty('--bg-color', s.bgColor || "#0f0f10");
             document.documentElement.style.setProperty('--text-color', s.textColor || "#ffffff");
-            document.documentElement.style.setProperty('--header-color', s.headerColor || "#0d0a26");
-            document.documentElement.style.setProperty('--footer-color', s.footerColor || "#000000");
+            document.documentElement.style.setProperty('--header-color', s.headerColor || "#0f0f10");
+            document.documentElement.style.setProperty('--footer-color', s.footerColor || "#070d1d");
 
             // Отображение динамических контактов
             const topBarContacts = document.getElementById('topBarContacts');
@@ -743,15 +745,15 @@
             if (!window.isUserAdmin()) return;
             const s = window.siteSettings;
             
-            document.getElementById('settingCardWidth').value = s.cardMinWidth || 194;
-            document.getElementById('cardWidthVal').innerText = (s.cardMinWidth || 194) + 'px';
-            document.getElementById('settingBgColor').value = s.bgColor || "#0d0a26";
+            document.getElementById('settingCardWidth').value = s.cardMinWidth || 240;
+            document.getElementById('cardWidthVal').innerText = (s.cardMinWidth || 240) + 'px';
+            document.getElementById('settingBgColor').value = s.bgColor || "#0f0f10";
             document.getElementById('settingTextColor').value = s.textColor || "#ffffff";
-            document.getElementById('settingHeaderColor').value = s.headerColor || "#0d0a26";
-            document.getElementById('settingFooterColor').value = s.footerColor || "#000000";
+            document.getElementById('settingHeaderColor').value = s.headerColor || "#0f0f10";
+            document.getElementById('settingFooterColor').value = s.footerColor || "#070d1d";
             
-            document.getElementById('settingBrand').value = s.brand || "B-TIME";
-            document.getElementById('settingSub').value = s.sub || "LUXURY WATCHES";
+            document.getElementById('settingBrand').value = s.brand || "OSORI15";
+            document.getElementById('settingSub').value = s.sub || "HAUTE COUTURE";
             document.getElementById('settingHeroTitle').value = s.heroTitle || "";
             document.getElementById('settingHeroDesc').value = s.heroDesc || "";
             document.getElementById('settingHeroBadge').value = s.heroBadge || "";
@@ -775,7 +777,7 @@
             if (!container) return;
             container.innerHTML = contacts.map((c, idx) => `
                 <div class="contact-item-row" id="contactRow_${idx}">
-                    <input type="text" value="${c.icon || ''}" placeholder="fa-brands fa-facebook" id="cIcon_${idx}">
+                    <input type="text" value="${c.icon || ''}" placeholder="fa-solid fa-phone" id="cIcon_${idx}">
                     <input type="text" value="${c.title || ''}" placeholder="Название" id="cTitle_${idx}">
                     <input type="text" value="${c.link || ''}" placeholder="Ссылка" id="cLink_${idx}">
                     <button type="button" class="btn-del-row" onclick="removeContactRow(${idx})"><i class="fa-solid fa-trash"></i></button>
@@ -790,7 +792,7 @@
             div.className = "contact-item-row";
             div.id = `contactRow_${idx}`;
             div.innerHTML = `
-                <input type="text" placeholder="fa-brands fa-facebook" id="cIcon_${idx}">
+                <input type="text" placeholder="fa-solid fa-phone" id="cIcon_${idx}">
                 <input type="text" placeholder="Название" id="cTitle_${idx}">
                 <input type="text" placeholder="Ссылка" id="cLink_${idx}">
                 <button type="button" class="btn-del-row" onclick="removeContactRow(${idx})"><i class="fa-solid fa-trash"></i></button>
@@ -817,7 +819,7 @@
             });
 
             const newSettings = {
-                cardMinWidth: parseInt(document.getElementById('settingCardWidth').value) || 194,
+                cardMinWidth: parseInt(document.getElementById('settingCardWidth').value) || 240,
                 bgColor: document.getElementById('settingBgColor').value,
                 textColor: document.getElementById('settingTextColor').value,
                 headerColor: document.getElementById('settingHeaderColor').value,
@@ -1061,7 +1063,7 @@
 
     <!-- ИНТЕРФЕЙС И ОТОБРАЖЕНИЕ -->
     <script>
-        let reviews = [{ author: "Мадина С.", rating: 5, text: "Отличное качество товаров, всё супер!" }];
+        let reviews = [{ author: "Мадина С.", rating: 5, text: "Отличное качество платья, идеальный крой!" }];
         let cart = JSON.parse(localStorage.getItem('osori_cart')) || [];
         let compareList = JSON.parse(localStorage.getItem('osori_compare')) || [];
         let currentCurrency = 'TJS';
@@ -1155,7 +1157,7 @@
                 const images = p.images && p.images.length > 0 ? p.images : [p.image];
                 const activeIndex = p.currentIndex || 0;
                 const skuText = p.sku || 'N/A';
-                const wpNumber = (p.whatsapp && p.whatsapp.trim() !== '') ? p.whatsapp.trim() : '992901024242';
+                const wpNumber = (p.whatsapp && p.whatsapp.trim() !== '') ? p.whatsapp.trim() : '992900000000';
                 const whatsappText = encodeURIComponent(`Здравствуйте! Хочу заказать:\nНазвание: ${p.name}\nАртикул: ${skuText}\nЦена: ${formatPrice(p.priceTJS)}`);
                 const whatsappUrl = `https://wa.me/${wpNumber}?text=${whatsappText}`;
 
