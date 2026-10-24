@@ -8,7 +8,8 @@
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Подключение популярных шрифтов -->
+    <link id="dynamicFontLink" href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Cormorant+Garamond:wght@600;700&family=Montserrat:wght@400;600;700&family=Open+Sans:wght@400;600&family=Oswald:wght@500;700&family=Pacifico&family=Playfair+Display:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
 
     <style>
         :root {
@@ -27,7 +28,7 @@
 
         body { background-color: var(--bg-color); color: var(--text-color); min-height: 100vh; display: flex; flex-direction: column; overflow-x: hidden; }
 
-        .serif { font-family: 'Playfair Display', serif; }
+        .serif { font-family: var(--site-font); }
         
         .top-bar { background: var(--topbar-color); border-bottom: 1px solid rgba(212, 175, 55, 0.2); font-size: 12px; color: #d1d5db; padding: 8px 16px; }
         .top-bar-inner { max-width: 1280px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; }
@@ -252,15 +253,30 @@
         <div id="fullscreenCounter" style="color: white; margin-top: 14px; font-weight: bold; font-size: 14px;">1 / 1</div>
     </div>
 
-    <!-- МОДАЛЬНОЕ ОКНО НАСТРОЕК (CMS) -->
+    <!-- МОДАЛЬНОЕ ОКНО НАСТРОЕК (CMS) С ВЫБОРОМ ШРИФТА -->
     <div id="settingsModal" class="modal">
         <div class="modal-box">
             <button onclick="closeModal('settingsModal')" class="modal-close"><i class="fa-solid fa-xmark"></i></button>
             <h2 class="serif" style="font-size: 22px; font-weight: bold; margin-bottom: 20px; color: #0d0a26; display: flex; align-items: center; gap: 8px;">
-                <i class="fa-solid fa-gear" style="color: #eab308;"></i> Настройки сайта и размера товаров
+                <i class="fa-solid fa-gear" style="color: #eab308;"></i> Настройки сайта и стиля
             </h2>
             <form onsubmit="saveSiteSettings(event)">
                 
+                <!-- ШРИФТ САЙТА -->
+                <div>
+                    <label style="display: flex; align-items: center; gap: 6px;"><i class="fa-solid fa-font text-amber"></i> Шрифт сайта (Font Family)</label>
+                    <select id="settingFontFamily" style="height: 45px; font-size: 15px; font-weight: 600;">
+                        <option value="'Plus Jakarta Sans', sans-serif">Plus Jakarta Sans (Современный Sans-Serif)</option>
+                        <option value="'Playfair Display', serif">Playfair Display (Премиальный элегантный)</option>
+                        <option value="'Montserrat', sans-serif">Montserrat (Стильный геомтрический)</option>
+                        <option value="'Roboto', sans-serif">Roboto (Классический чистый)</option>
+                        <option value="'Cormorant Garamond', serif">Cormorant Garamond (Роскошный Serif)</option>
+                        <option value="'Oswald', sans-serif">Oswald (Строгий плотный)</option>
+                        <option value="'Caveat', cursive">Caveat (Рукописный живой)</option>
+                        <option value="'Pacifico', cursive">Pacifico (Декоративный)</option>
+                    </select>
+                </div>
+
                 <!-- РАЗМЕР КАРТОЧКИ -->
                 <div>
                     <label>Минимальный размер карточки товара (Ширина в пикселях)</label>
@@ -354,7 +370,7 @@
         </div>
     </div>
 
-    <!-- ФОРМА ДОБАВЛЕНИЯ ТОВАРА ДЛЯ ОДЕЖДЫ -->
+    <!-- ФОРМА ДОБАВЛЕНИЯ ТОВАРА -->
     <div id="productModal" class="modal">
         <div class="modal-box">
             <button onclick="closeModal('productModal')" class="modal-close"><i class="fa-solid fa-xmark"></i></button>
@@ -485,6 +501,7 @@
         window.products = [];
         window.siteAdmins = [OWNER_EMAIL];
         window.siteSettings = {
+            siteFont: "'Plus Jakarta Sans', sans-serif",
             cardMinWidth: 240,
             bgColor: "#0f0f10",
             textColor: "#ffffff",
@@ -540,6 +557,7 @@
             if (document.getElementById('heroBadge')) document.getElementById('heroBadge').innerText = s.heroBadge || "";
             if (document.getElementById('footerDesc')) document.getElementById('footerDesc').innerText = s.footerDesc || "";
 
+            document.documentElement.style.setProperty('--site-font', s.siteFont || "'Plus Jakarta Sans', sans-serif");
             document.documentElement.style.setProperty('--card-min-width', (s.cardMinWidth || 240) + 'px');
             document.documentElement.style.setProperty('--bg-color', s.bgColor || "#0f0f10");
             document.documentElement.style.setProperty('--text-color', s.textColor || "#ffffff");
@@ -745,6 +763,7 @@
             if (!window.isUserAdmin()) return;
             const s = window.siteSettings;
             
+            document.getElementById('settingFontFamily').value = s.siteFont || "'Plus Jakarta Sans', sans-serif";
             document.getElementById('settingCardWidth').value = s.cardMinWidth || 240;
             document.getElementById('cardWidthVal').innerText = (s.cardMinWidth || 240) + 'px';
             document.getElementById('settingBgColor').value = s.bgColor || "#0f0f10";
@@ -819,6 +838,7 @@
             });
 
             const newSettings = {
+                siteFont: document.getElementById('settingFontFamily').value,
                 cardMinWidth: parseInt(document.getElementById('settingCardWidth').value) || 240,
                 bgColor: document.getElementById('settingBgColor').value,
                 textColor: document.getElementById('settingTextColor').value,
@@ -836,7 +856,7 @@
             try {
                 await set(ref(rtdb, 'settings'), newSettings);
                 closeModal('settingsModal');
-                alert("Настройки успешно сохранены!");
+                alert("Настройки и шрифт успешно сохранены!");
             } catch (err) {
                 alert("Ошибка: " + err.message);
             }
