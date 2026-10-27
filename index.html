@@ -21,7 +21,7 @@
             --accent-amber: #d4af37;
             --site-font: 'Plus Jakarta Sans', sans-serif;
             --brand-font: 'Playfair Display', serif;
-            --card-min-width: 240px;
+            --card-min-width: 280px;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: var(--site-font); -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
@@ -31,59 +31,59 @@
         .brand-logo-font { font-family: var(--brand-font); }
         
         .top-bar { background: var(--topbar-color); border-bottom: 1px solid rgba(212, 175, 55, 0.2); font-size: 12px; color: #d1d5db; padding: 8px 16px; }
-        .top-bar-inner { max-width: 1280px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; }
+        .top-bar-inner { max-width: 1400px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; }
         
-        header { position: sticky; top: 0; z-index: 40; background: var(--header-color); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(212, 175, 55, 0.3); min-height: 60px; display: flex; align-items: center; }
-        .header-inner { max-width: 1280px; margin: 0 auto; width: 100%; padding: 10px 16px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+        header { position: sticky; top: 0; z-index: 40; background: var(--header-color); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(212, 175, 55, 0.3); min-height: 70px; display: flex; align-items: center; }
+        .header-inner { max-width: 1400px; margin: 0 auto; width: 100%; padding: 12px 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
         
-        .logo { display: flex; align-items: center; gap: 10px; cursor: pointer; text-decoration: none; color: inherit; }
-        .logo-icon { width: 38px; height: 38px; border-radius: 12px; background: var(--gold-gradient); display: flex; align-items: center; justify-content: center; color: black; font-size: 16px; flex-shrink: 0; }
+        .logo { display: flex; align-items: center; gap: 12px; cursor: pointer; text-decoration: none; color: inherit; }
+        .logo-icon { width: 44px; height: 44px; border-radius: 12px; background: var(--gold-gradient); display: flex; align-items: center; justify-content: center; color: black; font-size: 18px; flex-shrink: 0; }
         
-        nav { display: flex; gap: 16px; font-size: 14px; font-weight: 500; flex-wrap: wrap; align-items: center; }
+        nav { display: flex; gap: 20px; font-size: 15px; font-weight: 500; flex-wrap: wrap; align-items: center; }
         nav button { background: none; border: none; color: inherit; opacity: 0.8; cursor: pointer; transition: color 0.2s, opacity 0.2s; white-space: nowrap; }
         nav button:hover, nav button.active { opacity: 1; color: var(--accent-amber); }
 
-        .search-box { display: flex; align-items: center; background: rgba(255,255,255,0.06); border: 1px solid rgba(212, 175, 55, 0.3); border-radius: 20px; padding: 4px 12px; gap: 8px; max-width: 200px; width: 100%; }
-        .search-box input { background: none; border: none; color: inherit; font-size: 13px; outline: none; width: 100%; }
+        .search-box { display: flex; align-items: center; background: rgba(255,255,255,0.06); border: 1px solid rgba(212, 175, 55, 0.3); border-radius: 20px; padding: 6px 14px; gap: 8px; max-width: 240px; width: 100%; }
+        .search-box input { background: none; border: none; color: inherit; font-size: 14px; outline: none; width: 100%; }
 
-        .actions { display: flex; align-items: center; gap: 8px; }
-        .btn-icon { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(212, 175, 55, 0.3); color: inherit; width: 38px; height: 38px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; position: relative; transition: 0.2s; flex-shrink: 0; }
+        .actions { display: flex; align-items: center; gap: 10px; }
+        .btn-icon { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(212, 175, 55, 0.3); color: inherit; width: 42px; height: 42px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; position: relative; transition: 0.2s; flex-shrink: 0; }
         .btn-icon:hover { border-color: var(--accent-amber); color: var(--accent-amber); }
         
         .badge { position: absolute; top: -4px; right: -4px; background: var(--accent-amber); color: black; font-size: 10px; font-weight: bold; width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
         
-        .main-content { flex-grow: 1; max-width: 1280px; margin: 0 auto; width: 100%; padding: 24px 16px; }
+        .main-content { flex-grow: 1; max-width: 1400px; margin: 0 auto; width: 100%; padding: 32px 24px; }
         .tab-pane { display: none; }
         .tab-pane.active { display: block; }
 
-        .grid-products { display: grid; grid-template-columns: repeat(auto-fill, minmax(var(--card-min-width), 1fr)); gap: 20px; }
+        .grid-products { display: grid; grid-template-columns: repeat(auto-fill, minmax(var(--card-min-width), 1fr)); gap: 24px; }
         
-        .card { background: rgba(255,255,255,0.03); border-radius: 16px; overflow: hidden; color: inherit; border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 4px 6px rgba(0,0,0,0.3); display: flex; flex-direction: column; position: relative; width: 100%; }
+        .card { background: rgba(255,255,255,0.03); border-radius: 20px; overflow: hidden; color: inherit; border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 8px 16px rgba(0,0,0,0.4); display: flex; flex-direction: column; position: relative; width: 100%; }
 
         .card-img-slider { position: relative; width: 100%; aspect-ratio: 3 / 4; background: #121214; overflow: hidden; cursor: pointer; }
         .card-img-track { display: flex; width: 100%; height: 100%; transition: transform 0.2s cubic-bezier(0.1, 0.7, 0.1, 1); will-change: transform; }
         .card-img-track img { width: 100%; height: 100%; object-fit: cover; flex-shrink: 0; }
         
-        .card-arrow { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.6); color: white; border: none; width: 30px; height: 30px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 12px; z-index: 5; opacity: 0.8; transition: opacity 0.2s; }
+        .card-arrow { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.6); color: white; border: none; width: 34px; height: 34px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 13px; z-index: 5; opacity: 0.8; transition: opacity 0.2s; }
         .card-arrow:hover { opacity: 1; }
-        .card-arrow-left { left: 8px; }
-        .card-arrow-right { right: 8px; }
+        .card-arrow-left { left: 10px; }
+        .card-arrow-right { right: 10px; }
         
-        .card-dots { position: absolute; bottom: 8px; left: 0; right: 0; display: flex; justify-content: center; gap: 4px; z-index: 2; pointer-events: none; }
-        .card-dot { width: 6px; height: 6px; border-radius: 50%; background: rgba(255,255,255,0.4); }
-        .card-dot.active { background: var(--accent-amber); width: 12px; border-radius: 4px; }
+        .card-dots { position: absolute; bottom: 10px; left: 0; right: 0; display: flex; justify-content: center; gap: 5px; z-index: 2; pointer-events: none; }
+        .card-dot { width: 7px; height: 7px; border-radius: 50%; background: rgba(255,255,255,0.4); }
+        .card-dot.active { background: var(--accent-amber); width: 14px; border-radius: 4px; }
 
-        .fullscreen-hint { position: absolute; bottom: 8px; right: 8px; background: rgba(0,0,0,0.6); color: white; font-size: 10px; padding: 3px 6px; border-radius: 6px; z-index: 3; pointer-events: none; display: flex; align-items: center; gap: 4px; }
+        .fullscreen-hint { position: absolute; bottom: 10px; right: 10px; background: rgba(0,0,0,0.6); color: white; font-size: 11px; padding: 4px 8px; border-radius: 6px; z-index: 3; pointer-events: none; display: flex; align-items: center; gap: 5px; }
 
-        .card-body { padding: 16px; display: flex; flex-direction: column; flex-grow: 1; justify-content: space-between; }
+        .card-body { padding: 20px; display: flex; flex-direction: column; flex-grow: 1; justify-content: space-between; }
         
-        .btn-gold { background: var(--gold-gradient); color: black; font-weight: bold; border: none; padding: 12px 20px; border-radius: 12px; cursor: pointer; width: 100%; font-size: 14px; text-transform: uppercase; }
-        .btn-whatsapp { background: #25d366; color: white; font-weight: bold; border: none; padding: 10px 14px; border-radius: 10px; cursor: pointer; width: 100%; font-size: 13px; display: flex; align-items: center; justify-content: center; gap: 6px; text-decoration: none; margin-top: 8px; }
+        .btn-gold { background: var(--gold-gradient); color: black; font-weight: bold; border: none; padding: 14px 24px; border-radius: 14px; cursor: pointer; width: 100%; font-size: 15px; text-transform: uppercase; }
+        .btn-whatsapp { background: #25d366; color: white; font-weight: bold; border: none; padding: 12px 16px; border-radius: 12px; cursor: pointer; width: 100%; font-size: 14px; display: flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; margin-top: 10px; }
 
         .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(5px); z-index: 100; display: none; align-items: center; justify-content: center; padding: 16px; }
         .modal.open { display: flex; }
-        .modal-box { background: #ffffff; color: #1f2937; border: 1px solid #e5e7eb; width: 100%; max-width: 600px; border-radius: 20px; padding: 24px; position: relative; max-height: 90dvh; overflow-y: auto; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5); }
-        .modal-close { position: absolute; top: 16px; right: 16px; background: none; border: none; font-size: 20px; cursor: pointer; color: #6b7280; z-index: 10; }
+        .modal-box { background: #ffffff; color: #1f2937; border: 1px solid #e5e7eb; width: 100%; max-width: 650px; border-radius: 20px; padding: 28px; position: relative; max-height: 90dvh; overflow-y: auto; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5); }
+        .modal-close { position: absolute; top: 16px; right: 16px; background: none; border: none; font-size: 22px; cursor: pointer; color: #6b7280; z-index: 10; }
         
         #fullscreenModal { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.95); z-index: 200; display: none; align-items: center; justify-content: center; flex-direction: column; }
         #fullscreenModal.open { display: flex; }
@@ -94,36 +94,36 @@
         .fs-arrow-left { left: 20px; }
         .fs-arrow-right { right: 20px; }
 
-        form div { margin-bottom: 14px; }
-        form label { display: block; font-size: 13px; font-weight: 700; margin-bottom: 6px; color: #374151; }
-        form input, form textarea, form select { width: 100%; padding: 10px 14px; background: #ffffff; border: 1px solid #d1d5db; color: #111827; border-radius: 10px; font-size: 14px; }
+        form div { margin-bottom: 16px; }
+        form label { display: block; font-size: 14px; font-weight: 700; margin-bottom: 6px; color: #374151; }
+        form input, form textarea, form select { width: 100%; padding: 12px 16px; background: #ffffff; border: 1px solid #d1d5db; color: #111827; border-radius: 12px; font-size: 15px; }
         
-        footer { background: var(--footer-color); border-top: 1px solid rgba(212, 175, 55, 0.2); padding: 32px 16px; margin-top: 40px; color: #9ca3af; font-size: 13px; text-align: center; }
-        .footer-inner { max-width: 1280px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 24px; text-align: left; }
+        footer { background: var(--footer-color); border-top: 1px solid rgba(212, 175, 55, 0.2); padding: 40px 24px; margin-top: 60px; color: #9ca3af; font-size: 14px; text-align: center; }
+        .footer-inner { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 32px; text-align: left; }
         
         .hidden { display: none !important; }
         .text-gold { color: var(--accent-amber); }
         .text-amber { color: var(--accent-amber); }
 
-        .btn-cms-save { background: #eab308; color: #000; font-weight: bold; border: none; padding: 14px; border-radius: 12px; cursor: pointer; width: 100%; font-size: 15px; margin-top: 10px; transition: background 0.2s; }
+        .btn-cms-save { background: #eab308; color: #000; font-weight: bold; border: none; padding: 16px; border-radius: 14px; cursor: pointer; width: 100%; font-size: 16px; margin-top: 10px; transition: background 0.2s; }
         .btn-cms-save:hover { background: #ca8a04; }
 
-        .contact-item-row { display: grid; grid-template-columns: 1fr 2fr 2fr auto; gap: 8px; align-items: center; margin-bottom: 8px; }
-        .btn-del-row { background: #dc2626; color: white; border: none; width: 36px; height: 38px; border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+        .contact-item-row { display: grid; grid-template-columns: 1fr 2fr 2fr auto; gap: 10px; align-items: center; margin-bottom: 10px; }
+        .btn-del-row { background: #dc2626; color: white; border: none; width: 40px; height: 42px; border-radius: 10px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
     </style>
 </head>
 <body>
 
     <div class="top-bar">
         <div class="top-bar-inner">
-            <div id="topBarContacts" style="display: flex; gap: 16px; align-items: center; flex-wrap: wrap;">
+            <div id="topBarContacts" style="display: flex; gap: 20px; align-items: center; flex-wrap: wrap;">
                 <span><i class="fa-solid fa-location-dot text-gold"></i> Душанбе, пр. Рудаки 15</span>
                 <span><i class="fa-solid fa-phone text-gold"></i> +992 (90) 000-00-00</span>
             </div>
-            <div style="display: flex; gap: 12px; align-items: center;">
+            <div style="display: flex; gap: 16px; align-items: center;">
                 <div>
                     <span>Язык:</span>
-                    <select id="langSelect" onchange="changeLanguage(this.value)" style="background: rgba(255,255,255,0.1); color: var(--accent-amber); border: 1px solid rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 4px; font-weight: bold;">
+                    <select id="langSelect" onchange="changeLanguage(this.value)" style="background: rgba(255,255,255,0.1); color: var(--accent-amber); border: 1px solid rgba(255,255,255,0.2); padding: 4px 8px; border-radius: 6px; font-weight: bold;">
                         <option value="ru">RU</option>
                         <option value="tj">TJ</option>
                         <option value="en">EN</option>
@@ -131,7 +131,7 @@
                 </div>
                 <div>
                     <span>Валюта:</span>
-                    <select id="currencySelect" onchange="changeCurrency(this.value)" style="background: rgba(255,255,255,0.1); color: var(--accent-amber); border: 1px solid rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 4px; font-weight: bold;">
+                    <select id="currencySelect" onchange="changeCurrency(this.value)" style="background: rgba(255,255,255,0.1); color: var(--accent-amber); border: 1px solid rgba(255,255,255,0.2); padding: 4px 8px; border-radius: 6px; font-weight: bold;">
                         <option value="TJS">TJS (ЅM)</option>
                         <option value="USD">USD ($)</option>
                         <option value="RUB">RUB (₽)</option>
@@ -146,20 +146,20 @@
             <div class="logo" onclick="switchTab('catalog')">
                 <div class="logo-icon"><i class="fa-solid fa-gem"></i></div>
                 <div>
-                    <span id="siteBrandName" style="font-size: 20px; font-weight: 900; letter-spacing: 1px;" class="brand-logo-font">OSORI15</span>
-                    <span id="siteBrandSub" style="display: block; font-size: 8px; color: var(--accent-amber); letter-spacing: 2px; font-weight: 600;">HAUTE COUTURE</span>
+                    <span id="siteBrandName" style="font-size: 24px; font-weight: 900; letter-spacing: 1px;" class="brand-logo-font">OSORI15</span>
+                    <span id="siteBrandSub" style="display: block; font-size: 9px; color: var(--accent-amber); letter-spacing: 2px; font-weight: 600;">HAUTE COUTURE</span>
                 </div>
             </div>
 
             <nav>
                 <button onclick="switchTab('home')" class="nav-btn active" data-tab="home">Главная</button>
                 <button onclick="switchTab('catalog')" class="nav-btn" data-tab="catalog">Каталог</button>
-                <button onclick="switchTab('compare')" class="nav-btn" data-tab="compare">Сравнение <span id="compareBadge" style="background:var(--accent-amber); color:black; padding:1px 6px; border-radius:10px; font-size:10px;" class="hidden">0</span></button>
+                <button onclick="switchTab('compare')" class="nav-btn" data-tab="compare">Сравнение <span id="compareBadge" style="background:var(--accent-amber); color:black; padding:2px 8px; border-radius:12px; font-size:11px;" class="hidden">0</span></button>
                 <button onclick="switchTab('reviews')" class="nav-btn" data-tab="reviews">Отзывы</button>
                 
                 <div class="search-box">
-                    <i class="fa-solid fa-magnifying-glass text-gold" style="font-size: 12px;"></i>
-                    <input type="text" id="mainSearchInput" oninput="handleGlobalSearch(this.value)" placeholder="Поиск...">
+                    <i class="fa-solid fa-magnifying-glass text-gold" style="font-size: 13px;"></i>
+                    <input type="text" id="mainSearchInput" oninput="handleGlobalSearch(this.value)" placeholder="Поиск товаров...">
                 </div>
             </nav>
 
@@ -184,38 +184,38 @@
 
     <main class="main-content">
         <div id="tab-home" class="tab-pane active">
-            <div style="padding: 20px 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 30px; align-items: center;">
+            <div style="padding: 40px 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 40px; align-items: center;">
                 <div>
-                    <span id="heroBadge" style="background: rgba(212,175,55,0.1); border: 1px solid rgba(212,175,55,0.3); color: var(--accent-amber); padding: 6px 12px; border-radius: 20px; font-size: 11px; font-weight: 600; text-transform: uppercase;">Премиум коллекция</span>
-                    <h1 id="heroTitle" style="font-size: clamp(26px, 5vw, 36px); line-height: 1.1; margin: 16px 0;">Изысканность и стиль в каждом наряде</h1>
-                    <p id="heroDesc" style="opacity: 0.8; margin-bottom: 20px; font-size: 14px;">Эксклюзивная женская одежда в Душанбе для самых особенных моментов вашей жизни.</p>
-                    <button onclick="switchTab('catalog')" class="btn-gold" style="width: auto; padding: 12px 24px;">Перейти в каталог</button>
+                    <span id="heroBadge" style="background: rgba(212,175,55,0.1); border: 1px solid rgba(212,175,55,0.3); color: var(--accent-amber); padding: 8px 16px; border-radius: 20px; font-size: 12px; font-weight: 600; text-transform: uppercase;">Премиум коллекция</span>
+                    <h1 id="heroTitle" style="font-size: clamp(32px, 5vw, 48px); line-height: 1.15; margin: 20px 0;">Изысканность и стиль в каждом наряде</h1>
+                    <p id="heroDesc" style="opacity: 0.85; margin-bottom: 28px; font-size: 16px; line-height: 1.5;">Эксклюзивная женская одежда в Душанбе для самых особенных моментов вашей жизни.</p>
+                    <button onclick="switchTab('catalog')" class="btn-gold" style="width: auto; padding: 16px 32px; font-size: 16px;">Перейти в каталог</button>
                 </div>
-                <div style="text-align: center;">
-                    <img id="heroImageElement" src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=1600&auto=format&fit=crop&q=100" style="max-width: 100%; border-radius: 16px; box-shadow: 0 15px 25px -5px rgba(0,0,0,0.5); object-fit: cover; aspect-ratio: 4/3;" alt="Fashion">
+                <div style="text-align: center; width: 100%;">
+                    <img id="heroImageElement" src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=1600&auto=format&fit=crop&q=100" style="width: 100%; max-height: 500px; border-radius: 24px; box-shadow: 0 20px 40px rgba(0,0,0,0.6); object-fit: cover;" alt="Fashion">
                 </div>
             </div>
 
-            <div style="display: flex; justify-content: space-between; align-items: center; margin: 30px 0 16px;">
-                <h2 style="font-size: clamp(18px, 4vw, 24px);">Новинки коллекции</h2>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin: 40px 0 24px;">
+                <h2 style="font-size: clamp(22px, 4vw, 32px);">Новинки коллекции</h2>
             </div>
             <div id="homeGrid" class="grid-products"></div>
         </div>
 
         <div id="tab-catalog" class="tab-pane">
-            <h2 style="font-size: clamp(18px, 4vw, 24px); margin-bottom: 20px;">Каталог одежды</h2>
+            <h2 style="font-size: clamp(22px, 4vw, 32px); margin-bottom: 24px;">Каталог одежды</h2>
             <div id="catalogGrid" class="grid-products"></div>
         </div>
 
         <div id="tab-compare" class="tab-pane">
-            <h2 style="font-size: clamp(18px, 4vw, 24px); margin-bottom: 20px;">Сравнение товаров</h2>
-            <div id="compareContainer" style="background: rgba(255,255,255,0.03); color: inherit; padding: 20px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.1);"></div>
+            <h2 style="font-size: clamp(22px, 4vw, 32px); margin-bottom: 24px;">Сравнение товаров</h2>
+            <div id="compareContainer" style="background: rgba(255,255,255,0.03); color: inherit; padding: 24px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.1);"></div>
         </div>
 
         <div id="tab-reviews" class="tab-pane">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 10px;">
-                <h2 style="font-size: clamp(18px, 4vw, 24px);">Отзывы клиентов</h2>
-                <button onclick="openModal('reviewModal')" class="btn-gold" style="width: auto; padding: 10px 18px;">Оставить отзыв</button>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; flex-wrap: wrap; gap: 12px;">
+                <h2 style="font-size: clamp(22px, 4vw, 32px);">Отзывы клиентов</h2>
+                <button onclick="openModal('reviewModal')" class="btn-gold" style="width: auto; padding: 12px 24px;">Оставить отзыв</button>
             </div>
             <div id="reviewsGrid" class="grid-products"></div>
         </div>
@@ -224,15 +224,15 @@
     <footer>
         <div class="footer-inner">
             <div>
-                <div class="logo" style="margin-bottom: 10px;">
+                <div class="logo" style="margin-bottom: 14px;">
                     <div class="logo-icon"><i class="fa-solid fa-gem"></i></div>
-                    <span id="footerBrandName" style="font-size: 18px; font-weight: 900; color: inherit;" class="brand-logo-font">OSORI15</span>
+                    <span id="footerBrandName" style="font-size: 20px; font-weight: 900; color: inherit;" class="brand-logo-font">OSORI15</span>
                 </div>
-                <p id="footerDesc">Премиальная женская одежда в Душанбе. Высочайшее качество тканей и безупречный крой.</p>
+                <p id="footerDesc" style="line-height: 1.5;">Премиальная женская одежда в Душанбе. Высочайшее качество тканей и безупречный крой.</p>
             </div>
             <div>
-                <h4 style="color: inherit; font-weight: bold; margin-bottom: 10px;">Контакты</h4>
-                <div id="footerContactsContainer" style="display: flex; flex-direction: column; gap: 8px;">
+                <h4 style="color: inherit; font-weight: bold; margin-bottom: 14px; font-size: 16px;">Контакты</h4>
+                <div id="footerContactsContainer" style="display: flex; flex-direction: column; gap: 10px;">
                     <span><i class="fa-solid fa-phone text-gold"></i> +992 (90) 000-00-00</span>
                     <span><i class="fa-solid fa-location-dot text-gold"></i> Душанбе, пр. Рудаки 15</span>
                 </div>
@@ -246,22 +246,22 @@
         <button class="fs-arrow fs-arrow-left" onclick="navigateFullscreen(-1)"><i class="fa-solid fa-chevron-left"></i></button>
         <img id="fullscreenImg" src="" alt="Full view">
         <button class="fs-arrow fs-arrow-right" onclick="navigateFullscreen(1)"><i class="fa-solid fa-chevron-right"></i></button>
-        <div id="fullscreenCounter" style="color: white; margin-top: 14px; font-weight: bold; font-size: 14px;">1 / 1</div>
+        <div id="fullscreenCounter" style="color: white; margin-top: 16px; font-weight: bold; font-size: 15px;">1 / 1</div>
     </div>
 
     <!-- МОДАЛЬНОЕ ОКНО НАСТРОЕК (CMS) -->
     <div id="settingsModal" class="modal">
         <div class="modal-box">
             <button onclick="closeModal('settingsModal')" class="modal-close"><i class="fa-solid fa-xmark"></i></button>
-            <h2 style="font-size: 22px; font-weight: bold; margin-bottom: 20px; color: #0d0a26; display: flex; align-items: center; gap: 8px;">
+            <h2 style="font-size: 24px; font-weight: bold; margin-bottom: 24px; color: #0d0a26; display: flex; align-items: center; gap: 10px;">
                 <i class="fa-solid fa-gear" style="color: #eab308;"></i> Настройки сайта и стиля
             </h2>
             <form onsubmit="saveSiteSettings(event)">
                 
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
                     <div>
                         <label><i class="fa-solid fa-font text-amber"></i> Шрифт сайта</label>
-                        <select id="settingFontFamily" style="height: 42px; font-size: 13px;">
+                        <select id="settingFontFamily" style="height: 48px; font-size: 14px;">
                             <option value="'Plus Jakarta Sans', sans-serif">Plus Jakarta Sans</option>
                             <option value="'Montserrat', sans-serif">Montserrat</option>
                             <option value="'Roboto', sans-serif">Roboto</option>
@@ -271,7 +271,7 @@
                     </div>
                     <div>
                         <label><i class="fa-solid fa-heading text-amber"></i> Шрифт названия (Osori15)</label>
-                        <select id="settingBrandFont" style="height: 42px; font-size: 13px;">
+                        <select id="settingBrandFont" style="height: 48px; font-size: 14px;">
                             <option value="'Playfair Display', serif">Playfair Display</option>
                             <option value="'Cormorant Garamond', serif">Cormorant Garamond</option>
                             <option value="'Cinzel', serif">Cinzel</option>
@@ -289,29 +289,29 @@
 
                 <div>
                     <label>Минимальный размер карточки товара (Ширина в пикселях)</label>
-                    <input type="range" id="settingCardWidth" min="150" max="400" value="240" oninput="document.getElementById('cardWidthVal').innerText = this.value + 'px'">
-                    <div id="cardWidthVal" style="color: #d97706; font-weight: bold; margin-top: 4px; font-size: 14px;">240px</div>
+                    <input type="range" id="settingCardWidth" min="200" max="400" value="280" oninput="document.getElementById('cardWidthVal').innerText = this.value + 'px'">
+                    <div id="cardWidthVal" style="color: #d97706; font-weight: bold; margin-top: 6px; font-size: 15px;">280px</div>
                 </div>
 
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
                     <div>
                         <label>Фон сайта</label>
-                        <input type="color" id="settingBgColor" value="#0f0f10" style="height: 42px; padding: 2px; cursor: pointer;">
+                        <input type="color" id="settingBgColor" value="#0f0f10" style="height: 48px; padding: 4px; cursor: pointer;">
                     </div>
                     <div>
                         <label>Цвет текста</label>
-                        <input type="color" id="settingTextColor" value="#ffffff" style="height: 42px; padding: 2px; cursor: pointer;">
+                        <input type="color" id="settingTextColor" value="#ffffff" style="height: 48px; padding: 4px; cursor: pointer;">
                     </div>
                 </div>
 
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
                     <div>
                         <label>Фон шапки (Header)</label>
-                        <input type="color" id="settingHeaderColor" value="#0f0f10" style="height: 42px; padding: 2px; cursor: pointer;">
+                        <input type="color" id="settingHeaderColor" value="#0f0f10" style="height: 48px; padding: 4px; cursor: pointer;">
                     </div>
                     <div>
                         <label>Фон футера (Footer)</label>
-                        <input type="color" id="settingFooterColor" value="#070d1d" style="height: 42px; padding: 2px; cursor: pointer;">
+                        <input type="color" id="settingFooterColor" value="#070d1d" style="height: 48px; padding: 4px; cursor: pointer;">
                     </div>
                 </div>
 
@@ -332,7 +332,7 @@
 
                 <div>
                     <label>Описание под заголовком</label>
-                    <textarea id="settingHeroDesc" rows="2">Эксклюзивная женская одежда в Душанбе для самых особенных моментов вашей жизни.</textarea>
+                    <textarea id="settingHeroDesc" rows="3">Эксклюзивная женская одежда в Душанбе для самых особенных моментов вашей жизни.</textarea>
                 </div>
 
                 <div>
@@ -342,16 +342,16 @@
 
                 <div>
                     <label>Описание в футере</label>
-                    <textarea id="settingFooterDesc" rows="2">Премиальная женская одежда в Душанбе. Высочайшее качество тканей и безупречный крой.</textarea>
+                    <textarea id="settingFooterDesc" rows="3">Премиальная женская одежда в Душанбе. Высочайшее качество тканей и безупречный крой.</textarea>
                 </div>
 
-                <div style="border-top: 1px solid #e5e7eb; padding-top: 16px; margin-top: 16px;">
-                    <label style="font-size: 15px; font-weight: 800; color: #111827; margin-bottom: 12px;">Контакты и кнопки</label>
+                <div style="border-top: 1px solid #e5e7eb; padding-top: 20px; margin-top: 20px;">
+                    <label style="font-size: 16px; font-weight: 800; color: #111827; margin-bottom: 14px;">Контакты и кнопки</label>
                     <div id="contactsFormList"></div>
-                    <button type="button" onclick="addContactRow()" style="width: 100%; background: #f3f4f6; border: 1px dashed #d1d5db; padding: 10px; border-radius: 10px; cursor: pointer; font-weight: bold; color: #374151; margin-top: 8px;">+ Добавить контакт</button>
+                    <button type="button" onclick="addContactRow()" style="width: 100%; background: #f3f4f6; border: 1px dashed #d1d5db; padding: 12px; border-radius: 12px; cursor: pointer; font-weight: bold; color: #374151; margin-top: 10px;">+ Добавить контакт</button>
                 </div>
 
-                <button type="submit" class="btn-cms-save">Сохранить всё</button>
+                <button type="submit" class="btn-cms-save" style="margin-top: 24px;">Сохранить всё</button>
             </form>
         </div>
     </div>
@@ -360,7 +360,7 @@
     <div id="productModal" class="modal">
         <div class="modal-box">
             <button onclick="closeModal('productModal')" class="modal-close"><i class="fa-solid fa-xmark"></i></button>
-            <h3 id="productModalTitle" style="font-size: 22px; margin-bottom: 16px;">Добавить товар</h3>
+            <h3 style="font-size: 24px; margin-bottom: 20px;">Добавить товар</h3>
             <form onsubmit="saveProduct(event)">
                 <input type="hidden" id="editProductDocId">
                 <div><label>Название</label><input type="text" id="prodName" required placeholder="Платье 'Silk'"></div>
@@ -373,10 +373,10 @@
                 <div>
                     <label id="uploadLabelText">Фотография товара (Realtime DB)</label>
                     <input type="file" id="prodImageFiles" accept="image/*" multiple onchange="handleMultipleImagesUpload(event)">
-                    <div id="uploadedImagesPreview" style="display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; max-height: 150px; overflow-y: auto;"></div>
+                    <div id="uploadedImagesPreview" style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 12px; max-height: 180px; overflow-y: auto;"></div>
                 </div>
                 
-                <button type="submit" id="saveProductSubmitBtn" class="btn-gold" style="margin-top: 10px;">Сохранить товар</button>
+                <button type="submit" id="saveProductSubmitBtn" class="btn-gold" style="margin-top: 16px;">Сохранить товар</button>
             </form>
         </div>
     </div>
@@ -385,9 +385,9 @@
     <div id="cartModal" class="modal">
         <div class="modal-box">
             <button onclick="closeModal('cartModal')" class="modal-close"><i class="fa-solid fa-xmark"></i></button>
-            <h3 style="font-size: 22px; margin-bottom: 16px;">Корзина</h3>
-            <div id="cartList" style="margin-bottom: 16px; max-height: 180px; overflow-y: auto;"></div>
-            <div style="display: flex; justify-content: space-between; font-weight: bold; font-size: 16px; margin-bottom: 16px; border-top: 1px solid #e5e7eb; padding-top: 10px;">
+            <h3 style="font-size: 24px; margin-bottom: 20px;">Корзина</h3>
+            <div id="cartList" style="margin-bottom: 20px; max-height: 220px; overflow-y: auto;"></div>
+            <div style="display: flex; justify-content: space-between; font-weight: bold; font-size: 18px; margin-bottom: 20px; border-top: 1px solid #e5e7eb; padding-top: 14px;">
                 <span>Итого:</span>
                 <span id="cartTotal" class="text-amber">0 ЅM</span>
             </div>
@@ -399,12 +399,12 @@
     <div id="checkoutModal" class="modal">
         <div class="modal-box">
             <button onclick="closeModal('checkoutModal')" class="modal-close"><i class="fa-solid fa-xmark"></i></button>
-            <h3 style="font-size: 22px; margin-bottom: 16px;">Быстрое оформление заказа</h3>
+            <h3 style="font-size: 24px; margin-bottom: 20px;">Быстрое оформление заказа</h3>
             <form onsubmit="submitOrder(event)">
                 <div><label>Ваше имя</label><input type="text" id="orderName" required placeholder="Мадина"></div>
                 <div><label>Телефон для связи</label><input type="tel" id="orderPhone" required placeholder="+992 90 000 00 00"></div>
-                <div><label>Адрес доставки</label><textarea id="orderAddress" required rows="2" placeholder="г. Душанбе..."></textarea></div>
-                <button type="submit" class="btn-gold">Подтвердить заказ</button>
+                <div><label>Адрес доставки</label><textarea id="orderAddress" required rows="3" placeholder="г. Душанбе..."></textarea></div>
+                <button type="submit" class="btn-gold" style="margin-top: 10px;">Подтвердить заказ</button>
             </form>
         </div>
     </div>
@@ -413,8 +413,8 @@
     <div id="adminModal" class="modal">
         <div class="modal-box">
             <button onclick="closeModal('adminModal')" class="modal-close"><i class="fa-solid fa-xmark"></i></button>
-            <h3 style="font-size: 22px; margin-bottom: 16px;"><i class="fa-solid fa-file-lines text-amber"></i> Панель заказов</h3>
-            <div id="adminOrdersContainer" style="display: flex; flex-direction: column; gap: 10px; max-height: 50dvh; overflow-y: auto;">
+            <h3 style="font-size: 24px; margin-bottom: 20px;"><i class="fa-solid fa-file-lines text-amber"></i> Панель заказов</h3>
+            <div id="adminOrdersContainer" style="display: flex; flex-direction: column; gap: 12px; max-height: 60dvh; overflow-y: auto;">
                 <p style="color: #6b7280; text-align: center;">Загрузка...</p>
             </div>
         </div>
@@ -424,14 +424,14 @@
     <div id="reviewModal" class="modal">
         <div class="modal-box">
             <button onclick="closeModal('reviewModal')" class="modal-close"><i class="fa-solid fa-xmark"></i></button>
-            <h3 style="font-size: 22px; margin-bottom: 16px;">Оставить отзыв</h3>
+            <h3 style="font-size: 24px; margin-bottom: 20px;">Оставить отзыв</h3>
             <form onsubmit="submitReview(event)">
                 <div>
                     <label>Оценка</label>
-                    <select id="reviewRating"><option value="5">★★★★★ (5/5)</option><option value="4">★★★★☆ (4/5)</option></select>
+                    <select id="reviewRating" style="height: 48px;"><option value="5">★★★★★ (5/5)</option><option value="4">★★★★☆ (4/5)</option></select>
                 </div>
                 <div><label>Текст отзыва</label><textarea id="reviewText" required rows="3"></textarea></div>
-                <button type="submit" class="btn-gold">Отправить</button>
+                <button type="submit" class="btn-gold" style="margin-top: 10px;">Отправить</button>
             </form>
         </div>
     </div>
@@ -461,7 +461,7 @@
         window.siteSettings = {
             siteFont: "'Plus Jakarta Sans', sans-serif",
             brandFont: "'Playfair Display', serif",
-            cardMinWidth: 240,
+            cardMinWidth: 280,
             bgColor: "#0f0f10",
             textColor: "#ffffff",
             headerColor: "#0f0f10",
@@ -505,7 +505,7 @@
 
             document.documentElement.style.setProperty('--site-font', s.siteFont || "'Plus Jakarta Sans', sans-serif");
             document.documentElement.style.setProperty('--brand-font', s.brandFont || "'Playfair Display', serif");
-            document.documentElement.style.setProperty('--card-min-width', (s.cardMinWidth || 240) + 'px');
+            document.documentElement.style.setProperty('--card-min-width', (s.cardMinWidth || 280) + 'px');
             document.documentElement.style.setProperty('--bg-color', s.bgColor || "#0f0f10");
             document.documentElement.style.setProperty('--text-color', s.textColor || "#ffffff");
             document.documentElement.style.setProperty('--header-color', s.headerColor || "#0f0f10");
@@ -516,7 +516,7 @@
             
             if (s.contacts && Array.isArray(s.contacts) && s.contacts.length > 0) {
                 const contactsHtml = s.contacts.map(c => `
-                    <a href="${c.link || '#'}" target="_blank" style="color: inherit; text-decoration: none; display: flex; align-items: center; gap: 6px;">
+                    <a href="${c.link || '#'}" target="_blank" style="color: inherit; text-decoration: none; display: flex; align-items: center; gap: 8px;">
                         <i class="${c.icon || 'fa-solid fa-link'} text-gold"></i>
                         <span>${c.title || ''}</span>
                     </a>
@@ -603,19 +603,19 @@
                 return;
             }
             container.innerHTML = cachedOrders.map((o, idx) => `
-                <div style="background: rgba(0,0,0,0.05); border: 1px solid rgba(0,0,0,0.1); border-radius: 12px; padding: 14px; color: inherit;">
-                    <div style="display: flex; justify-content: space-between; font-size: 13px; font-weight: bold; margin-bottom: 6px; color: var(--accent-amber);">
+                <div style="background: rgba(0,0,0,0.05); border: 1px solid rgba(0,0,0,0.1); border-radius: 14px; padding: 16px; color: inherit;">
+                    <div style="display: flex; justify-content: space-between; font-size: 14px; font-weight: bold; margin-bottom: 8px; color: var(--accent-amber);">
                         <span>Заказ #${cachedOrders.length - idx}</span>
                         <span style="color: #6b7280; font-weight: normal;">${o.date}</span>
                     </div>
-                    <p style="font-size: 13px; margin-bottom: 4px;"><strong>Клиент:</strong> ${o.name} (${o.phone})</p>
-                    <p style="font-size: 13px; margin-bottom: 6px;"><strong>Адрес:</strong> ${o.address}</p>
-                    <div style="background: rgba(0,0,0,0.05); padding: 8px; border-radius: 8px; font-size: 12px; margin-bottom: 8px;">
+                    <p style="font-size: 14px; margin-bottom: 6px;"><strong>Клиент:</strong> ${o.name} (${o.phone})</p>
+                    <p style="font-size: 14px; margin-bottom: 8px;"><strong>Адрес:</strong> ${o.address}</p>
+                    <div style="background: rgba(0,0,0,0.05); padding: 10px; border-radius: 10px; font-size: 13px; margin-bottom: 10px;">
                         ${o.items.map(i => `<div>• ${i.name} (x${i.qty})</div>`).join('')}
                     </div>
-                    <div style="display: flex; justify-content: space-between; align-items: center; font-size: 13px; font-weight: bold;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; font-size: 14px; font-weight: bold;">
                         <span>Сумма: <span class="text-amber">${o.total}</span></span>
-                        <button onclick="deleteOrder('${o.id}')" style="background: #dc2626; color: white; border: none; padding: 5px 8px; border-radius: 6px; cursor: pointer; font-size: 11px;">Удалить</button>
+                        <button onclick="deleteOrder('${o.id}')" style="background: #dc2626; color: white; border: none; padding: 6px 12px; border-radius: 8px; cursor: pointer; font-size: 12px;">Удалить</button>
                     </div>
                 </div>
             `).join('');
@@ -633,8 +633,8 @@
             document.getElementById('settingFontFamily').value = s.siteFont || "'Plus Jakarta Sans', sans-serif";
             document.getElementById('settingBrandFont').value = s.brandFont || "'Playfair Display', serif";
             document.getElementById('settingHeroImage').value = s.heroImage || "";
-            document.getElementById('settingCardWidth').value = s.cardMinWidth || 240;
-            document.getElementById('cardWidthVal').innerText = (s.cardMinWidth || 240) + 'px';
+            document.getElementById('settingCardWidth').value = s.cardMinWidth || 280;
+            document.getElementById('cardWidthVal').innerText = (s.cardMinWidth || 280) + 'px';
             document.getElementById('settingBgColor').value = s.bgColor || "#0f0f10";
             document.getElementById('settingTextColor').value = s.textColor || "#ffffff";
             document.getElementById('settingHeaderColor').value = s.headerColor || "#0f0f10";
@@ -701,7 +701,7 @@
                 siteFont: document.getElementById('settingFontFamily').value,
                 brandFont: document.getElementById('settingBrandFont').value,
                 heroImage: document.getElementById('settingHeroImage').value,
-                cardMinWidth: parseInt(document.getElementById('settingCardWidth').value) || 240,
+                cardMinWidth: parseInt(document.getElementById('settingCardWidth').value) || 280,
                 bgColor: document.getElementById('settingBgColor').value,
                 textColor: document.getElementById('settingTextColor').value,
                 headerColor: document.getElementById('settingHeaderColor').value,
@@ -733,7 +733,7 @@
             if (files.length === 0) return;
             
             uploadLabel.innerText = `Обработка ${files.length} фото...`;
-            previewContainer.innerHTML = '<span style="font-size: 11px; color: var(--accent-amber);">Оптимизация...</span>';
+            previewContainer.innerHTML = '<span style="font-size: 12px; color: var(--accent-amber);">Оптимизация...</span>';
 
             const processSingleImage = (file) => {
                 return new Promise((resolve) => {
@@ -745,7 +745,7 @@
                             const canvas = document.createElement('canvas');
                             let width = img.width;
                             let height = img.height;
-                            const maxDim = 400;
+                            const maxDim = 600;
                             if (width > maxDim || height > maxDim) {
                                 if (width > height) {
                                     height = Math.round((height * maxDim) / width);
@@ -759,7 +759,7 @@
                             canvas.height = height;
                             const ctx = canvas.getContext('2d');
                             ctx.drawImage(img, 0, 0, width, height);
-                            resolve(canvas.toDataURL('image/jpeg', 0.45));
+                            resolve(canvas.toDataURL('image/jpeg', 0.55));
                         };
                         img.onerror = () => resolve(null);
                     };
@@ -779,7 +779,7 @@
             uploadLabel.innerText = `Фотографии товара (выбрано: ${loadedImages.length} шт.)`;
             
             previewContainer.innerHTML = window.tempProductBase64Images.map(img => `
-                <img src="${img}" style="width: 45px; height: 45px; object-fit: cover; border-radius: 6px; border: 1px solid var(--accent-amber);" loading="lazy">
+                <img src="${img}" style="width: 55px; height: 55px; object-fit: cover; border-radius: 8px; border: 2px solid var(--accent-amber);" loading="lazy">
             `).join('');
         };
 
@@ -865,7 +865,7 @@
             
             const previewContainer = document.getElementById('uploadedImagesPreview');
             previewContainer.innerHTML = window.tempProductBase64Images.map(img => `
-                <img src="${img}" style="width: 45px; height: 45px; object-fit: cover; border-radius: 6px; border: 1px solid var(--accent-amber);" loading="lazy">
+                <img src="${img}" style="width: 55px; height: 55px; object-fit: cover; border-radius: 8px; border: 2px solid var(--accent-amber);" loading="lazy">
             `).join('');
 
             document.getElementById('productModalTitle').innerText = "Редактировать товар";
@@ -992,7 +992,7 @@
             }
             
             if (list.length === 0) {
-                const emptyHtml = `<div style="grid-column: 1/-1; text-align: center; padding: 40px; color: inherit; opacity: 0.7;">Товаров не найдено.</div>`;
+                const emptyHtml = `<div style="grid-column: 1/-1; text-align: center; padding: 50px; color: inherit; opacity: 0.7; font-size: 16px;">Товаров не найдено.</div>`;
                 if (document.getElementById('homeGrid')) document.getElementById('homeGrid').innerHTML = emptyHtml;
                 if (document.getElementById('catalogGrid')) document.getElementById('catalogGrid').innerHTML = emptyHtml;
                 return;
@@ -1009,7 +1009,7 @@
                 return `
                 <div class="card">
                     <div class="card-img-slider" onclick="openFullscreen('${p.id}')">
-                        <span style="position: absolute; top: 10px; left: 10px; background: var(--accent-amber); color: black; font-size: 10px; font-weight: bold; padding: 4px 8px; border-radius: 20px; text-transform: uppercase; z-index: 3;">${p.badge || 'NEW'}</span>
+                        <span style="position: absolute; top: 12px; left: 12px; background: var(--accent-amber); color: black; font-size: 11px; font-weight: bold; padding: 5px 10px; border-radius: 20px; text-transform: uppercase; z-index: 3;">${p.badge || 'NEW'}</span>
                         
                         <div class="fullscreen-hint"><i class="fa-solid fa-expand"></i> Полный экран</div>
 
@@ -1031,29 +1031,29 @@
 
                     <div class="card-body">
                         <div>
-                            <div style="display: flex; justify-content: space-between; align-items: center;">
-                                <span style="font-size: 11px; color: var(--accent-amber); text-transform: uppercase;">${p.brand}</span>
-                                <span style="font-size: 10px; background: rgba(255,255,255,0.1); color: var(--accent-amber); padding: 2px 6px; border-radius: 4px;">SKU: ${skuText}</span>
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                                <span style="font-size: 12px; color: var(--accent-amber); text-transform: uppercase; font-weight: 600;">${p.brand}</span>
+                                <span style="font-size: 11px; background: rgba(255,255,255,0.1); color: var(--accent-amber); padding: 3px 8px; border-radius: 6px;">SKU: ${skuText}</span>
                             </div>
-                            <h3 style="font-size: 15px; font-weight: bold; margin: 4px 0 10px;">${p.name}</h3>
+                            <h3 style="font-size: 17px; font-weight: bold; margin: 4px 0 14px;">${p.name}</h3>
                         </div>
                         <div>
-                            <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px; margin-bottom: 8px;">
-                                <span style="font-size: 15px; font-weight: 900;" class="text-amber">${formatPrice(p.priceTJS)}</span>
-                                <div style="display: flex; gap: 6px;">
-                                    <button onclick="toggleCompare('${p.id}')" title="Сравнить" style="background: ${compareList.includes(p.id) ? 'var(--accent-amber)' : 'rgba(255,255,255,0.1)'}; color: ${compareList.includes(p.id) ? 'black' : 'inherit'}; border: 1px solid rgba(255,255,255,0.1); width: 34px; height: 34px; border-radius: 10px; cursor: pointer;"><i class="fa-solid fa-scale-balanced"></i></button>
-                                    <button onclick="addToCart('${p.id}')" title="В корзину" style="background: var(--accent-amber); border: none; width: 34px; height: 34px; border-radius: 10px; cursor: pointer; font-weight: bold;"><i class="fa-solid fa-bag-shopping"></i></button>
+                            <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 12px; margin-bottom: 12px;">
+                                <span style="font-size: 18px; font-weight: 900;" class="text-amber">${formatPrice(p.priceTJS)}</span>
+                                <div style="display: flex; gap: 8px;">
+                                    <button onclick="toggleCompare('${p.id}')" title="Сравнить" style="background: ${compareList.includes(p.id) ? 'var(--accent-amber)' : 'rgba(255,255,255,0.1)'}; color: ${compareList.includes(p.id) ? 'black' : 'inherit'}; border: 1px solid rgba(255,255,255,0.1); width: 38px; height: 38px; border-radius: 12px; cursor: pointer;"><i class="fa-solid fa-scale-balanced"></i></button>
+                                    <button onclick="addToCart('${p.id}')" title="В корзину" style="background: var(--accent-amber); border: none; width: 38px; height: 38px; border-radius: 12px; cursor: pointer; font-weight: bold;"><i class="fa-solid fa-bag-shopping"></i></button>
                                 </div>
                             </div>
                             
                             <a href="${whatsappUrl}" target="_blank" class="btn-whatsapp">
-                                <i class="fa-brands fa-whatsapp" style="font-size: 16px;"></i> Купить через WhatsApp
+                                <i class="fa-brands fa-whatsapp" style="font-size: 18px;"></i> Купить через WhatsApp
                             </a>
 
                             ${admin ? `
-                                <div style="display: flex; gap: 6px; border-top: 1px dashed rgba(255,255,255,0.2); padding-top: 6px; margin-top: 6px;">
-                                    <button onclick="editProduct('${p.id}')" style="flex: 1; background: #2563eb; color: white; border: none; padding: 6px; border-radius: 6px; font-size: 11px; cursor: pointer;"><i class="fa-solid fa-pen"></i> Ред.</button>
-                                    <button onclick="deleteProduct('${p.id}')" style="flex: 1; background: #dc2626; color: white; border: none; padding: 6px; border-radius: 6px; font-size: 11px; cursor: pointer;"><i class="fa-solid fa-trash"></i> Уд.</button>
+                                <div style="display: flex; gap: 8px; border-top: 1px dashed rgba(255,255,255,0.2); padding-top: 8px; margin-top: 8px;">
+                                    <button onclick="editProduct('${p.id}')" style="flex: 1; background: #2563eb; color: white; border: none; padding: 8px; border-radius: 8px; font-size: 12px; cursor: pointer; font-weight: 600;"><i class="fa-solid fa-pen"></i> Ред.</button>
+                                    <button onclick="deleteProduct('${p.id}')" style="flex: 1; background: #dc2626; color: white; border: none; padding: 8px; border-radius: 8px; font-size: 12px; cursor: pointer; font-weight: 600;"><i class="fa-solid fa-trash"></i> Уд.</button>
                                 </div>
                             ` : ''}
                         </div>
@@ -1094,16 +1094,16 @@
                 return;
             }
             container.innerHTML = `
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 14px;">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px;">
                     ${compareList.map(id => {
                         const p = window.products.find(prod => prod.id == id);
                         if (!p) return '';
                         const img = p.images && p.images.length > 0 ? p.images[0] : p.image;
-                        return `<div style="border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.05); padding: 14px; border-radius: 12px; text-align: center; position: relative;">
-                            <button onclick="toggleCompare('${p.id}'); renderCompare();" style="position: absolute; top: 6px; right: 6px; background: none; border: none; color: #dc2626; cursor: pointer;"><i class="fa-solid fa-xmark"></i></button>
-                            <img src="${img}" style="height: 120px; width:100%; object-fit: cover; margin-bottom: 8px; border-radius: 8px;" loading="lazy">
-                            <h4 style="font-weight: bold; font-size: 14px; margin-bottom: 4px;">${p.name}</h4>
-                            <p class="text-amber" style="font-weight: bold; font-size: 14px;">${formatPrice(p.priceTJS)}</p>
+                        return `<div style="border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.05); padding: 16px; border-radius: 14px; text-align: center; position: relative;">
+                            <button onclick="toggleCompare('${p.id}'); renderCompare();" style="position: absolute; top: 8px; right: 8px; background: none; border: none; color: #dc2626; cursor: pointer; font-size: 16px;"><i class="fa-solid fa-xmark"></i></button>
+                            <img src="${img}" style="height: 140px; width:100%; object-fit: cover; margin-bottom: 10px; border-radius: 10px;" loading="lazy">
+                            <h4 style="font-weight: bold; font-size: 15px; margin-bottom: 6px;">${p.name}</h4>
+                            <p class="text-amber" style="font-weight: bold; font-size: 15px;">${formatPrice(p.priceTJS)}</p>
                         </div>`;
                     }).join('')}
                 </div>
@@ -1122,7 +1122,7 @@
             const list = document.getElementById('cartList');
             if (!list) return;
             if (cart.length === 0) {
-                list.innerHTML = `<p style="text-align: center; color: #6b7280;">Корзина пуста</p>`;
+                list.innerHTML = `<p style="text-align: center; color: #6b7280; padding: 20px;">Корзина пуста</p>`;
                 document.getElementById('cartTotal').innerText = formatPrice(0);
                 openModal('cartModal');
                 return;
@@ -1132,11 +1132,11 @@
                 const p = window.products.find(prod => prod.id == i.id);
                 if (!p) return '';
                 total += p.priceTJS * i.qty;
-                return `<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; font-size: 13px; border-bottom: 1px solid #e5e7eb; padding-bottom: 6px;">
+                return `<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; font-size: 14px; border-bottom: 1px solid #e5e7eb; padding-bottom: 8px;">
                     <span>${p.name} (x${i.qty})</span>
-                    <div style="display: flex; align-items: center; gap: 8px;">
+                    <div style="display: flex; align-items: center; gap: 12px;">
                         <strong class="text-amber">${formatPrice(p.priceTJS * i.qty)}</strong>
-                        <button onclick="removeFromCart('${p.id}')" style="background: none; border: none; color: #dc2626; cursor: pointer;"><i class="fa-solid fa-trash"></i></button>
+                        <button onclick="removeFromCart('${p.id}')" style="background: none; border: none; color: #dc2626; cursor: pointer; font-size: 15px;"><i class="fa-solid fa-trash"></i></button>
                     </div>
                 </div>`;
             }).join('');
@@ -1202,10 +1202,10 @@
             const grid = document.getElementById('reviewsGrid');
             if (grid) {
                 grid.innerHTML = reviews.map(r => `
-                    <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; padding: 16px; color: inherit;">
-                        <div style="font-weight: bold; margin-bottom: 4px; font-size: 14px;">${r.author}</div>
-                        <div style="color: var(--accent-amber); font-size: 12px; margin-bottom: 6px;">${'★'.repeat(r.rating)}</div>
-                        <p style="opacity: 0.8; font-size: 13px;">"${r.text}"</p>
+                    <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; padding: 20px; color: inherit;">
+                        <div style="font-weight: bold; margin-bottom: 6px; font-size: 15px;">${r.author}</div>
+                        <div style="color: var(--accent-amber); font-size: 13px; margin-bottom: 8px;">${'★'.repeat(r.rating)}</div>
+                        <p style="opacity: 0.85; font-size: 14px; line-height: 1.5;">"${r.text}"</p>
                     </div>
                 `).join('');
             }
