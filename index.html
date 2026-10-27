@@ -8,8 +8,7 @@
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <!-- Подключение популярных шрифтов -->
-    <link id="dynamicFontLink" href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Cormorant+Garamond:wght@600;700&family=Montserrat:wght@400;600;700&family=Open+Sans:wght@400;600&family=Oswald:wght@500;700&family=Pacifico&family=Playfair+Display:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link id="dynamicFontLink" href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Cormorant+Garamond:wght@600;700&family=Montserrat:wght@400;600;700&family=Open+Sans:wght@400;600&family=Oswald:wght@500;700&family=Pacifico&family=Playfair+Display:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Roboto:wght@400;500;700&family=Cinzel:wght@600;700&display=swap" rel="stylesheet">
 
     <style>
         :root {
@@ -21,6 +20,7 @@
             --gold-gradient: linear-gradient(135deg, #d4af37, #f3e5ab);
             --accent-amber: #d4af37;
             --site-font: 'Plus Jakarta Sans', sans-serif;
+            --brand-font: 'Playfair Display', serif;
             --card-min-width: 240px;
         }
 
@@ -28,7 +28,7 @@
 
         body { background-color: var(--bg-color); color: var(--text-color); min-height: 100vh; display: flex; flex-direction: column; overflow-x: hidden; }
 
-        .serif { font-family: var(--site-font); }
+        .brand-font { font-family: var(--brand-font); }
         
         .top-bar { background: var(--topbar-color); border-bottom: 1px solid rgba(212, 175, 55, 0.2); font-size: 12px; color: #d1d5db; padding: 8px 16px; }
         .top-bar-inner { max-width: 1280px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; }
@@ -39,9 +39,12 @@
         .logo { display: flex; align-items: center; gap: 10px; cursor: pointer; text-decoration: none; color: inherit; }
         .logo-icon { width: 38px; height: 38px; border-radius: 12px; background: var(--gold-gradient); display: flex; align-items: center; justify-content: center; color: black; font-size: 16px; flex-shrink: 0; }
         
-        nav { display: flex; gap: 16px; font-size: 14px; font-weight: 500; flex-wrap: wrap; }
+        nav { display: flex; gap: 16px; font-size: 14px; font-weight: 500; flex-wrap: wrap; align-items: center; }
         nav button { background: none; border: none; color: inherit; opacity: 0.8; cursor: pointer; transition: color 0.2s, opacity 0.2s; white-space: nowrap; }
         nav button:hover, nav button.active { opacity: 1; color: var(--accent-amber); }
+
+        .search-box { display: flex; align-items: center; background: rgba(255,255,255,0.06); border: 1px solid rgba(212, 175, 55, 0.3); border-radius: 20px; padding: 4px 12px; gap: 8px; max-width: 200px; width: 100%; }
+        .search-box input { background: none; border: none; color: inherit; font-size: 13px; outline: none; width: 100%; }
 
         .actions { display: flex; align-items: center; gap: 8px; }
         .btn-icon { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(212, 175, 55, 0.3); color: inherit; width: 38px; height: 38px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; position: relative; transition: 0.2s; flex-shrink: 0; }
@@ -134,11 +137,6 @@
                         <option value="RUB">RUB (₽)</option>
                     </select>
                 </div>
-                <div id="authContainer">
-                    <button onclick="openModal('authModal')" style="background: rgba(212,175,55,0.1); border: 1px solid rgba(212,175,55,0.3); color: var(--accent-amber); padding: 6px 12px; border-radius: 6px; cursor: pointer; font-weight: bold;">
-                        <i class="fa-solid fa-user"></i> Войти
-                    </button>
-                </div>
             </div>
         </div>
     </div>
@@ -148,7 +146,7 @@
             <div class="logo" onclick="switchTab('catalog')">
                 <div class="logo-icon"><i class="fa-solid fa-gem"></i></div>
                 <div>
-                    <span id="siteBrandName" style="font-size: 20px; font-weight: 900; letter-spacing: 1px;" class="serif">OSORI15</span>
+                    <span id="siteBrandName" style="font-size: 20px; font-weight: 900; letter-spacing: 1px;" class="brand-font">OSORI15</span>
                     <span id="siteBrandSub" style="display: block; font-size: 8px; color: var(--accent-amber); letter-spacing: 2px; font-weight: 600;">HAUTE COUTURE</span>
                 </div>
             </div>
@@ -158,6 +156,11 @@
                 <button onclick="switchTab('catalog')" class="nav-btn" data-tab="catalog">Каталог</button>
                 <button onclick="switchTab('compare')" class="nav-btn" data-tab="compare">Сравнение <span id="compareBadge" style="background:var(--accent-amber); color:black; padding:1px 6px; border-radius:10px; font-size:10px;" class="hidden">0</span></button>
                 <button onclick="switchTab('reviews')" class="nav-btn" data-tab="reviews">Отзывы</button>
+                
+                <div class="search-box">
+                    <i class="fa-solid fa-magnifying-glass text-gold" style="font-size: 12px;"></i>
+                    <input type="text" id="mainSearchInput" oninput="handleGlobalSearch(this.value)" placeholder="Поиск... (/admin)">
+                </div>
             </nav>
 
             <div class="actions">
@@ -167,13 +170,6 @@
                 <button id="addProductBtn" onclick="openProductModal()" class="btn-icon hidden" title="Добавить товар" style="background: var(--accent-amber); color: black; border-color: var(--accent-amber); font-weight: bold;">
                     <i class="fa-solid fa-plus"></i>
                 </button>
-                <button id="skuSearchBtn" onclick="openModal('skuSearchModal')" class="btn-icon hidden" title="Поиск по артикулу (SKU)" style="background: rgba(212,175,55,0.15); color: var(--accent-amber); border-color: rgba(212,175,55,0.4);">
-                    <i class="fa-solid fa-hashtag"></i>
-                </button>
-                <button id="clientOrdersBtn" onclick="openClientOrdersModal()" class="btn-icon hidden" title="Мои заказы" style="color: #60a5fa; border-color: rgba(96,165,250,0.4);">
-                    <i class="fa-solid fa-receipt"></i>
-                    <span id="clientBadge" class="badge hidden" style="background:#60a5fa; color:white;">0</span>
-                </button>
                 <button id="adminOrdersBtn" onclick="openAdminModal()" class="btn-icon hidden" title="Панель заказов" style="color: var(--accent-amber); border-color: rgba(212,175,55,0.4);">
                     <i class="fa-solid fa-file-lines"></i>
                     <span id="adminBadge" class="badge hidden">0</span>
@@ -181,6 +177,9 @@
                 <button onclick="openCartModal()" class="btn-icon" title="Корзина">
                     <i class="fa-solid fa-bag-shopping"></i>
                     <span id="cartBadge" class="badge hidden">0</span>
+                </button>
+                <button onclick="triggerAdminLoginPrompt()" class="btn-icon" title="Вход для админа" style="color: #9ca3af;">
+                    <i class="fa-solid fa-lock"></i>
                 </button>
             </div>
         </div>
@@ -191,34 +190,34 @@
             <div style="padding: 20px 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 30px; align-items: center;">
                 <div>
                     <span id="heroBadge" style="background: rgba(212,175,55,0.1); border: 1px solid rgba(212,175,55,0.3); color: var(--accent-amber); padding: 6px 12px; border-radius: 20px; font-size: 11px; font-weight: 600; text-transform: uppercase;">Премиум коллекция</span>
-                    <h1 id="heroTitle" class="serif" style="font-size: clamp(26px, 5vw, 36px); line-height: 1.1; margin: 16px 0;">Изысканность и стиль в каждом наряде</h1>
+                    <h1 id="heroTitle" class="brand-font" style="font-size: clamp(26px, 5vw, 36px); line-height: 1.1; margin: 16px 0;">Изысканность и стиль в каждом наряде</h1>
                     <p id="heroDesc" style="opacity: 0.8; margin-bottom: 20px; font-size: 14px;">Эксклюзивная женская одежда в Душанбе для самых особенных моментов вашей жизни.</p>
                     <button onclick="switchTab('catalog')" class="btn-gold" style="width: auto; padding: 12px 24px;">Перейти в каталог</button>
                 </div>
                 <div style="text-align: center;">
-                    <img src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=1600&auto=format&fit=crop&q=100" style="max-width: 100%; border-radius: 16px; box-shadow: 0 15px 25px -5px rgba(0,0,0,0.5);" alt="Fashion">
+                    <img id="heroImageElement" src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=1600&auto=format&fit=crop&q=100" style="max-width: 100%; border-radius: 16px; box-shadow: 0 15px 25px -5px rgba(0,0,0,0.5); object-fit: cover; aspect-ratio: 4/3;" alt="Fashion">
                 </div>
             </div>
 
             <div style="display: flex; justify-content: space-between; align-items: center; margin: 30px 0 16px;">
-                <h2 class="serif" style="font-size: clamp(18px, 4vw, 24px);">Новинки коллекции</h2>
+                <h2 class="brand-font" style="font-size: clamp(18px, 4vw, 24px);">Новинки коллекции</h2>
             </div>
             <div id="homeGrid" class="grid-products"></div>
         </div>
 
         <div id="tab-catalog" class="tab-pane">
-            <h2 class="serif" style="font-size: clamp(18px, 4vw, 24px); margin-bottom: 20px;">Каталог одежды</h2>
+            <h2 class="brand-font" style="font-size: clamp(18px, 4vw, 24px); margin-bottom: 20px;">Каталог одежды</h2>
             <div id="catalogGrid" class="grid-products"></div>
         </div>
 
         <div id="tab-compare" class="tab-pane">
-            <h2 class="serif" style="font-size: clamp(18px, 4vw, 24px); margin-bottom: 20px;">Сравнение товаров</h2>
+            <h2 class="brand-font" style="font-size: clamp(18px, 4vw, 24px); margin-bottom: 20px;">Сравнение товаров</h2>
             <div id="compareContainer" style="background: rgba(255,255,255,0.03); color: inherit; padding: 20px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.1);"></div>
         </div>
 
         <div id="tab-reviews" class="tab-pane">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 10px;">
-                <h2 class="serif" style="font-size: clamp(18px, 4vw, 24px);">Отзывы клиентов</h2>
+                <h2 class="brand-font" style="font-size: clamp(18px, 4vw, 24px);">Отзывы клиентов</h2>
                 <button onclick="openModal('reviewModal')" class="btn-gold" style="width: auto; padding: 10px 18px;">Оставить отзыв</button>
             </div>
             <div id="reviewsGrid" class="grid-products"></div>
@@ -230,7 +229,7 @@
             <div>
                 <div class="logo" style="margin-bottom: 10px;">
                     <div class="logo-icon"><i class="fa-solid fa-gem"></i></div>
-                    <span id="footerBrandName" style="font-size: 18px; font-weight: 900; color: inherit;" class="serif">OSORI15</span>
+                    <span id="footerBrandName" style="font-size: 18px; font-weight: 900; color: inherit;" class="brand-font">OSORI15</span>
                 </div>
                 <p id="footerDesc">Премиальная женская одежда в Душанбе. Высочайшее качество тканей и безупречный крой.</p>
             </div>
@@ -253,38 +252,50 @@
         <div id="fullscreenCounter" style="color: white; margin-top: 14px; font-weight: bold; font-size: 14px;">1 / 1</div>
     </div>
 
-    <!-- МОДАЛЬНОЕ ОКНО НАСТРОЕК (CMS) С ВЫБОРОМ ШРИФТА -->
+    <!-- МОДАЛЬНОЕ ОКНО НАСТРОЕК (CMS) -->
     <div id="settingsModal" class="modal">
         <div class="modal-box">
             <button onclick="closeModal('settingsModal')" class="modal-close"><i class="fa-solid fa-xmark"></i></button>
-            <h2 class="serif" style="font-size: 22px; font-weight: bold; margin-bottom: 20px; color: #0d0a26; display: flex; align-items: center; gap: 8px;">
+            <h2 class="brand-font" style="font-size: 22px; font-weight: bold; margin-bottom: 20px; color: #0d0a26; display: flex; align-items: center; gap: 8px;">
                 <i class="fa-solid fa-gear" style="color: #eab308;"></i> Настройки сайта и стиля
             </h2>
             <form onsubmit="saveSiteSettings(event)">
                 
-                <!-- ШРИФТ САЙТА -->
-                <div>
-                    <label style="display: flex; align-items: center; gap: 6px;"><i class="fa-solid fa-font text-amber"></i> Шрифт сайта (Font Family)</label>
-                    <select id="settingFontFamily" style="height: 45px; font-size: 15px; font-weight: 600;">
-                        <option value="'Plus Jakarta Sans', sans-serif">Plus Jakarta Sans (Современный Sans-Serif)</option>
-                        <option value="'Playfair Display', serif">Playfair Display (Премиальный элегантный)</option>
-                        <option value="'Montserrat', sans-serif">Montserrat (Стильный геомтрический)</option>
-                        <option value="'Roboto', sans-serif">Roboto (Классический чистый)</option>
-                        <option value="'Cormorant Garamond', serif">Cormorant Garamond (Роскошный Serif)</option>
-                        <option value="'Oswald', sans-serif">Oswald (Строгий плотный)</option>
-                        <option value="'Caveat', cursive">Caveat (Рукописный живой)</option>
-                        <option value="'Pacifico', cursive">Pacifico (Декоративный)</option>
-                    </select>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                    <div>
+                        <label><i class="fa-solid fa-font text-amber"></i> Шрифт сайта</label>
+                        <select id="settingFontFamily" style="height: 42px; font-size: 13px;">
+                            <option value="'Plus Jakarta Sans', sans-serif">Plus Jakarta Sans</option>
+                            <option value="'Montserrat', sans-serif">Montserrat</option>
+                            <option value="'Roboto', sans-serif">Roboto</option>
+                            <option value="'Open Sans', sans-serif">Open Sans</option>
+                            <option value="'Oswald', sans-serif">Oswald</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label><i class="fa-solid fa-heading text-amber"></i> Шрифт заголовков/бренда</label>
+                        <select id="settingBrandFont" style="height: 42px; font-size: 13px;">
+                            <option value="'Playfair Display', serif">Playfair Display</option>
+                            <option value="'Cormorant Garamond', serif">Cormorant Garamond</option>
+                            <option value="'Cinzel', serif">Cinzel</option>
+                            <option value="'Montserrat', sans-serif">Montserrat</option>
+                            <option value="'Caveat', cursive">Caveat (Рукописный)</option>
+                            <option value="'Pacifico', cursive">Pacifico</option>
+                        </select>
+                    </div>
                 </div>
 
-                <!-- РАЗМЕР КАРТОЧКИ -->
+                <div>
+                    <label>Главное фото на главной (URL картинки Banner)</label>
+                    <input type="text" id="settingHeroImage" placeholder="https://images.unsplash.com/...">
+                </div>
+
                 <div>
                     <label>Минимальный размер карточки товара (Ширина в пикселях)</label>
                     <input type="range" id="settingCardWidth" min="150" max="400" value="240" oninput="document.getElementById('cardWidthVal').innerText = this.value + 'px'">
                     <div id="cardWidthVal" style="color: #d97706; font-weight: bold; margin-top: 4px; font-size: 14px;">240px</div>
                 </div>
 
-                <!-- ЦВЕТА -->
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
                     <div>
                         <label>Фон сайта</label>
@@ -307,7 +318,6 @@
                     </div>
                 </div>
 
-                <!-- БРЕНД И ТЕКСТЫ -->
                 <div>
                     <label>Название бренда</label>
                     <input type="text" id="settingBrand" value="OSORI15" required>
@@ -338,22 +348,10 @@
                     <textarea id="settingFooterDesc" rows="2">Премиальная женская одежда в Душанбе. Высочайшее качество тканей и безупречный крой.</textarea>
                 </div>
 
-                <!-- КОНТАКТЫ И КНОПКИ -->
                 <div style="border-top: 1px solid #e5e7eb; padding-top: 16px; margin-top: 16px;">
                     <label style="font-size: 15px; font-weight: 800; color: #111827; margin-bottom: 12px;">Контакты и кнопки</label>
                     <div id="contactsFormList"></div>
                     <button type="button" onclick="addContactRow()" style="width: 100%; background: #f3f4f6; border: 1px dashed #d1d5db; padding: 10px; border-radius: 10px; cursor: pointer; font-weight: bold; color: #374151; margin-top: 8px;">+ Добавить контакт</button>
-                </div>
-
-                <!-- БЛОК ВЛАДЕЛЬЦА -->
-                <div id="ownerOnlySection" class="hidden" style="border-top: 1px solid #e5e7eb; padding-top: 14px; margin-top: 14px;">
-                    <label style="color: #2563eb;">Управление администраторами (Главный доступ)</label>
-                    <p style="font-size: 11px; color: #6b7280; margin-bottom: 8px;">Добавьте email человека, чтобы выдать ему права админа:</p>
-                    <div style="display: flex; gap: 8px;">
-                        <input type="email" id="newAdminEmail" placeholder="new-admin@gmail.com" style="margin-bottom: 0;">
-                        <button type="button" onclick="addNewAdmin()" style="background: #2563eb; color: white; border: none; padding: 0 16px; border-radius: 10px; font-weight: bold; cursor: pointer;">Добавить</button>
-                    </div>
-                    <div id="adminsListContainer" style="margin-top: 10px; font-size: 12px; color: #1f2937; max-height: 120px; overflow-y: auto;"></div>
                 </div>
 
                 <button type="submit" class="btn-cms-save">Сохранить всё</button>
@@ -361,20 +359,11 @@
         </div>
     </div>
 
-    <div id="skuSearchModal" class="modal">
-        <div class="modal-box">
-            <button onclick="closeModal('skuSearchModal')" class="modal-close"><i class="fa-solid fa-xmark"></i></button>
-            <h3 class="serif" style="font-size: 22px; margin-bottom: 16px;"><i class="fa-solid fa-hashtag text-amber"></i> Поиск по SKU</h3>
-            <input type="text" id="skuSearchInputModal" oninput="filterBySku(this.value)" placeholder="Введите артикул товара..." style="width: 100%; padding: 12px; border-radius: 10px; font-size: 16px; margin-bottom: 14px;">
-            <button onclick="switchTab('catalog'); closeModal('skuSearchModal');" class="btn-gold">Применить</button>
-        </div>
-    </div>
-
-    <!-- ФОРМА ДОБАВЛЕНИЯ ТОВАРА -->
+    <!-- МОДАЛЬНОЕ ОКНО ДОБАВЛЕНИЯ ТОВАРА -->
     <div id="productModal" class="modal">
         <div class="modal-box">
             <button onclick="closeModal('productModal')" class="modal-close"><i class="fa-solid fa-xmark"></i></button>
-            <h3 id="productModalTitle" class="serif" style="font-size: 22px; margin-bottom: 16px;">Добавить товар</h3>
+            <h3 id="productModalTitle" class="brand-font" style="font-size: 22px; margin-bottom: 16px;">Добавить товар</h3>
             <form onsubmit="saveProduct(event)">
                 <input type="hidden" id="editProductDocId">
                 <div><label>Название</label><input type="text" id="prodName" required placeholder="Платье 'Silk'"></div>
@@ -395,25 +384,11 @@
         </div>
     </div>
 
-    <!-- ОКНО ВХОДА -->
-    <div id="authModal" class="modal">
-        <div class="modal-box" style="text-align: center; padding: 32px 24px;">
-            <button onclick="closeModal('authModal')" class="modal-close"><i class="fa-solid fa-xmark"></i></button>
-            <div style="width: 50px; height: 50px; border-radius: 50%; background: rgba(212,175,55,0.1); color: var(--accent-amber); display: flex; align-items: center; justify-content: center; font-size: 22px; margin: 0 auto 16px;">
-                <i class="fa-solid fa-user-lock"></i>
-            </div>
-            <h3 class="serif" style="font-size: 24px; margin-bottom: 8px;">Вход в аккаунт</h3>
-            <p style="color: #6b7280; font-size: 13px; margin-bottom: 24px;">Используйте ваш Google-аккаунт для входа</p>
-            <button onclick="loginWithGoogle()" style="width: 100%; background: white; border: 1px solid #d1d5db; color: #000; padding: 14px; border-radius: 12px; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 12px; font-size: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
-                <i class="fa-brands fa-google" style="color: #ea4335; font-size: 18px;"></i> Войти через Google
-            </button>
-        </div>
-    </div>
-
+    <!-- КОРЗИНА -->
     <div id="cartModal" class="modal">
         <div class="modal-box">
             <button onclick="closeModal('cartModal')" class="modal-close"><i class="fa-solid fa-xmark"></i></button>
-            <h3 class="serif" style="font-size: 22px; margin-bottom: 16px;">Корзина</h3>
+            <h3 class="brand-font" style="font-size: 22px; margin-bottom: 16px;">Корзина</h3>
             <div id="cartList" style="margin-bottom: 16px; max-height: 180px; overflow-y: auto;"></div>
             <div style="display: flex; justify-content: space-between; font-weight: bold; font-size: 16px; margin-bottom: 16px; border-top: 1px solid #e5e7eb; padding-top: 10px;">
                 <span>Итого:</span>
@@ -423,43 +398,36 @@
         </div>
     </div>
 
+    <!-- БЫСТРОЕ ОФОРМЛЕНИЕ ЗАКАЗА БЕЗ ВХОДА -->
     <div id="checkoutModal" class="modal">
         <div class="modal-box">
             <button onclick="closeModal('checkoutModal')" class="modal-close"><i class="fa-solid fa-xmark"></i></button>
-            <h3 class="serif" style="font-size: 22px; margin-bottom: 16px;">Оформление заказа</h3>
+            <h3 class="brand-font" style="font-size: 22px; margin-bottom: 16px;">Быстрое оформление заказа</h3>
             <form onsubmit="submitOrder(event)">
-                <div><label>Ваше имя</label><input type="text" id="orderName" required></div>
-                <div><label>Телефон</label><input type="tel" id="orderPhone" required placeholder="+992..."></div>
-                <div><label>Адрес доставки</label><textarea id="orderAddress" required rows="2" placeholder="Душанбе..."></textarea></div>
+                <div><label>Ваше имя</label><input type="text" id="orderName" required placeholder="Мадина"></div>
+                <div><label>Телефон для связи</label><input type="tel" id="orderPhone" required placeholder="+992 90 000 00 00"></div>
+                <div><label>Адрес доставки</label><textarea id="orderAddress" required rows="2" placeholder="г. Душанбе..."></textarea></div>
                 <button type="submit" class="btn-gold">Подтвердить заказ</button>
             </form>
         </div>
     </div>
 
-    <div id="clientOrdersModal" class="modal">
-        <div class="modal-box">
-            <button onclick="closeModal('clientOrdersModal')" class="modal-close"><i class="fa-solid fa-xmark"></i></button>
-            <h3 class="serif" style="font-size: 22px; margin-bottom: 16px;"><i class="fa-solid fa-receipt text-amber"></i> Мои заказы</h3>
-            <div id="clientOrdersContainer" style="display: flex; flex-direction: column; gap: 10px; max-height: 50dvh; overflow-y: auto;">
-                <p style="color: #6b7280; text-align: center;">Загрузка...</p>
-            </div>
-        </div>
-    </div>
-
+    <!-- ПАНЕЛЬ ЗАКАЗОВ ДЛЯ АДМИНА -->
     <div id="adminModal" class="modal">
         <div class="modal-box">
             <button onclick="closeModal('adminModal')" class="modal-close"><i class="fa-solid fa-xmark"></i></button>
-            <h3 class="serif" style="font-size: 22px; margin-bottom: 16px;"><i class="fa-solid fa-file-lines text-amber"></i> Панель заказов</h3>
+            <h3 class="brand-font" style="font-size: 22px; margin-bottom: 16px;"><i class="fa-solid fa-file-lines text-amber"></i> Панель заказов</h3>
             <div id="adminOrdersContainer" style="display: flex; flex-direction: column; gap: 10px; max-height: 50dvh; overflow-y: auto;">
                 <p style="color: #6b7280; text-align: center;">Загрузка...</p>
             </div>
         </div>
     </div>
 
+    <!-- ОТЗЫВЫ -->
     <div id="reviewModal" class="modal">
         <div class="modal-box">
             <button onclick="closeModal('reviewModal')" class="modal-close"><i class="fa-solid fa-xmark"></i></button>
-            <h3 class="serif" style="font-size: 22px; margin-bottom: 16px;">Оставить отзыв</h3>
+            <h3 class="brand-font" style="font-size: 22px; margin-bottom: 16px;">Оставить отзыв</h3>
             <form onsubmit="submitReview(event)">
                 <div>
                     <label>Оценка</label>
@@ -474,7 +442,6 @@
     <!-- FIREBASE REALTIME DATABASE ЛОГИКА -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
-        import { getAuth, signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
         import { getDatabase, ref, set, push, remove, onValue, update } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-database.js";
 
         const firebaseConfig = {
@@ -488,20 +455,15 @@
         };
 
         const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
         const rtdb = getDatabase(app);
-        const googleProvider = new GoogleAuthProvider();
 
-        window.firebaseAuth = auth;
-
-        const OWNER_EMAIL = "samirdv888@gmail.com";
-        let currentUser = null;
+        window.isAdminLoggedIn = localStorage.getItem('osori_admin_auth') === 'true';
         let cachedOrders = [];
         window.tempProductBase64Images = [];
         window.products = [];
-        window.siteAdmins = [OWNER_EMAIL];
         window.siteSettings = {
             siteFont: "'Plus Jakarta Sans', sans-serif",
+            brandFont: "'Playfair Display', serif",
             cardMinWidth: 240,
             bgColor: "#0f0f10",
             textColor: "#ffffff",
@@ -512,6 +474,7 @@
             heroTitle: "Изысканность и стиль в каждом наряде",
             heroDesc: "Эксклюзивная женская одежда в Душанбе для самых особенных моментов вашей жизни.",
             heroBadge: "Премиум коллекция",
+            heroImage: "https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=1600&auto=format&fit=crop&q=100",
             footerDesc: "Премиальная женская одежда в Душанбе. Высочайшее качество тканей и безупречный крой.",
             contacts: [
                 { icon: "fa-solid fa-location-dot", title: "Душанбе, пр. Рудаки 15", link: "#" },
@@ -527,21 +490,6 @@
                     applySiteSettingsUI();
                 }
             });
-
-            onValue(ref(rtdb, 'admins'), (snapshot) => {
-                const data = snapshot.val();
-                let list = [OWNER_EMAIL];
-                if (data) {
-                    Object.values(data).forEach(email => {
-                        if (email && typeof email === 'string') {
-                            let cleanEmail = email.toLowerCase().trim();
-                            if (!list.includes(cleanEmail)) list.push(cleanEmail);
-                        }
-                    });
-                }
-                window.siteAdmins = list;
-                updateAdminUIVisibility();
-            });
         }
         initRealtimeConfig();
 
@@ -556,15 +504,16 @@
             if (document.getElementById('heroDesc')) document.getElementById('heroDesc').innerText = s.heroDesc || "";
             if (document.getElementById('heroBadge')) document.getElementById('heroBadge').innerText = s.heroBadge || "";
             if (document.getElementById('footerDesc')) document.getElementById('footerDesc').innerText = s.footerDesc || "";
+            if (document.getElementById('heroImageElement')) document.getElementById('heroImageElement').src = s.heroImage || "https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=1600&auto=format&fit=crop&q=100";
 
             document.documentElement.style.setProperty('--site-font', s.siteFont || "'Plus Jakarta Sans', sans-serif");
+            document.documentElement.style.setProperty('--brand-font', s.brandFont || "'Playfair Display', serif");
             document.documentElement.style.setProperty('--card-min-width', (s.cardMinWidth || 240) + 'px');
             document.documentElement.style.setProperty('--bg-color', s.bgColor || "#0f0f10");
             document.documentElement.style.setProperty('--text-color', s.textColor || "#ffffff");
             document.documentElement.style.setProperty('--header-color', s.headerColor || "#0f0f10");
             document.documentElement.style.setProperty('--footer-color', s.footerColor || "#070d1d");
 
-            // Отображение динамических контактов
             const topBarContacts = document.getElementById('topBarContacts');
             const footerContacts = document.getElementById('footerContactsContainer');
             
@@ -580,35 +529,21 @@
             }
         }
 
-        window.isUserAdmin = function() {
-            if (!currentUser || !currentUser.email) return false;
-            return window.siteAdmins.includes(currentUser.email.toLowerCase().trim());
-        };
-
-        window.isUserOwner = function() {
-            if (!currentUser || !currentUser.email) return false;
-            return currentUser.email.toLowerCase().trim() === OWNER_EMAIL;
-        };
-
-        function updateAdminUIVisibility() {
-            const isAdmin = window.isUserAdmin();
+        window.updateAdminUIVisibility = function() {
             const addProductBtn = document.getElementById('addProductBtn');
-            const skuSearchBtn = document.getElementById('skuSearchBtn');
             const adminOrdersBtn = document.getElementById('adminOrdersBtn');
             const siteSettingsBtn = document.getElementById('siteSettingsBtn');
 
-            if (isAdmin) {
+            if (window.isAdminLoggedIn) {
                 addProductBtn.classList.remove('hidden');
-                skuSearchBtn.classList.remove('hidden');
                 adminOrdersBtn.classList.remove('hidden');
                 siteSettingsBtn.classList.remove('hidden');
             } else {
                 addProductBtn.classList.add('hidden');
-                skuSearchBtn.classList.add('hidden');
                 adminOrdersBtn.classList.add('hidden');
                 siteSettingsBtn.classList.add('hidden');
             }
-        }
+        };
 
         function initRealtimeProducts() {
             onValue(ref(rtdb, 'products'), (snapshot) => {
@@ -631,40 +566,6 @@
         }
         initRealtimeProducts();
 
-        onAuthStateChanged(auth, async (user) => {
-            currentUser = user;
-            const authContainer = document.getElementById('authContainer');
-            const clientBtn = document.getElementById('clientOrdersBtn');
-
-            if (user) {
-                authContainer.innerHTML = `
-                    <span style="color: var(--accent-amber); font-weight: 600; margin-right: 10px;">${user.email.split('@')[0]}</span>
-                    <button onclick="logout()" style="background: rgba(244,63,94,0.1); border: 1px solid rgba(244,63,94,0.3); color: #f43f5e; padding: 4px 10px; border-radius: 6px; cursor: pointer;">Выйти</button>
-                `;
-                clientBtn.classList.remove('hidden');
-                initRealtimeOrders();
-            } else {
-                authContainer.innerHTML = `
-                    <button onclick="openModal('authModal')" style="background: rgba(212,175,55,0.1); border: 1px solid rgba(212,175,55,0.3); color: var(--accent-amber); padding: 6px 12px; border-radius: 6px; cursor: pointer; font-weight: bold;">
-                        <i class="fa-solid fa-user"></i> Войти
-                    </button>
-                `;
-                clientBtn.classList.add('hidden');
-            }
-            updateAdminUIVisibility();
-            if (typeof renderProducts === 'function') renderProducts();
-        });
-
-        window.logout = () => signOut(auth);
-        window.loginWithGoogle = async () => { 
-            try { 
-                await signInWithPopup(auth, googleProvider); 
-                closeModal('authModal'); 
-            } catch(e) { 
-                alert("Ошибка авторизации: " + e.message); 
-            } 
-        };
-
         function initRealtimeOrders() {
             onValue(ref(rtdb, 'orders'), (snapshot) => {
                 const data = snapshot.val();
@@ -677,7 +578,7 @@
                 }
                 
                 const adminBadge = document.getElementById('adminBadge');
-                if (window.isUserAdmin() && cachedOrders.length > 0) {
+                if (window.isAdminLoggedIn && cachedOrders.length > 0) {
                     adminBadge.innerText = cachedOrders.length;
                     adminBadge.classList.remove('hidden');
                 } else {
@@ -685,6 +586,7 @@
                 }
             });
         }
+        initRealtimeOrders();
 
         window.saveOrderToCloud = async (orderData) => {
             const newOrderRef = push(ref(rtdb, 'orders'));
@@ -692,7 +594,7 @@
         };
 
         window.openAdminModal = () => {
-            if (!window.isUserAdmin()) return;
+            if (!window.isAdminLoggedIn) return;
             document.getElementById('adminModal').classList.add('open');
             renderAdminOrders();
         };
@@ -722,48 +624,18 @@
             `).join('');
         }
 
-        window.openClientOrdersModal = () => {
-            const activeUser = window.firebaseAuth ? window.firebaseAuth.currentUser : null;
-            if (!activeUser) { alert("Войдите в аккаунт."); openModal('authModal'); return; }
-            document.getElementById('clientOrdersModal').classList.add('open');
-            renderClientOrders();
-        };
-
-        function renderClientOrders() {
-            const container = document.getElementById('clientOrdersContainer');
-            const activeUser = window.firebaseAuth ? window.firebaseAuth.currentUser : null;
-            if (!activeUser) return;
-            const myOrders = cachedOrders.filter(o => o.userId === activeUser.uid);
-            if (myOrders.length === 0) {
-                container.innerHTML = `<p style="text-align: center; color: #6b7280; padding: 20px;">У вас пока нет заказов.</p>`;
-                return;
-            }
-            container.innerHTML = myOrders.map((o, idx) => `
-                <div style="background: rgba(0,0,0,0.05); border: 1px solid rgba(0,0,0,0.1); border-radius: 12px; padding: 14px; color: inherit;">
-                    <div style="display: flex; justify-content: space-between; font-size: 13px; font-weight: bold; margin-bottom: 6px; color: #2563eb;">
-                        <span>Заказ #${myOrders.length - idx}</span>
-                        <span style="color: #6b7280; font-weight: normal;">${o.date}</span>
-                    </div>
-                    <div style="background: rgba(0,0,0,0.05); padding: 8px; border-radius: 8px; font-size: 12px; margin-bottom: 8px;">
-                        ${o.items.map(i => `<div>• ${i.name} (x${i.qty})</div>`).join('')}
-                    </div>
-                    <div style="display: flex; justify-content: space-between; align-items: center; font-size: 13px; font-weight: bold;">
-                        <span>Сумма: <span class="text-amber">${o.total}</span></span>
-                    </div>
-                </div>
-            `).join('');
-        }
-
         window.deleteOrder = async (id) => { 
-            if(!window.isUserAdmin()) return;
+            if(!window.isAdminLoggedIn) return;
             if(confirm("Удалить заказ?")) remove(ref(rtdb, `orders/${id}`)).catch(() => {}); 
         };
 
         window.openSettingsModal = () => {
-            if (!window.isUserAdmin()) return;
+            if (!window.isAdminLoggedIn) return;
             const s = window.siteSettings;
             
             document.getElementById('settingFontFamily').value = s.siteFont || "'Plus Jakarta Sans', sans-serif";
+            document.getElementById('settingBrandFont').value = s.brandFont || "'Playfair Display', serif";
+            document.getElementById('settingHeroImage').value = s.heroImage || "";
             document.getElementById('settingCardWidth').value = s.cardMinWidth || 240;
             document.getElementById('cardWidthVal').innerText = (s.cardMinWidth || 240) + 'px';
             document.getElementById('settingBgColor').value = s.bgColor || "#0f0f10";
@@ -779,15 +651,6 @@
             document.getElementById('settingFooterDesc').value = s.footerDesc || "";
 
             renderContactsFormList(s.contacts || []);
-
-            const ownerSection = document.getElementById('ownerOnlySection');
-            if (window.isUserOwner()) {
-                ownerSection.classList.remove('hidden');
-                renderAdminsList();
-            } else {
-                ownerSection.classList.add('hidden');
-            }
-
             document.getElementById('settingsModal').classList.add('open');
         };
 
@@ -826,7 +689,7 @@
 
         window.saveSiteSettings = async (e) => {
             e.preventDefault();
-            if (!window.isUserAdmin()) return;
+            if (!window.isAdminLoggedIn) return;
 
             const contactRows = document.querySelectorAll('.contact-item-row');
             let contacts = [];
@@ -839,6 +702,8 @@
 
             const newSettings = {
                 siteFont: document.getElementById('settingFontFamily').value,
+                brandFont: document.getElementById('settingBrandFont').value,
+                heroImage: document.getElementById('settingHeroImage').value,
                 cardMinWidth: parseInt(document.getElementById('settingCardWidth').value) || 240,
                 bgColor: document.getElementById('settingBgColor').value,
                 textColor: document.getElementById('settingTextColor').value,
@@ -856,71 +721,11 @@
             try {
                 await set(ref(rtdb, 'settings'), newSettings);
                 closeModal('settingsModal');
-                alert("Настройки и шрифт успешно сохранены!");
+                alert("Настройки успешно сохранены!");
             } catch (err) {
                 alert("Ошибка: " + err.message);
             }
         };
-
-        window.addNewAdmin = async () => {
-            if (!window.isUserOwner()) {
-                alert("Только главный администратор (samirdv888@gmail.com) может добавлять админов!");
-                return;
-            }
-            const emailInput = document.getElementById('newAdminEmail');
-            const email = emailInput.value.trim().toLowerCase();
-            if (!email || !email.includes('@')) {
-                alert("Введите корректный email!");
-                return;
-            }
-            if (window.siteAdmins.includes(email)) {
-                alert("Этот пользователь уже является администратором!");
-                return;
-            }
-
-            try {
-                const safeKey = email.replace(/[.#$\/\[\]]/g, "_");
-                await set(ref(rtdb, `admins/${safeKey}`), email);
-                emailInput.value = '';
-                alert(`Администратор ${email} успешно добавлен!`);
-            } catch (err) {
-                alert("Ошибка: " + err.message);
-            }
-        };
-
-        window.removeAdmin = async (email) => {
-            if (!window.isUserOwner()) {
-                alert("Только главный администратор может удалять админов!");
-                return;
-            }
-            if (email === OWNER_EMAIL) {
-                alert("Нельзя удалить главного администратора!");
-                return;
-            }
-            if (confirm(`Удалить права администратора у ${email}?`)) {
-                try {
-                    const safeKey = email.replace(/[.#$\/\[\]]/g, "_");
-                    await remove(ref(rtdb, `admins/${safeKey}`));
-                    renderAdminsList();
-                } catch (err) {
-                    alert("Ошибка: " + err.message);
-                }
-            }
-        };
-
-        function renderAdminsList() {
-            const container = document.getElementById('adminsListContainer');
-            if (!container) return;
-            container.innerHTML = window.siteAdmins.map(email => `
-                <div style="display: flex; justify-content: space-between; align-items: center; background: #f3f4f6; padding: 6px 10px; border-radius: 6px; margin-bottom: 4px;">
-                    <span>${email}</span>
-                    <div style="display: flex; align-items: center; gap: 8px;">
-                        ${email === OWNER_EMAIL ? `<span style="color: #d97706; font-size: 11px;">Владелец</span>` : `<span style="color: #2563eb; font-size: 11px;">Админ</span>`}
-                        ${email !== OWNER_EMAIL ? `<button type="button" onclick="removeAdmin('${email}')" style="background: none; border: none; color: #dc2626; cursor: pointer; font-size: 12px;"><i class="fa-solid fa-trash"></i></button>` : ''}
-                    </div>
-                </div>
-            `).join('');
-        }
 
         window.handleMultipleImagesUpload = async (event) => {
             const files = Array.from(event.target.files);
@@ -983,7 +788,7 @@
 
         window.saveProduct = async (e) => {
             e.preventDefault();
-            if (!window.isUserAdmin()) return;
+            if (!window.isAdminLoggedIn) return;
 
             const editId = document.getElementById('editProductDocId').value;
             const name = document.getElementById('prodName').value;
@@ -1030,7 +835,7 @@
         };
 
         window.openProductModal = () => {
-            if (!window.isUserAdmin()) return;
+            if (!window.isAdminLoggedIn) return;
             document.getElementById('editProductDocId').value = '';
             document.getElementById('prodName').value = '';
             document.getElementById('prodBrand').value = '';
@@ -1047,7 +852,7 @@
         };
 
         window.editProduct = (id) => {
-            if (!window.isUserAdmin()) return;
+            if (!window.isAdminLoggedIn) return;
             const p = window.products.find(prod => prod.id == id);
             if (!p) return;
             document.getElementById('editProductDocId').value = p.id;
@@ -1071,7 +876,7 @@
         };
 
         window.deleteProduct = async (id) => {
-            if (!window.isUserAdmin()) return;
+            if (!window.isAdminLoggedIn) return;
             if (confirm("Удалить этот товар?")) {
                 remove(ref(rtdb, `products/${id}`)).catch(() => {});
             }
@@ -1079,6 +884,19 @@
 
         window.openModal = (id) => document.getElementById(id).classList.add('open');
         window.closeModal = (id) => document.getElementById(id).classList.remove('open');
+
+        window.triggerAdminLoginPrompt = () => {
+            const pwd = prompt("Введите пароль администратора:");
+            if (pwd === "admin123") {
+                window.isAdminLoggedIn = true;
+                localStorage.setItem('osori_admin_auth', 'true');
+                updateAdminUIVisibility();
+                renderProducts();
+                alert("Вход выполнен успешно!");
+            } else if (pwd !== null) {
+                alert("Неверный пароль!");
+            }
+        };
     </script>
 
     <!-- ИНТЕРФЕЙС И ОТОБРАЖЕНИЕ -->
@@ -1088,7 +906,7 @@
         let compareList = JSON.parse(localStorage.getItem('osori_compare')) || [];
         let currentCurrency = 'TJS';
         let currentLang = 'ru';
-        let skuQuery = '';
+        let searchQuery = '';
         const rates = { TJS: 1, USD: 0.092, RUB: 8.3 };
 
         let activeFsImages = [];
@@ -1105,8 +923,14 @@
 
         function changeCurrency(val) { currentCurrency = val; renderProducts(); }
 
-        window.filterBySku = function(val) {
-            skuQuery = val.trim().toLowerCase();
+        window.handleGlobalSearch = function(val) {
+            const cleanVal = val.trim();
+            if (cleanVal.toLowerCase() === '/admin' || cleanVal.toLowerCase() === 'admin') {
+                document.getElementById('mainSearchInput').value = '';
+                triggerAdminLoginPrompt();
+                return;
+            }
+            searchQuery = cleanVal.toLowerCase();
             renderProducts();
         };
 
@@ -1159,15 +983,19 @@
         }
 
         window.renderProducts = function() {
-            const admin = window.isUserAdmin();
+            const admin = window.isAdminLoggedIn;
             let list = window.products || [];
 
-            if (admin && skuQuery !== '') {
-                list = list.filter(p => p.sku && p.sku.toLowerCase().includes(skuQuery));
+            if (searchQuery !== '') {
+                list = list.filter(p => 
+                    (p.name && p.name.toLowerCase().includes(searchQuery)) || 
+                    (p.brand && p.brand.toLowerCase().includes(searchQuery)) || 
+                    (p.sku && p.sku.toLowerCase().includes(searchQuery))
+                );
             }
             
             if (list.length === 0) {
-                const emptyHtml = `<div style="grid-column: 1/-1; text-align: center; padding: 40px; color: inherit; opacity: 0.7;">Товаров пока нет в каталоге.</div>`;
+                const emptyHtml = `<div style="grid-column: 1/-1; text-align: center; padding: 40px; color: inherit; opacity: 0.7;">Товаров не найдено.</div>`;
                 if (document.getElementById('homeGrid')) document.getElementById('homeGrid').innerHTML = emptyHtml;
                 if (document.getElementById('catalogGrid')) document.getElementById('catalogGrid').innerHTML = emptyHtml;
                 return;
@@ -1208,9 +1036,9 @@
                         <div>
                             <div style="display: flex; justify-content: space-between; align-items: center;">
                                 <span style="font-size: 11px; color: var(--accent-amber); text-transform: uppercase;">${p.brand}</span>
-                                ${admin ? `<span style="font-size: 10px; background: rgba(255,255,255,0.1); color: var(--accent-amber); padding: 2px 6px; border-radius: 4px;">SKU: ${skuText}</span>` : ''}
+                                <span style="font-size: 10px; background: rgba(255,255,255,0.1); color: var(--accent-amber); padding: 2px 6px; border-radius: 4px;">SKU: ${skuText}</span>
                             </div>
-                            <h3 style="font-size: 15px; font-weight: bold; margin: 4px 0 10px;" class="serif">${p.name}</h3>
+                            <h3 style="font-size: 15px; font-weight: bold; margin: 4px 0 10px;" class="brand-font">${p.name}</h3>
                         </div>
                         <div>
                             <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px; margin-bottom: 8px;">
@@ -1277,7 +1105,7 @@
                         return `<div style="border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.05); padding: 14px; border-radius: 12px; text-align: center; position: relative;">
                             <button onclick="toggleCompare('${p.id}'); renderCompare();" style="position: absolute; top: 6px; right: 6px; background: none; border: none; color: #dc2626; cursor: pointer;"><i class="fa-solid fa-xmark"></i></button>
                             <img src="${img}" style="height: 120px; width:100%; object-fit: cover; margin-bottom: 8px; border-radius: 8px;" loading="lazy">
-                            <h4 style="font-weight: bold; font-size: 14px; margin-bottom: 4px;" class="serif">${p.name}</h4>
+                            <h4 style="font-weight: bold; font-size: 14px; margin-bottom: 4px;" class="brand-font">${p.name}</h4>
                             <p class="text-amber" style="font-weight: bold; font-size: 14px;">${formatPrice(p.priceTJS)}</p>
                         </div>`;
                     }).join('')}
@@ -1328,17 +1156,12 @@
 
         function openCheckout() {
             if (cart.length === 0) return;
-            const activeUser = window.firebaseAuth ? window.firebaseAuth.currentUser : null;
-            if (!activeUser) { alert("Войдите в аккаунт!"); closeModal('cartModal'); openModal('authModal'); return; }
             closeModal('cartModal');
             openModal('checkoutModal');
         }
 
         function submitOrder(e) {
             e.preventDefault();
-            const activeUser = window.firebaseAuth ? window.firebaseAuth.currentUser : null;
-            if (!activeUser) { alert("Войдите в аккаунт!"); closeModal('checkoutModal'); openModal('authModal'); return; }
-
             const name = document.getElementById('orderName').value;
             const phone = document.getElementById('orderPhone').value;
             const address = document.getElementById('orderAddress').value;
@@ -1349,8 +1172,6 @@
             }, 0);
 
             const order = {
-                userId: activeUser.uid,
-                userEmail: activeUser.email,
                 name, phone, address,
                 items: cart.map(cartItem => {
                     const p = window.products.find(prod => prod.id == cartItem.id);
@@ -1367,7 +1188,7 @@
             localStorage.removeItem('osori_cart');
             updateBadges();
             closeModal('checkoutModal');
-            alert("Заказ успешно оформлен!");
+            alert("Заказ успешно оформлен! Мы свяжемся с вами в ближайшее время.");
         }
 
         function submitReview(e) {
@@ -1409,6 +1230,7 @@
         }
 
         window.addEventListener('DOMContentLoaded', () => {
+            updateAdminUIVisibility();
             renderProducts();
         });
     </script>
