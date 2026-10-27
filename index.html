@@ -28,7 +28,7 @@
 
         body { background-color: var(--bg-color); color: var(--text-color); min-height: 100vh; display: flex; flex-direction: column; overflow-x: hidden; }
 
-        .brand-font { font-family: var(--brand-font); }
+        .brand-logo-font { font-family: var(--brand-font); }
         
         .top-bar { background: var(--topbar-color); border-bottom: 1px solid rgba(212, 175, 55, 0.2); font-size: 12px; color: #d1d5db; padding: 8px 16px; }
         .top-bar-inner { max-width: 1280px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; }
@@ -146,7 +146,7 @@
             <div class="logo" onclick="switchTab('catalog')">
                 <div class="logo-icon"><i class="fa-solid fa-gem"></i></div>
                 <div>
-                    <span id="siteBrandName" style="font-size: 20px; font-weight: 900; letter-spacing: 1px;" class="brand-font">OSORI15</span>
+                    <span id="siteBrandName" style="font-size: 20px; font-weight: 900; letter-spacing: 1px;" class="brand-logo-font">OSORI15</span>
                     <span id="siteBrandSub" style="display: block; font-size: 8px; color: var(--accent-amber); letter-spacing: 2px; font-weight: 600;">HAUTE COUTURE</span>
                 </div>
             </div>
@@ -159,7 +159,7 @@
                 
                 <div class="search-box">
                     <i class="fa-solid fa-magnifying-glass text-gold" style="font-size: 12px;"></i>
-                    <input type="text" id="mainSearchInput" oninput="handleGlobalSearch(this.value)" placeholder="Поиск... (/admin)">
+                    <input type="text" id="mainSearchInput" oninput="handleGlobalSearch(this.value)" placeholder="Поиск...">
                 </div>
             </nav>
 
@@ -178,9 +178,6 @@
                     <i class="fa-solid fa-bag-shopping"></i>
                     <span id="cartBadge" class="badge hidden">0</span>
                 </button>
-                <button onclick="triggerAdminLoginPrompt()" class="btn-icon" title="Вход для админа" style="color: #9ca3af;">
-                    <i class="fa-solid fa-lock"></i>
-                </button>
             </div>
         </div>
     </header>
@@ -190,7 +187,7 @@
             <div style="padding: 20px 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 30px; align-items: center;">
                 <div>
                     <span id="heroBadge" style="background: rgba(212,175,55,0.1); border: 1px solid rgba(212,175,55,0.3); color: var(--accent-amber); padding: 6px 12px; border-radius: 20px; font-size: 11px; font-weight: 600; text-transform: uppercase;">Премиум коллекция</span>
-                    <h1 id="heroTitle" class="brand-font" style="font-size: clamp(26px, 5vw, 36px); line-height: 1.1; margin: 16px 0;">Изысканность и стиль в каждом наряде</h1>
+                    <h1 id="heroTitle" style="font-size: clamp(26px, 5vw, 36px); line-height: 1.1; margin: 16px 0;">Изысканность и стиль в каждом наряде</h1>
                     <p id="heroDesc" style="opacity: 0.8; margin-bottom: 20px; font-size: 14px;">Эксклюзивная женская одежда в Душанбе для самых особенных моментов вашей жизни.</p>
                     <button onclick="switchTab('catalog')" class="btn-gold" style="width: auto; padding: 12px 24px;">Перейти в каталог</button>
                 </div>
@@ -200,24 +197,24 @@
             </div>
 
             <div style="display: flex; justify-content: space-between; align-items: center; margin: 30px 0 16px;">
-                <h2 class="brand-font" style="font-size: clamp(18px, 4vw, 24px);">Новинки коллекции</h2>
+                <h2 style="font-size: clamp(18px, 4vw, 24px);">Новинки коллекции</h2>
             </div>
             <div id="homeGrid" class="grid-products"></div>
         </div>
 
         <div id="tab-catalog" class="tab-pane">
-            <h2 class="brand-font" style="font-size: clamp(18px, 4vw, 24px); margin-bottom: 20px;">Каталог одежды</h2>
+            <h2 style="font-size: clamp(18px, 4vw, 24px); margin-bottom: 20px;">Каталог одежды</h2>
             <div id="catalogGrid" class="grid-products"></div>
         </div>
 
         <div id="tab-compare" class="tab-pane">
-            <h2 class="brand-font" style="font-size: clamp(18px, 4vw, 24px); margin-bottom: 20px;">Сравнение товаров</h2>
+            <h2 style="font-size: clamp(18px, 4vw, 24px); margin-bottom: 20px;">Сравнение товаров</h2>
             <div id="compareContainer" style="background: rgba(255,255,255,0.03); color: inherit; padding: 20px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.1);"></div>
         </div>
 
         <div id="tab-reviews" class="tab-pane">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 10px;">
-                <h2 class="brand-font" style="font-size: clamp(18px, 4vw, 24px);">Отзывы клиентов</h2>
+                <h2 style="font-size: clamp(18px, 4vw, 24px);">Отзывы клиентов</h2>
                 <button onclick="openModal('reviewModal')" class="btn-gold" style="width: auto; padding: 10px 18px;">Оставить отзыв</button>
             </div>
             <div id="reviewsGrid" class="grid-products"></div>
@@ -229,7 +226,7 @@
             <div>
                 <div class="logo" style="margin-bottom: 10px;">
                     <div class="logo-icon"><i class="fa-solid fa-gem"></i></div>
-                    <span id="footerBrandName" style="font-size: 18px; font-weight: 900; color: inherit;" class="brand-font">OSORI15</span>
+                    <span id="footerBrandName" style="font-size: 18px; font-weight: 900; color: inherit;" class="brand-logo-font">OSORI15</span>
                 </div>
                 <p id="footerDesc">Премиальная женская одежда в Душанбе. Высочайшее качество тканей и безупречный крой.</p>
             </div>
@@ -256,7 +253,7 @@
     <div id="settingsModal" class="modal">
         <div class="modal-box">
             <button onclick="closeModal('settingsModal')" class="modal-close"><i class="fa-solid fa-xmark"></i></button>
-            <h2 class="brand-font" style="font-size: 22px; font-weight: bold; margin-bottom: 20px; color: #0d0a26; display: flex; align-items: center; gap: 8px;">
+            <h2 style="font-size: 22px; font-weight: bold; margin-bottom: 20px; color: #0d0a26; display: flex; align-items: center; gap: 8px;">
                 <i class="fa-solid fa-gear" style="color: #eab308;"></i> Настройки сайта и стиля
             </h2>
             <form onsubmit="saveSiteSettings(event)">
@@ -273,7 +270,7 @@
                         </select>
                     </div>
                     <div>
-                        <label><i class="fa-solid fa-heading text-amber"></i> Шрифт заголовков/бренда</label>
+                        <label><i class="fa-solid fa-heading text-amber"></i> Шрифт названия (Osori15)</label>
                         <select id="settingBrandFont" style="height: 42px; font-size: 13px;">
                             <option value="'Playfair Display', serif">Playfair Display</option>
                             <option value="'Cormorant Garamond', serif">Cormorant Garamond</option>
@@ -363,7 +360,7 @@
     <div id="productModal" class="modal">
         <div class="modal-box">
             <button onclick="closeModal('productModal')" class="modal-close"><i class="fa-solid fa-xmark"></i></button>
-            <h3 id="productModalTitle" class="brand-font" style="font-size: 22px; margin-bottom: 16px;">Добавить товар</h3>
+            <h3 id="productModalTitle" style="font-size: 22px; margin-bottom: 16px;">Добавить товар</h3>
             <form onsubmit="saveProduct(event)">
                 <input type="hidden" id="editProductDocId">
                 <div><label>Название</label><input type="text" id="prodName" required placeholder="Платье 'Silk'"></div>
@@ -388,7 +385,7 @@
     <div id="cartModal" class="modal">
         <div class="modal-box">
             <button onclick="closeModal('cartModal')" class="modal-close"><i class="fa-solid fa-xmark"></i></button>
-            <h3 class="brand-font" style="font-size: 22px; margin-bottom: 16px;">Корзина</h3>
+            <h3 style="font-size: 22px; margin-bottom: 16px;">Корзина</h3>
             <div id="cartList" style="margin-bottom: 16px; max-height: 180px; overflow-y: auto;"></div>
             <div style="display: flex; justify-content: space-between; font-weight: bold; font-size: 16px; margin-bottom: 16px; border-top: 1px solid #e5e7eb; padding-top: 10px;">
                 <span>Итого:</span>
@@ -402,7 +399,7 @@
     <div id="checkoutModal" class="modal">
         <div class="modal-box">
             <button onclick="closeModal('checkoutModal')" class="modal-close"><i class="fa-solid fa-xmark"></i></button>
-            <h3 class="brand-font" style="font-size: 22px; margin-bottom: 16px;">Быстрое оформление заказа</h3>
+            <h3 style="font-size: 22px; margin-bottom: 16px;">Быстрое оформление заказа</h3>
             <form onsubmit="submitOrder(event)">
                 <div><label>Ваше имя</label><input type="text" id="orderName" required placeholder="Мадина"></div>
                 <div><label>Телефон для связи</label><input type="tel" id="orderPhone" required placeholder="+992 90 000 00 00"></div>
@@ -416,7 +413,7 @@
     <div id="adminModal" class="modal">
         <div class="modal-box">
             <button onclick="closeModal('adminModal')" class="modal-close"><i class="fa-solid fa-xmark"></i></button>
-            <h3 class="brand-font" style="font-size: 22px; margin-bottom: 16px;"><i class="fa-solid fa-file-lines text-amber"></i> Панель заказов</h3>
+            <h3 style="font-size: 22px; margin-bottom: 16px;"><i class="fa-solid fa-file-lines text-amber"></i> Панель заказов</h3>
             <div id="adminOrdersContainer" style="display: flex; flex-direction: column; gap: 10px; max-height: 50dvh; overflow-y: auto;">
                 <p style="color: #6b7280; text-align: center;">Загрузка...</p>
             </div>
@@ -427,7 +424,7 @@
     <div id="reviewModal" class="modal">
         <div class="modal-box">
             <button onclick="closeModal('reviewModal')" class="modal-close"><i class="fa-solid fa-xmark"></i></button>
-            <h3 class="brand-font" style="font-size: 22px; margin-bottom: 16px;">Оставить отзыв</h3>
+            <h3 style="font-size: 22px; margin-bottom: 16px;">Оставить отзыв</h3>
             <form onsubmit="submitReview(event)">
                 <div>
                     <label>Оценка</label>
@@ -1038,7 +1035,7 @@
                                 <span style="font-size: 11px; color: var(--accent-amber); text-transform: uppercase;">${p.brand}</span>
                                 <span style="font-size: 10px; background: rgba(255,255,255,0.1); color: var(--accent-amber); padding: 2px 6px; border-radius: 4px;">SKU: ${skuText}</span>
                             </div>
-                            <h3 style="font-size: 15px; font-weight: bold; margin: 4px 0 10px;" class="brand-font">${p.name}</h3>
+                            <h3 style="font-size: 15px; font-weight: bold; margin: 4px 0 10px;">${p.name}</h3>
                         </div>
                         <div>
                             <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px; margin-bottom: 8px;">
@@ -1105,7 +1102,7 @@
                         return `<div style="border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.05); padding: 14px; border-radius: 12px; text-align: center; position: relative;">
                             <button onclick="toggleCompare('${p.id}'); renderCompare();" style="position: absolute; top: 6px; right: 6px; background: none; border: none; color: #dc2626; cursor: pointer;"><i class="fa-solid fa-xmark"></i></button>
                             <img src="${img}" style="height: 120px; width:100%; object-fit: cover; margin-bottom: 8px; border-radius: 8px;" loading="lazy">
-                            <h4 style="font-weight: bold; font-size: 14px; margin-bottom: 4px;" class="brand-font">${p.name}</h4>
+                            <h4 style="font-weight: bold; font-size: 14px; margin-bottom: 4px;">${p.name}</h4>
                             <p class="text-amber" style="font-weight: bold; font-size: 14px;">${formatPrice(p.priceTJS)}</p>
                         </div>`;
                     }).join('')}
