@@ -78,10 +78,10 @@
         .card-body { padding: 20px; display: flex; flex-direction: column; flex-grow: 1; justify-content: space-between; }
         
         /* Стили выбора цветов как на WB */
-        .color-selector { display: flex; gap: 6px; flex-wrap: wrap; margin: 10px 0; align-items: center; }
-        .color-swatch { width: 24px; height: 24px; border-radius: 50%; border: 2px solid rgba(255,255,255,0.4); cursor: pointer; position: relative; transition: transform 0.2s; }
+        .color-selector { display: flex; gap: 8px; flex-wrap: wrap; margin: 10px 0; align-items: center; }
+        .color-swatch { width: 28px; height: 28px; border-radius: 50%; border: 2px solid rgba(255,255,255,0.5); cursor: pointer; position: relative; transition: transform 0.2s; }
         .color-swatch:hover { transform: scale(1.15); }
-        .color-swatch.active { border-color: var(--accent-amber); transform: scale(1.2); box-shadow: 0 0 8px var(--accent-amber); }
+        .color-swatch.active { border-color: var(--accent-amber); transform: scale(1.25); box-shadow: 0 0 10px var(--accent-amber); }
 
         .btn-gold { background: var(--gold-gradient); color: black; font-weight: bold; border: none; padding: 14px 24px; border-radius: 14px; cursor: pointer; width: 100%; font-size: 15px; text-transform: uppercase; }
         .btn-whatsapp { background: #25d366; color: white; font-weight: bold; border: none; padding: 12px 16px; border-radius: 12px; cursor: pointer; width: 100%; font-size: 14px; display: flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; margin-top: 10px; }
@@ -197,7 +197,6 @@
             <div style="padding: 20px 0; display: flex; flex-direction: column; gap: 30px; align-items: center;">
                 <div style="text-align: center; width: 100%; max-width: 900px;">
                     <div id="heroMediaContainer" style="width: 100%; border-radius: 24px; box-shadow: 0 20px 40px rgba(0,0,0,0.6); overflow: hidden; background: #121214;">
-                        <!-- Динамическое фото или видео баннера -->
                         <img id="heroImageElement" src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=1600&auto=format&fit=crop&q=100" style="width: 100%; max-height: 500px; object-fit: cover; display: block;" alt="Fashion">
                     </div>
                 </div>
@@ -297,7 +296,7 @@
                 </div>
 
                 <div>
-                    <label>Главное фото или видео на главной (Загрузить с устройства или URL)</label>
+                    <label>Главное фото или видео на главной (Загрузить с устройства)</label>
                     <input type="file" id="settingHeroMediaFile" accept="image/*,video/*" onchange="handleHeroMediaUpload(event)">
                     <input type="hidden" id="settingHeroImage" value="">
                     <div id="settingHeroMediaPreview" style="margin-top: 10px;"></div>
@@ -372,7 +371,7 @@
         </div>
     </div>
 
-    <!-- МОДАЛЬНОЕ ОКНО ДОБАВЛЕНИЯ ТОВАРА С ВЫБОРОМ ЦВЕТОВ И ВИДЕО/ФОТО -->
+    <!-- МОДАЛЬНОЕ ОКНО ДОБАВЛЕНИЯ ТОВАРА -->
     <div id="productModal" class="modal">
         <div class="modal-box">
             <button onclick="closeModal('productModal')" class="modal-close"><i class="fa-solid fa-xmark"></i></button>
@@ -480,7 +479,7 @@
 
         window.isAdminLoggedIn = localStorage.getItem('osori_admin_auth') === 'true';
         let cachedOrders = [];
-        window.tempProductMedia = []; // хранит фото/видео товара
+        window.tempProductMedia = [];
         window.products = [];
         window.siteSettings = {
             siteFont: "'Plus Jakarta Sans', sans-serif",
@@ -786,7 +785,6 @@
             }
         };
 
-        // Загрузка медиа (фото или видео) для товара
         window.handleMultipleMediaUpload = async (event) => {
             const files = Array.from(event.target.files);
             const previewContainer = document.getElementById('uploadedImagesPreview');
@@ -820,7 +818,6 @@
             `).join('');
         };
 
-        // Управление добавлением цветов админом
         window.addAdminColorRow = (name = '', hex = '#d4af37') => {
             const container = document.getElementById('adminColorsList');
             const idx = container.children.length;
@@ -849,7 +846,6 @@
             const whatsapp = document.getElementById('prodWhatsapp').value.trim();
             const media = window.tempProductMedia;
 
-            // Сбор цветов
             const colorRows = document.querySelectorAll('.admin-color-row');
             let colors = [];
             colorRows.forEach((row, idx) => {
@@ -933,7 +929,6 @@
                 </div>
             `).join('');
 
-            // Загружаем сохраненные цвета
             const colorsContainer = document.getElementById('adminColorsList');
             colorsContainer.innerHTML = '';
             if (p.colors && Array.isArray(p.colors)) {
@@ -1025,13 +1020,11 @@
             }
         };
 
-        // Переключение цвета клиентом (как на Wildberries)
         window.selectProductColor = function(id, colorName) {
             const p = window.products.find(prod => prod.id == id);
             if (!p) return;
             p.selectedColor = colorName;
             
-            // Подсветка выбранной иконки цвета
             const colorSwatches = document.querySelectorAll(`#cardColors_${id} .color-swatch`);
             colorSwatches.forEach(swatch => {
                 if (swatch.getAttribute('data-color') === colorName) {
@@ -1040,6 +1033,8 @@
                     swatch.classList.remove('active');
                 }
             });
+            const nameEl = document.getElementById(`selectedColorName_${id}`);
+            if (nameEl) nameEl.innerText = colorName;
         };
 
         window.openFullscreen = function(id) {
@@ -1139,7 +1134,7 @@
 
                             <!-- Блок выбора цвета в стиле WB -->
                             ${p.colors && p.colors.length > 0 ? `
-                                <div style="font-size: 12px; opacity: 0.8; margin-top: 6px;">Цвет: <strong style="color: var(--accent-amber);">${p.selectedColor || p.colors[0].name}</strong></div>
+                                <div style="font-size: 12px; opacity: 0.8; margin-top: 6px;">Цвет: <strong id="selectedColorName_${p.id}" style="color: var(--accent-amber);">${p.selectedColor || p.colors[0].name}</strong></div>
                                 <div class="color-selector" id="cardColors_${p.id}">
                                     ${p.colors.map(c => `
                                         <div class="color-swatch ${(p.selectedColor === c.name || (!p.selectedColor && c === p.colors[0])) ? 'active' : ''}" 
@@ -1231,7 +1226,7 @@
             if (!p) return;
             const chosenColor = p.selectedColor || (p.colors && p.colors.length > 0 ? p.colors[0].name : '');
             
-            const item = cart.find(i => i.id == id && i.selectedColor === chosenColor);
+            const item = cart.find(i => i.id == id && (i.selectedColor || '') === chosenColor);
             if (item) item.qty++; 
             else cart.push({ id, qty: 1, selectedColor: chosenColor });
             
