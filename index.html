@@ -62,7 +62,7 @@
 
         .card-img-slider { position: relative; width: 100%; aspect-ratio: 3 / 4; background: #121214; overflow: hidden; cursor: pointer; }
         .card-img-track { display: flex; width: 100%; height: 100%; transition: transform 0.2s cubic-bezier(0.1, 0.7, 0.1, 1); will-change: transform; }
-        .card-img-track img { width: 100%; height: 100%; object-fit: cover; flex-shrink: 0; }
+        .card-img-track img, .card-img-track video { width: 100%; height: 100%; object-fit: cover; flex-shrink: 0; }
         
         .card-arrow { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.6); color: white; border: none; width: 34px; height: 34px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 13px; z-index: 5; opacity: 0.8; transition: opacity 0.2s; }
         .card-arrow:hover { opacity: 1; }
@@ -77,6 +77,12 @@
 
         .card-body { padding: 20px; display: flex; flex-direction: column; flex-grow: 1; justify-content: space-between; }
         
+        /* Стили выбора цветов как на WB */
+        .color-selector { display: flex; gap: 6px; flex-wrap: wrap; margin: 10px 0; align-items: center; }
+        .color-swatch { width: 24px; height: 24px; border-radius: 50%; border: 2px solid rgba(255,255,255,0.4); cursor: pointer; position: relative; transition: transform 0.2s; }
+        .color-swatch:hover { transform: scale(1.15); }
+        .color-swatch.active { border-color: var(--accent-amber); transform: scale(1.2); box-shadow: 0 0 8px var(--accent-amber); }
+
         .btn-gold { background: var(--gold-gradient); color: black; font-weight: bold; border: none; padding: 14px 24px; border-radius: 14px; cursor: pointer; width: 100%; font-size: 15px; text-transform: uppercase; }
         .btn-whatsapp { background: #25d366; color: white; font-weight: bold; border: none; padding: 12px 16px; border-radius: 12px; cursor: pointer; width: 100%; font-size: 14px; display: flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; margin-top: 10px; }
 
@@ -87,7 +93,8 @@
         
         #fullscreenModal { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.95); z-index: 200; display: none; align-items: center; justify-content: center; flex-direction: column; }
         #fullscreenModal.open { display: flex; }
-        #fullscreenImg { max-width: 95vw; max-height: 85vh; object-fit: contain; border-radius: 8px; }
+        #fullscreenMediaContainer { max-width: 95vw; max-height: 85vh; display: flex; align-items: center; justify-content: center; }
+        #fullscreenMediaContainer img, #fullscreenMediaContainer video { max-width: 95vw; max-height: 85vh; object-fit: contain; border-radius: 8px; }
         .fs-close { position: absolute; top: 20px; right: 20px; color: white; font-size: 28px; background: rgba(255,255,255,0.1); border: none; width: 44px; height: 44px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; }
         .fs-arrow { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(255,255,255,0.15); color: white; border: none; width: 50px; height: 50px; border-radius: 50%; cursor: pointer; font-size: 20px; display: flex; align-items: center; justify-content: center; transition: 0.2s; }
         .fs-arrow:hover { background: rgba(255,255,255,0.3); }
@@ -110,6 +117,8 @@
 
         .contact-item-row { display: grid; grid-template-columns: 1fr 2fr 2fr auto; gap: 10px; align-items: center; margin-bottom: 10px; }
         .btn-del-row { background: #dc2626; color: white; border: none; width: 40px; height: 42px; border-radius: 10px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+        
+        .admin-color-row { display: flex; gap: 10px; align-items: center; margin-bottom: 8px; }
     </style>
 </head>
 <body>
@@ -184,19 +193,24 @@
 
     <main class="main-content">
         <div id="tab-home" class="tab-pane active">
-            <div style="padding: 40px 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 40px; align-items: center;">
-                <div>
+            <!-- Блок главного баннера: Фото/Видео СВЕРХУ, текст ПОД НИМ -->
+            <div style="padding: 20px 0; display: flex; flex-direction: column; gap: 30px; align-items: center;">
+                <div style="text-align: center; width: 100%; max-width: 900px;">
+                    <div id="heroMediaContainer" style="width: 100%; border-radius: 24px; box-shadow: 0 20px 40px rgba(0,0,0,0.6); overflow: hidden; background: #121214;">
+                        <!-- Динамическое фото или видео баннера -->
+                        <img id="heroImageElement" src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=1600&auto=format&fit=crop&q=100" style="width: 100%; max-height: 500px; object-fit: cover; display: block;" alt="Fashion">
+                    </div>
+                </div>
+
+                <div style="text-align: center; max-width: 800px;">
                     <span id="heroBadge" style="background: rgba(212,175,55,0.1); border: 1px solid rgba(212,175,55,0.3); color: var(--accent-amber); padding: 8px 16px; border-radius: 20px; font-size: 12px; font-weight: 600; text-transform: uppercase;">Премиум коллекция</span>
                     <h1 id="heroTitle" style="font-size: clamp(32px, 5vw, 48px); line-height: 1.15; margin: 20px 0;">Изысканность и стиль в каждом наряде</h1>
                     <p id="heroDesc" style="opacity: 0.85; margin-bottom: 28px; font-size: 16px; line-height: 1.5;">Эксклюзивная женская одежда в Душанбе для самых особенных моментов вашей жизни.</p>
                     <button onclick="switchTab('catalog')" class="btn-gold" style="width: auto; padding: 16px 32px; font-size: 16px;">Перейти в каталог</button>
                 </div>
-                <div style="text-align: center; width: 100%;">
-                    <img id="heroImageElement" src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=1600&auto=format&fit=crop&q=100" style="width: 100%; max-height: 500px; border-radius: 24px; box-shadow: 0 20px 40px rgba(0,0,0,0.6); object-fit: cover;" alt="Fashion">
-                </div>
             </div>
 
-            <div style="display: flex; justify-content: space-between; align-items: center; margin: 40px 0 24px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin: 50px 0 24px;">
                 <h2 style="font-size: clamp(22px, 4vw, 32px);">Новинки коллекции</h2>
             </div>
             <div id="homeGrid" class="grid-products"></div>
@@ -240,11 +254,11 @@
         </div>
     </footer>
 
-    <!-- ПОЛНОЭКРАННЫЙ ПРОСМОТР -->
+    <!-- ПОЛНОЭКРАННЫЙ ПРОСМОТР ФОТО/ВИДЕО -->
     <div id="fullscreenModal">
         <button class="fs-close" onclick="closeFullscreen()"><i class="fa-solid fa-xmark"></i></button>
         <button class="fs-arrow fs-arrow-left" onclick="navigateFullscreen(-1)"><i class="fa-solid fa-chevron-left"></i></button>
-        <img id="fullscreenImg" src="" alt="Full view">
+        <div id="fullscreenMediaContainer"></div>
         <button class="fs-arrow fs-arrow-right" onclick="navigateFullscreen(1)"><i class="fa-solid fa-chevron-right"></i></button>
         <div id="fullscreenCounter" style="color: white; margin-top: 16px; font-weight: bold; font-size: 15px;">1 / 1</div>
     </div>
@@ -283,8 +297,10 @@
                 </div>
 
                 <div>
-                    <label>Главное фото на главной (URL картинки Banner)</label>
-                    <input type="text" id="settingHeroImage" placeholder="https://images.unsplash.com/...">
+                    <label>Главное фото или видео на главной (Загрузить с устройства или URL)</label>
+                    <input type="file" id="settingHeroMediaFile" accept="image/*,video/*" onchange="handleHeroMediaUpload(event)">
+                    <input type="hidden" id="settingHeroImage" value="">
+                    <div id="settingHeroMediaPreview" style="margin-top: 10px;"></div>
                 </div>
 
                 <div>
@@ -356,11 +372,11 @@
         </div>
     </div>
 
-    <!-- МОДАЛЬНОЕ ОКНО ДОБАВЛЕНИЯ ТОВАРА -->
+    <!-- МОДАЛЬНОЕ ОКНО ДОБАВЛЕНИЯ ТОВАРА С ВЫБОРОМ ЦВЕТОВ И ВИДЕО/ФОТО -->
     <div id="productModal" class="modal">
         <div class="modal-box">
             <button onclick="closeModal('productModal')" class="modal-close"><i class="fa-solid fa-xmark"></i></button>
-            <h3 style="font-size: 24px; margin-bottom: 20px;">Добавить товар</h3>
+            <h3 id="productModalTitle" style="font-size: 24px; margin-bottom: 20px;">Добавить товар</h3>
             <form onsubmit="saveProduct(event)">
                 <input type="hidden" id="editProductDocId">
                 <div><label>Название</label><input type="text" id="prodName" required placeholder="Платье 'Silk'"></div>
@@ -370,9 +386,17 @@
                 <div><label>Бейдж</label><input type="text" id="prodBadge" value="NEW"></div>
                 <div><label>Номер WhatsApp (+992...)</label><input type="text" id="prodWhatsapp" placeholder="992900000000"></div>
                 
+                <!-- Блок цветов (как на WB) -->
+                <div style="border-top: 1px solid #e5e7eb; border-bottom: 1px solid #e5e7eb; padding: 16px 0; margin: 16px 0;">
+                    <label style="font-size: 16px; font-weight: 800; color: #111827; margin-bottom: 8px;">Цвета товара (до 20 цветов)</label>
+                    <p style="font-size: 12px; color: #6b7280; margin-bottom: 12px;">Укажите название цвета и выберите оттенок для отображения клиентам</p>
+                    <div id="adminColorsList"></div>
+                    <button type="button" onclick="addAdminColorRow()" style="background: #f3f4f6; border: 1px dashed #d1d5db; padding: 8px 14px; border-radius: 8px; cursor: pointer; font-weight: bold; color: #374151; font-size: 13px;">+ Добавить цвет</button>
+                </div>
+
                 <div>
-                    <label id="uploadLabelText">Фотография товара (Realtime DB)</label>
-                    <input type="file" id="prodImageFiles" accept="image/*" multiple onchange="handleMultipleImagesUpload(event)">
+                    <label id="uploadLabelText">Фотографии или видео товара (можно выбрать несколько с устройства)</label>
+                    <input type="file" id="prodImageFiles" accept="image/*,video/*" multiple onchange="handleMultipleMediaUpload(event)">
                     <div id="uploadedImagesPreview" style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 12px; max-height: 180px; overflow-y: auto;"></div>
                 </div>
                 
@@ -456,7 +480,7 @@
 
         window.isAdminLoggedIn = localStorage.getItem('osori_admin_auth') === 'true';
         let cachedOrders = [];
-        window.tempProductBase64Images = [];
+        window.tempProductMedia = []; // хранит фото/видео товара
         window.products = [];
         window.siteSettings = {
             siteFont: "'Plus Jakarta Sans', sans-serif",
@@ -472,6 +496,7 @@
             heroDesc: "Эксклюзивная женская одежда в Душанбе для самых особенных моментов вашей жизни.",
             heroBadge: "Премиум коллекция",
             heroImage: "https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=1600&auto=format&fit=crop&q=100",
+            heroMediaType: "image",
             footerDesc: "Премиальная женская одежда в Душанбе. Высочайшее качество тканей и безупречный крой.",
             contacts: [
                 { icon: "fa-solid fa-location-dot", title: "Душанбе, пр. Рудаки 15", link: "#" },
@@ -501,7 +526,16 @@
             if (document.getElementById('heroDesc')) document.getElementById('heroDesc').innerText = s.heroDesc || "";
             if (document.getElementById('heroBadge')) document.getElementById('heroBadge').innerText = s.heroBadge || "";
             if (document.getElementById('footerDesc')) document.getElementById('footerDesc').innerText = s.footerDesc || "";
-            if (document.getElementById('heroImageElement')) document.getElementById('heroImageElement').src = s.heroImage || "https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=1600&auto=format&fit=crop&q=100";
+            
+            const mediaContainer = document.getElementById('heroMediaContainer');
+            if (mediaContainer) {
+                const mediaUrl = s.heroImage || "https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=1600&auto=format&fit=crop&q=100";
+                if (s.heroMediaType === 'video') {
+                    mediaContainer.innerHTML = `<video src="${mediaUrl}" autoplay muted loop playsinline style="width: 100%; max-height: 500px; object-fit: cover; display: block;"></video>`;
+                } else {
+                    mediaContainer.innerHTML = `<img id="heroImageElement" src="${mediaUrl}" style="width: 100%; max-height: 500px; object-fit: cover; display: block;" alt="Fashion">`;
+                }
+            }
 
             document.documentElement.style.setProperty('--site-font', s.siteFont || "'Plus Jakarta Sans', sans-serif");
             document.documentElement.style.setProperty('--brand-font', s.brandFont || "'Playfair Display', serif");
@@ -552,7 +586,8 @@
                         loadedProducts.push({
                             id: key,
                             ...item,
-                            images: item.images || (item.image ? [item.image] : [])
+                            media: item.media || item.images || (item.image ? [{url: item.image, type: 'image'}] : []),
+                            colors: item.colors || []
                         });
                     });
                     loadedProducts.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
@@ -611,7 +646,7 @@
                     <p style="font-size: 14px; margin-bottom: 6px;"><strong>Клиент:</strong> ${o.name} (${o.phone})</p>
                     <p style="font-size: 14px; margin-bottom: 8px;"><strong>Адрес:</strong> ${o.address}</p>
                     <div style="background: rgba(0,0,0,0.05); padding: 10px; border-radius: 10px; font-size: 13px; margin-bottom: 10px;">
-                        ${o.items.map(i => `<div>• ${i.name} (x${i.qty})</div>`).join('')}
+                        ${o.items.map(i => `<div>• ${i.name} ${i.selectedColor ? `(Цвет: ${i.selectedColor})` : ''} (x${i.qty})</div>`).join('')}
                     </div>
                     <div style="display: flex; justify-content: space-between; align-items: center; font-size: 14px; font-weight: bold;">
                         <span>Сумма: <span class="text-amber">${o.total}</span></span>
@@ -647,8 +682,34 @@
             document.getElementById('settingHeroBadge').value = s.heroBadge || "";
             document.getElementById('settingFooterDesc').value = s.footerDesc || "";
 
+            const preview = document.getElementById('settingHeroMediaPreview');
+            if (s.heroMediaType === 'video') {
+                preview.innerHTML = `<video src="${s.heroImage}" style="width: 100px; height: 100px; object-fit: cover; border-radius: 8px;" autoplay muted></video>`;
+            } else {
+                preview.innerHTML = `<img src="${s.heroImage}" style="width: 100px; height: 100px; object-fit: cover; border-radius: 8px;">`;
+            }
+
             renderContactsFormList(s.contacts || []);
             document.getElementById('settingsModal').classList.add('open');
+        };
+
+        window.handleHeroMediaUpload = async (event) => {
+            const file = event.target.files[0];
+            if (!file) return;
+            const isVideo = file.type.startsWith('video');
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const base64 = e.target.result;
+                document.getElementById('settingHeroImage').value = base64;
+                window.siteSettings.heroMediaType = isVideo ? 'video' : 'image';
+                const preview = document.getElementById('settingHeroMediaPreview');
+                if (isVideo) {
+                    preview.innerHTML = `<video src="${base64}" style="width: 100px; height: 100px; object-fit: cover; border-radius: 8px;" autoplay muted></video>`;
+                } else {
+                    preview.innerHTML = `<img src="${base64}" style="width: 100px; height: 100px; object-fit: cover; border-radius: 8px;">`;
+                }
+            };
+            reader.readAsDataURL(file);
         };
 
         window.renderContactsFormList = (contacts) => {
@@ -690,7 +751,7 @@
 
             const contactRows = document.querySelectorAll('.contact-item-row');
             let contacts = [];
-            contactRows.forEach((row, idx) => {
+            contactRows.forEach((row) => {
                 const icon = row.querySelector(`[id^="cIcon_"]`).value;
                 const title = row.querySelector(`[id^="cTitle_"]`).value;
                 const link = row.querySelector(`[id^="cLink_"]`).value;
@@ -700,7 +761,8 @@
             const newSettings = {
                 siteFont: document.getElementById('settingFontFamily').value,
                 brandFont: document.getElementById('settingBrandFont').value,
-                heroImage: document.getElementById('settingHeroImage').value,
+                heroImage: document.getElementById('settingHeroImage').value || window.siteSettings.heroImage,
+                heroMediaType: window.siteSettings.heroMediaType || 'image',
                 cardMinWidth: parseInt(document.getElementById('settingCardWidth').value) || 280,
                 bgColor: document.getElementById('settingBgColor').value,
                 textColor: document.getElementById('settingTextColor').value,
@@ -724,63 +786,54 @@
             }
         };
 
-        window.handleMultipleImagesUpload = async (event) => {
+        // Загрузка медиа (фото или видео) для товара
+        window.handleMultipleMediaUpload = async (event) => {
             const files = Array.from(event.target.files);
-            window.tempProductBase64Images = [];
             const previewContainer = document.getElementById('uploadedImagesPreview');
             const uploadLabel = document.getElementById('uploadLabelText');
             
             if (files.length === 0) return;
-            
-            uploadLabel.innerText = `Обработка ${files.length} фото...`;
-            previewContainer.innerHTML = '<span style="font-size: 12px; color: var(--accent-amber);">Оптимизация...</span>';
+            uploadLabel.innerText = `Обработка файлов (${files.length})...`;
 
-            const processSingleImage = (file) => {
-                return new Promise((resolve) => {
+            for (let i = 0; i < files.length; i++) {
+                const file = files[i];
+                const isVideo = file.type.startsWith('video');
+                
+                await new Promise((resolve) => {
                     const reader = new FileReader();
                     reader.onload = (e) => {
-                        const img = new Image();
-                        img.src = e.target.result;
-                        img.onload = () => {
-                            const canvas = document.createElement('canvas');
-                            let width = img.width;
-                            let height = img.height;
-                            const maxDim = 600;
-                            if (width > maxDim || height > maxDim) {
-                                if (width > height) {
-                                    height = Math.round((height * maxDim) / width);
-                                    width = maxDim;
-                                } else {
-                                    width = Math.round((width * maxDim) / height);
-                                    height = maxDim;
-                                }
-                            }
-                            canvas.width = width;
-                            canvas.height = height;
-                            const ctx = canvas.getContext('2d');
-                            ctx.drawImage(img, 0, 0, width, height);
-                            resolve(canvas.toDataURL('image/jpeg', 0.55));
-                        };
-                        img.onerror = () => resolve(null);
+                        window.tempProductMedia.push({
+                            url: e.target.result,
+                            type: isVideo ? 'video' : 'image'
+                        });
+                        resolve();
                     };
-                    reader.onerror = () => resolve(null);
                     reader.readAsDataURL(file);
                 });
-            };
-
-            let loadedImages = [];
-            for (let i = 0; i < files.length; i++) {
-                const optimized = await processSingleImage(files[i]);
-                if (optimized) loadedImages.push(optimized);
-                uploadLabel.innerText = `Готово фото: ${i + 1} из ${files.length}`;
             }
 
-            window.tempProductBase64Images = loadedImages;
-            uploadLabel.innerText = `Фотографии товара (выбрано: ${loadedImages.length} шт.)`;
-            
-            previewContainer.innerHTML = window.tempProductBase64Images.map(img => `
-                <img src="${img}" style="width: 55px; height: 55px; object-fit: cover; border-radius: 8px; border: 2px solid var(--accent-amber);" loading="lazy">
+            uploadLabel.innerText = `Файлов загружено: ${window.tempProductMedia.length}`;
+            previewContainer.innerHTML = window.tempProductMedia.map(m => `
+                <div style="position: relative;">
+                    ${m.type === 'video' ? `<video src="${m.url}" style="width: 55px; height: 55px; object-fit: cover; border-radius: 8px; border: 2px solid var(--accent-amber);" muted></video>` : `<img src="${m.url}" style="width: 55px; height: 55px; object-fit: cover; border-radius: 8px; border: 2px solid var(--accent-amber);" loading="lazy">`}
+                </div>
             `).join('');
+        };
+
+        // Управление добавлением цветов админом
+        window.addAdminColorRow = (name = '', hex = '#d4af37') => {
+            const container = document.getElementById('adminColorsList');
+            const idx = container.children.length;
+            if (idx >= 20) { alert("Максимально до 20 цветов"); return; }
+            const div = document.createElement('div');
+            div.className = "admin-color-row";
+            div.id = `adminColorRow_${idx}`;
+            div.innerHTML = `
+                <input type="text" placeholder="Название цвета (напр. Золотой)" value="${name}" id="colorName_${idx}" style="flex: 2;">
+                <input type="color" value="${hex}" id="colorHex_${idx}" style="width: 60px; height: 42px; padding: 2px; cursor: pointer;">
+                <button type="button" class="btn-del-row" onclick="document.getElementById('adminColorRow_${idx}').remove()"><i class="fa-solid fa-trash"></i></button>
+            `;
+            container.appendChild(div);
         };
 
         window.saveProduct = async (e) => {
@@ -794,10 +847,19 @@
             const priceTJS = parseFloat(document.getElementById('prodPrice').value);
             const badge = document.getElementById('prodBadge').value;
             const whatsapp = document.getElementById('prodWhatsapp').value.trim();
-            const images = window.tempProductBase64Images;
+            const media = window.tempProductMedia;
 
-            if (!images || images.length === 0) {
-                alert("Пожалуйста, выберите хотя бы одно фото!");
+            // Сбор цветов
+            const colorRows = document.querySelectorAll('.admin-color-row');
+            let colors = [];
+            colorRows.forEach((row, idx) => {
+                const cName = document.getElementById(`colorName_${idx}`).value;
+                const cHex = document.getElementById(`colorHex_${idx}`).value;
+                if (cName) colors.push({ name: cName, hex: cHex });
+            });
+
+            if (!media || media.length === 0) {
+                alert("Пожалуйста, загрузите хотя бы одно фото или видео товара!");
                 return;
             }
 
@@ -811,8 +873,8 @@
                 priceTJS, 
                 badge: badge || 'NEW', 
                 whatsapp, 
-                images, 
-                image: images[0], 
+                media, 
+                colors,
                 timestamp: Date.now() 
             };
 
@@ -841,9 +903,10 @@
             document.getElementById('prodBadge').value = 'NEW';
             document.getElementById('prodWhatsapp').value = '';
             document.getElementById('prodImageFiles').value = '';
-            document.getElementById('uploadLabelText').innerText = "Фотография товара (Realtime DB)";
+            document.getElementById('uploadLabelText').innerText = "Фотографии или видео товара";
             document.getElementById('uploadedImagesPreview').innerHTML = '';
-            window.tempProductBase64Images = [];
+            document.getElementById('adminColorsList').innerHTML = '';
+            window.tempProductMedia = [];
             document.getElementById('productModalTitle').innerText = "Добавить товар";
             openModal('productModal');
         };
@@ -860,13 +923,22 @@
             document.getElementById('prodBadge').value = p.badge || 'NEW';
             document.getElementById('prodWhatsapp').value = p.whatsapp || '';
             
-            window.tempProductBase64Images = p.images || (p.image ? [p.image] : []);
-            document.getElementById('uploadLabelText').innerText = `Загружено фото: ${window.tempProductBase64Images.length}`;
+            window.tempProductMedia = p.media || [];
+            document.getElementById('uploadLabelText').innerText = `Загружено файлов: ${window.tempProductMedia.length}`;
             
             const previewContainer = document.getElementById('uploadedImagesPreview');
-            previewContainer.innerHTML = window.tempProductBase64Images.map(img => `
-                <img src="${img}" style="width: 55px; height: 55px; object-fit: cover; border-radius: 8px; border: 2px solid var(--accent-amber);" loading="lazy">
+            previewContainer.innerHTML = window.tempProductMedia.map(m => `
+                <div style="position: relative;">
+                    ${m.type === 'video' ? `<video src="${m.url}" style="width: 55px; height: 55px; object-fit: cover; border-radius: 8px; border: 2px solid var(--accent-amber);" muted></video>` : `<img src="${m.url}" style="width: 55px; height: 55px; object-fit: cover; border-radius: 8px; border: 2px solid var(--accent-amber);" loading="lazy">`}
+                </div>
             `).join('');
+
+            // Загружаем сохраненные цвета
+            const colorsContainer = document.getElementById('adminColorsList');
+            colorsContainer.innerHTML = '';
+            if (p.colors && Array.isArray(p.colors)) {
+                p.colors.forEach(c => addAdminColorRow(c.name, c.hex));
+            }
 
             document.getElementById('productModalTitle').innerText = "Редактировать товар";
             openModal('productModal');
@@ -906,7 +978,7 @@
         let searchQuery = '';
         const rates = { TJS: 1, USD: 0.092, RUB: 8.3 };
 
-        let activeFsImages = [];
+        let activeFsMedia = [];
         let activeFsIndex = 0;
 
         function changeLanguage(lang) { currentLang = lang; }
@@ -931,15 +1003,15 @@
             renderProducts();
         };
 
-        window.moveCardImage = function(id, dir) {
+        window.moveCardMedia = function(id, dir) {
             const p = window.products.find(prod => prod.id == id);
             if (!p) return;
-            const images = p.images || (p.image ? [p.image] : []);
-            if (images.length <= 1) return;
+            const media = p.media || [];
+            if (media.length <= 1) return;
 
             p.currentIndex = (p.currentIndex || 0) + dir;
-            if (p.currentIndex < 0) p.currentIndex = images.length - 1;
-            if (p.currentIndex >= images.length) p.currentIndex = 0;
+            if (p.currentIndex < 0) p.currentIndex = media.length - 1;
+            if (p.currentIndex >= media.length) p.currentIndex = 0;
 
             const track = document.getElementById(`track_${id}`);
             const dotsContainer = document.getElementById(`dots_${id}`);
@@ -953,10 +1025,27 @@
             }
         };
 
+        // Переключение цвета клиентом (как на Wildberries)
+        window.selectProductColor = function(id, colorName) {
+            const p = window.products.find(prod => prod.id == id);
+            if (!p) return;
+            p.selectedColor = colorName;
+            
+            // Подсветка выбранной иконки цвета
+            const colorSwatches = document.querySelectorAll(`#cardColors_${id} .color-swatch`);
+            colorSwatches.forEach(swatch => {
+                if (swatch.getAttribute('data-color') === colorName) {
+                    swatch.classList.add('active');
+                } else {
+                    swatch.classList.remove('active');
+                }
+            });
+        };
+
         window.openFullscreen = function(id) {
             const p = window.products.find(prod => prod.id == id);
             if (!p) return;
-            activeFsImages = p.images || (p.image ? [p.image] : []);
+            activeFsMedia = p.media || [];
             activeFsIndex = p.currentIndex || 0;
             updateFullscreenUI();
             document.getElementById('fullscreenModal').classList.add('open');
@@ -967,16 +1056,22 @@
         };
 
         window.navigateFullscreen = function(dir) {
-            if (activeFsImages.length <= 1) return;
+            if (activeFsMedia.length <= 1) return;
             activeFsIndex += dir;
-            if (activeFsIndex < 0) activeFsIndex = activeFsImages.length - 1;
-            if (activeFsIndex >= activeFsImages.length) activeFsIndex = 0;
+            if (activeFsIndex < 0) activeFsIndex = activeFsMedia.length - 1;
+            if (activeFsIndex >= activeFsMedia.length) activeFsIndex = 0;
             updateFullscreenUI();
         };
 
         function updateFullscreenUI() {
-            document.getElementById('fullscreenImg').src = activeFsImages[activeFsIndex];
-            document.getElementById('fullscreenCounter').innerText = `${activeFsIndex + 1} / ${activeFsImages.length}`;
+            const container = document.getElementById('fullscreenMediaContainer');
+            const item = activeFsMedia[activeFsIndex];
+            if (item.type === 'video') {
+                container.innerHTML = `<video src="${item.url}" controls autoplay style="max-width: 95vw; max-height: 85vh; border-radius: 8px;"></video>`;
+            } else {
+                container.innerHTML = `<img src="${item.url}" style="max-width: 95vw; max-height: 85vh; object-fit: contain; border-radius: 8px;">`;
+            }
+            document.getElementById('fullscreenCounter').innerText = `${activeFsIndex + 1} / ${activeFsMedia.length}`;
         }
 
         window.renderProducts = function() {
@@ -999,11 +1094,16 @@
             }
 
             const html = list.map(p => {
-                const images = p.images && p.images.length > 0 ? p.images : [p.image];
+                const media = p.media && p.media.length > 0 ? p.media : [{url: p.image || 'https://images.unsplash.com/photo-1490481651871-ab68de25d43d', type: 'image'}];
                 const activeIndex = p.currentIndex || 0;
                 const skuText = p.sku || 'N/A';
                 const wpNumber = (p.whatsapp && p.whatsapp.trim() !== '') ? p.whatsapp.trim() : '992900000000';
-                const whatsappText = encodeURIComponent(`Здравствуйте! Хочу заказать:\nНазвание: ${p.name}\nАртикул: ${skuText}\nЦена: ${formatPrice(p.priceTJS)}`);
+                
+                if (!p.selectedColor && p.colors && p.colors.length > 0) {
+                    p.selectedColor = p.colors[0].name;
+                }
+
+                const whatsappText = encodeURIComponent(`Здравствуйте! Хочу заказать:\nНазвание: ${p.name}\n${p.selectedColor ? `Цвет: ${p.selectedColor}\n` : ''}Артикул: ${skuText}\nЦена: ${formatPrice(p.priceTJS)}`);
                 const whatsappUrl = `https://wa.me/${wpNumber}?text=${whatsappText}`;
 
                 return `
@@ -1013,18 +1113,18 @@
                         
                         <div class="fullscreen-hint"><i class="fa-solid fa-expand"></i> Полный экран</div>
 
-                        ${images.length > 1 ? `
-                            <button class="card-arrow card-arrow-left" onclick="event.stopPropagation(); moveCardImage('${p.id}', -1)"><i class="fa-solid fa-chevron-left"></i></button>
-                            <button class="card-arrow card-arrow-right" onclick="event.stopPropagation(); moveCardImage('${p.id}', 1)"><i class="fa-solid fa-chevron-right"></i></button>
+                        ${media.length > 1 ? `
+                            <button class="card-arrow card-arrow-left" onclick="event.stopPropagation(); moveCardMedia('${p.id}', -1)"><i class="fa-solid fa-chevron-left"></i></button>
+                            <button class="card-arrow card-arrow-right" onclick="event.stopPropagation(); moveCardMedia('${p.id}', 1)"><i class="fa-solid fa-chevron-right"></i></button>
                         ` : ''}
 
                         <div class="card-img-track" id="track_${p.id}" style="transform: translateX(-${activeIndex * 100}%);">
-                            ${images.map((img, idx) => `<img src="${img}" alt="${p.name}" ${idx === 0 ? '' : 'loading="lazy"'}>`).join('')}
+                            ${media.map((m, idx) => m.type === 'video' ? `<video src="${m.url}" muted loop playsinline ${idx === 0 ? 'autoplay' : ''}></video>` : `<img src="${m.url}" alt="${p.name}" ${idx === 0 ? '' : 'loading="lazy"'}>`).join('')}
                         </div>
 
-                        ${images.length > 1 ? `
+                        ${media.length > 1 ? `
                             <div class="card-dots" id="dots_${p.id}">
-                                ${images.map((_, idx) => `<div class="card-dot ${idx === activeIndex ? 'active' : ''}"></div>`).join('')}
+                                ${media.map((_, idx) => `<div class="card-dot ${idx === activeIndex ? 'active' : ''}"></div>`).join('')}
                             </div>
                         ` : ''}
                     </div>
@@ -1035,8 +1135,24 @@
                                 <span style="font-size: 12px; color: var(--accent-amber); text-transform: uppercase; font-weight: 600;">${p.brand}</span>
                                 <span style="font-size: 11px; background: rgba(255,255,255,0.1); color: var(--accent-amber); padding: 3px 8px; border-radius: 6px;">SKU: ${skuText}</span>
                             </div>
-                            <h3 style="font-size: 17px; font-weight: bold; margin: 4px 0 14px;">${p.name}</h3>
+                            <h3 style="font-size: 17px; font-weight: bold; margin: 4px 0 6px;">${p.name}</h3>
+
+                            <!-- Блок выбора цвета в стиле WB -->
+                            ${p.colors && p.colors.length > 0 ? `
+                                <div style="font-size: 12px; opacity: 0.8; margin-top: 6px;">Цвет: <strong style="color: var(--accent-amber);">${p.selectedColor || p.colors[0].name}</strong></div>
+                                <div class="color-selector" id="cardColors_${p.id}">
+                                    ${p.colors.map(c => `
+                                        <div class="color-swatch ${(p.selectedColor === c.name || (!p.selectedColor && c === p.colors[0])) ? 'active' : ''}" 
+                                             style="background-color: ${c.hex};" 
+                                             title="${c.name}" 
+                                             data-color="${c.name}"
+                                             onclick="event.stopPropagation(); selectProductColor('${p.id}', '${c.name}')">
+                                        </div>
+                                    `).join('')}
+                                </div>
+                            ` : ''}
                         </div>
+
                         <div>
                             <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 12px; margin-bottom: 12px;">
                                 <span style="font-size: 18px; font-weight: 900;" class="text-amber">${formatPrice(p.priceTJS)}</span>
@@ -1098,10 +1214,10 @@
                     ${compareList.map(id => {
                         const p = window.products.find(prod => prod.id == id);
                         if (!p) return '';
-                        const img = p.images && p.images.length > 0 ? p.images[0] : p.image;
+                        const mediaItem = p.media && p.media.length > 0 ? p.media[0] : {url: 'https://images.unsplash.com/photo-1490481651871-ab68de25d43d', type: 'image'};
                         return `<div style="border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.05); padding: 16px; border-radius: 14px; text-align: center; position: relative;">
                             <button onclick="toggleCompare('${p.id}'); renderCompare();" style="position: absolute; top: 8px; right: 8px; background: none; border: none; color: #dc2626; cursor: pointer; font-size: 16px;"><i class="fa-solid fa-xmark"></i></button>
-                            <img src="${img}" style="height: 140px; width:100%; object-fit: cover; margin-bottom: 10px; border-radius: 10px;" loading="lazy">
+                            ${mediaItem.type === 'video' ? `<video src="${mediaItem.url}" style="height: 140px; width:100%; object-fit: cover; margin-bottom: 10px; border-radius: 10px;" muted></video>` : `<img src="${mediaItem.url}" style="height: 140px; width:100%; object-fit: cover; margin-bottom: 10px; border-radius: 10px;" loading="lazy">`}
                             <h4 style="font-weight: bold; font-size: 15px; margin-bottom: 6px;">${p.name}</h4>
                             <p class="text-amber" style="font-weight: bold; font-size: 15px;">${formatPrice(p.priceTJS)}</p>
                         </div>`;
@@ -1111,8 +1227,14 @@
         }
 
         function addToCart(id) {
-            const item = cart.find(i => i.id == id);
-            if (item) item.qty++; else cart.push({ id, qty: 1 });
+            const p = window.products.find(prod => prod.id == id);
+            if (!p) return;
+            const chosenColor = p.selectedColor || (p.colors && p.colors.length > 0 ? p.colors[0].name : '');
+            
+            const item = cart.find(i => i.id == id && i.selectedColor === chosenColor);
+            if (item) item.qty++; 
+            else cart.push({ id, qty: 1, selectedColor: chosenColor });
+            
             localStorage.setItem('osori_cart', JSON.stringify(cart));
             updateBadges();
             openCartModal();
@@ -1133,10 +1255,13 @@
                 if (!p) return '';
                 total += p.priceTJS * i.qty;
                 return `<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; font-size: 14px; border-bottom: 1px solid #e5e7eb; padding-bottom: 8px;">
-                    <span>${p.name} (x${i.qty})</span>
+                    <div>
+                        <div><strong>${p.name}</strong> (x${i.qty})</div>
+                        ${i.selectedColor ? `<div style="font-size: 12px; color: #6b7280;">Цвет: ${i.selectedColor}</div>` : ''}
+                    </div>
                     <div style="display: flex; align-items: center; gap: 12px;">
                         <strong class="text-amber">${formatPrice(p.priceTJS * i.qty)}</strong>
-                        <button onclick="removeFromCart('${p.id}')" style="background: none; border: none; color: #dc2626; cursor: pointer; font-size: 15px;"><i class="fa-solid fa-trash"></i></button>
+                        <button onclick="removeFromCart('${i.id}', '${i.selectedColor || ''}')" style="background: none; border: none; color: #dc2626; cursor: pointer; font-size: 15px;"><i class="fa-solid fa-trash"></i></button>
                     </div>
                 </div>`;
             }).join('');
@@ -1144,8 +1269,8 @@
             openModal('cartModal');
         }
 
-        function removeFromCart(id) {
-            cart = cart.filter(i => i.id != id);
+        function removeFromCart(id, color) {
+            cart = cart.filter(i => !(i.id == id && (i.selectedColor || '') === color));
             localStorage.setItem('osori_cart', JSON.stringify(cart));
             updateBadges();
             openCartModal();
@@ -1172,7 +1297,7 @@
                 name, phone, address,
                 items: cart.map(cartItem => {
                     const p = window.products.find(prod => prod.id == cartItem.id);
-                    return { name: p ? p.name : 'Товар', qty: cartItem.qty };
+                    return { name: p ? p.name : 'Товар', qty: cartItem.qty, selectedColor: cartItem.selectedColor || '' };
                 }),
                 total: formatPrice(totalTJS),
                 date: new Date().toLocaleString(),
